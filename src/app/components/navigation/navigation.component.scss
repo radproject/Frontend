@@ -1,0 +1,96 @@
+.navBg {
+  background: teal;
+  display: grid;
+  justify-items: center;
+  padding: 5px;
+  
+  .navItems {    
+    width: 85%;
+    display: grid;
+    grid-template-columns: auto 1fr 1fr;
+    grid-column-gap: 30px;
+    grid-template-areas: 'logo main auth';
+
+    color: white;
+    font-size: 26px;
+
+    .logo {
+      grid-area: logo;
+      width: 100%;
+      height: 80px;
+      max-height: 100px;
+    }
+    .main {
+      grid-area: main;
+      justify-self: flex-start;
+
+      span { cursor: pointer; }
+    }
+    .auth {
+      grid-area: auth;
+      justify-self: flex-end;
+      
+      span { cursor: pointer; }
+    }
+    div {
+      display: grid;
+      grid-template-columns: repeat(3,auto);
+      grid-column-gap: 30px;
+      align-items: center;
+    }
+  }
+}
+
+.active {
+  color: #debd03;
+}
+
+@media only screen and (max-width: 630px) {
+  .navBg {
+    .navItems {
+      grid-template-columns: repeat(2,auto);
+      grid-template-areas: 'logo auth'
+                           'main main';
+      .main {
+        width: 100%;
+        justify-self: center;
+      }
+
+      .auth {
+        font-size: 20px;
+      }
+      
+      .logo {
+        display: block;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 430px) {
+  .navBg {
+    .navItems {
+      grid-template-columns: auto;
+      grid-template-areas: 'logo'
+                           'main'
+                           'auth';
+      justify-items: center;
+      .main {
+        width: 100%;
+        justify-self: center;
+        justify-items: center;
+        grid-template-columns: auto;
+        grid-template-rows: repeat(3,auto);
+      }
+      .auth {
+        justify-self: center;
+        justify-items: center;
+        grid-template-columns: auto;
+        grid-template-rows: repeat(2,auto);
+      }
+      .logo {
+        display: block;
+      }
+    }
+  }
+}

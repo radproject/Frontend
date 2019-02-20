@@ -1,3 +1,18 @@
-<p>
-  navigation works!
-</p>
+<div class="navBg">
+  <div class="navItems">
+    <app-logo class="logo"></app-logo>
+    <div class="main">
+      <span (click)='selectPage("/home/")' [class.active]='router.url == "/home"'>Home</span>
+      <span (click)='selectPage("/forums/")'  [class.active]='router.url == "/forums/*"'>Forums</span>
+      <!-- <span (click)='selectPage("")' [class.active]='router.url =="/"'></span> -->
+    </div>
+    <div class="auth" *ngIf='!user'>
+      <span (click)='selectPage("/auth/login")' [class.active]='router.url =="/auth/login"'>Login</span>
+      <span (click)='selectPage("/auth/register")' [class.active]='router.url =="/auth/register"'>Register</span>
+    </div>
+    <div class="auth" *ngIf='user'>
+        <span (click)='logout()'>Logout</span>
+        <!-- <span (click)='selectPage("user")' [class.active]='router.url =="/user"'>My Profile</span> -->
+    </div>
+  </div>
+</div>
