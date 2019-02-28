@@ -1,9 +1,0 @@
-<div class='browseContainer'>
-  <h1>Forum Index</h1>
-  <div class='department' *ngFor='let dept of departments' #BusinessAndSocialSciences>
-    <h2>{{dept.name}}</h2>
-    <!-- <div class='subjects'> -->
-      <app-thread-list-item *ngFor='let topic of dept.topics'></app-thread-list-item>
-    <!-- </div> -->
-  </div>
-</div>
