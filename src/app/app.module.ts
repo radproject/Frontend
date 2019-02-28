@@ -16,6 +16,9 @@ import { RegisterComponent } from './pages/auth/register/register.component';
 import { TopicListComponent } from './components/topics/topic-list/topic-list.component';
 import { TopicPageComponent } from './components/topics/topic-page/topic-page.component';
 import { TopicPostComponent } from './components/topics/topic-post/topic-post.component';
+import { BrowseComponent } from './pages/topics/browse/browse.component';
+import { TopicItemComponent } from './pages/topics/topic-item/topic-item.component';
+import { CommentComponent } from './components/comment/comment.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +31,9 @@ import { TopicPostComponent } from './components/topics/topic-post/topic-post.co
     TopicListComponent,
     TopicPageComponent,
     TopicPostComponent,
+    BrowseComponent,
+    TopicItemComponent,
+    CommentComponent,
   ],
   imports: [
     AppRoutingModule,
