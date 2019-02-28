@@ -1,3 +1,26 @@
-<p>
-  register works!
-</p>
+<div class='gridContainer'>
+  <h2>Register</h2>
+  <form [formGroup]='registerForm'>
+    <div class='form-group'>
+      <label for='name'>Full name*</label>
+      <input type='text' id='name' class='form-control' formControlName='name' placeholder="John Smith"/>
+    </div>
+    <div class='form-group'>
+      <label for='email'>Email*</label>
+      <input type='text' id='email' class='form-control' formControlName='email' placeholder="johnsmith@email.com"/>
+    </div>
+    <div class='form-group'>
+      <label for='password'>Password*</label>
+      <input autocomplete="off" type='password' id='password' class='form-control' formControlName='password'/>
+    </div>
+    <div class='form-group'>
+      <label for='confirmPassword'>Confirm Password*</label>
+      <input autocomplete="off" type='password' id='confirmPassword' class='form-control' formControlName='confirmPassword'/>
+    </div>
+    <small class='error' *ngIf='registerForm.errors'>{{(registerForm.errors.passMatch)?registerForm.errors.passMatch:null}}</small>
+    <div class='buttons'>
+      <small (click)='goToLogin()'>Already registered?</small>
+      <button class='btn btn-primary' (click)='register()' [disabled]='!registerForm.valid'>Register</button>
+    </div>
+  </form>
+</div>

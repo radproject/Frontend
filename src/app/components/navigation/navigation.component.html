@@ -2,13 +2,13 @@
   <div class="navItems">
     <app-logo class="logo"></app-logo>
     <div class="main">
-      <span (click)='selectPage("/home/")' [class.active]='router.url == "/home"'>Home</span>
-      <span (click)='selectPage("/forums/")'  [class.active]='router.url == "/forums/*"'>Forums</span>
-      <!-- <span (click)='selectPage("")' [class.active]='router.url =="/"'></span> -->
+      <span routerLink='/home/' routerLinkActive='active'>Home</span>
+      <span routerLink='/forums/' routerLinkActive='active'>Forums</span>
+      <!-- <span routerLink='/info/' routerLinkActive='active'>Info</span> -->
     </div>
     <div class="auth" *ngIf='!user'>
-      <span (click)='selectPage("/auth/login")' [class.active]='router.url =="/auth/login"'>Login</span>
-      <span (click)='selectPage("/auth/register")' [class.active]='router.url =="/auth/register"'>Register</span>
+      <span routerLink='/auth/login/' routerLinkActive='active'>Login</span>
+      <span routerLink='/auth/register/' routerLinkActive='active'>Register</span>
     </div>
     <div class="auth" *ngIf='user'>
         <span (click)='logout()'>Logout</span>

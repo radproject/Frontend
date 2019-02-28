@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
+import { AngularMaterialModule } from './angular-material.module';
 import { ToasterModule } from 'angular2-toaster';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -9,13 +11,13 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { HomepageComponent } from './pages/homepage/homepage.component';
 import { BrowseComponent } from './pages/forum/browse/browse.component';
 import { ThreadComponent } from './pages/forum/thread/thread.component';
-import { PostComponent } from './components/forum/post/post.component';
-import { UserIconComponent } from './components/forum/user-icon/user-icon.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { AuthComponent } from './pages/auth/auth.component';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { RegisterComponent } from './pages/auth/register/register.component';
-
+import { TopicListComponent } from './components/topics/topic-list/topic-list.component';
+import { TopicPageComponent } from './components/topics/topic-page/topic-page.component';
+import { TopicPostComponent } from './components/topics/topic-post/topic-post.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,17 +25,20 @@ import { RegisterComponent } from './pages/auth/register/register.component';
     HomepageComponent,
     BrowseComponent,
     ThreadComponent,
-    PostComponent,
-    UserIconComponent,
     LogoComponent,
     AuthComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    TopicListComponent,
+    TopicPageComponent,
+    TopicPostComponent,
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
-    ToasterModule.forRoot()
+    ToasterModule.forRoot(),
+    AngularMaterialModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

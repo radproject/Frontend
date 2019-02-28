@@ -1,5 +1,6 @@
+@import '../../../assets/colour-scheme.scss';
 .navBg {
-  background: teal;
+  background: $primary;
   display: grid;
   justify-items: center;
   padding: 5px;

@@ -1,0 +1,30 @@
+.gridContainer {
+    h2{
+        width: 100%;
+        text-align: center;
+    }
+
+    form {
+        .buttons {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+
+            div {
+                display: grid;
+                grid-row-gap: 5px;
+                justify-items: left;
+
+                small {
+                    color: blue;
+                    cursor: pointer;
+                }
+            }
+
+            button {
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+        }
+    }
+}

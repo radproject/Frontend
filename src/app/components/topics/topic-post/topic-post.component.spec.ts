@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserIconComponent } from './user-icon.component';
+import { TopicPostComponent } from './topic-post.component';
 
-describe('UserIconComponent', () => {
-  let component: UserIconComponent;
-  let fixture: ComponentFixture<UserIconComponent>;
+describe('TopicPostComponent', () => {
+  let component: TopicPostComponent;
+  let fixture: ComponentFixture<TopicPostComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserIconComponent ]
+      declarations: [ TopicPostComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserIconComponent);
+    fixture = TestBed.createComponent(TopicPostComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
