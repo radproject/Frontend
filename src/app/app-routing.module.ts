@@ -6,12 +6,13 @@ import { LoginComponent } from './pages/auth/login/login.component';
 import { RegisterComponent } from './pages/auth/register/register.component';
 import { TopicListComponent } from './pages/topics/topic-list/topic-list.component';
 import { TopicItemComponent } from './pages/topics/topic-item/topic-item.component';
+import { TopicsComponent } from './pages/topics/topics.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomepageComponent },
   //Topic browsing pages
-  { path: 'topics', children: [
+  { path: 'topics', component: TopicsComponent, children: [
     { path: '', redirectTo: 'browse', pathMatch: 'full' },
     { path: 'browse', component: TopicListComponent },
     { path: '/:id', component: TopicItemComponent }

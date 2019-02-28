@@ -13,12 +13,10 @@ import { LogoComponent } from './components/logo/logo.component';
 import { AuthComponent } from './pages/auth/auth.component';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { RegisterComponent } from './pages/auth/register/register.component';
-import { TopicListComponent } from './components/topics/topic-list/topic-list.component';
-import { TopicPageComponent } from './components/topics/topic-page/topic-page.component';
-import { TopicPostComponent } from './components/topics/topic-post/topic-post.component';
-import { BrowseComponent } from './pages/topics/browse/browse.component';
 import { TopicItemComponent } from './pages/topics/topic-item/topic-item.component';
 import { CommentComponent } from './components/comment/comment.component';
+import { TopicsComponent } from './pages/topics/topics.component';
+import { TopicListComponent } from './pages/topics/topic-list/topic-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,11 +27,9 @@ import { CommentComponent } from './components/comment/comment.component';
     LoginComponent,
     RegisterComponent,
     TopicListComponent,
-    TopicPageComponent,
-    TopicPostComponent,
-    BrowseComponent,
     TopicItemComponent,
     CommentComponent,
+    TopicsComponent,
   ],
   imports: [
     AppRoutingModule,
