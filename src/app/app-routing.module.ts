@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'topics', component: TopicsComponent, children: [
     { path: '', redirectTo: 'browse', pathMatch: 'full' },
     { path: 'browse', component: TopicListComponent },
-    { path: '/:id', component: TopicItemComponent }
+    { path: ':id', component: TopicItemComponent }
   ]},
   //Auth Pages
   { path: 'auth', component: AuthComponent, children: [
