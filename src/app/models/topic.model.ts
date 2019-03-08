@@ -1,3 +1,15 @@
 export interface ITopic {
-    id: string
+    ID: number
+    Title: string,
+    CreationDate: Date
+    
+    PostId: number
+    CreatorId: string
+    SubscribedIds: string[]
+
+    isPrivate: boolean
+}
+
+export interface IPost {
+
 }
