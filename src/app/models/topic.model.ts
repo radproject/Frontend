@@ -2,7 +2,7 @@ import { IPost } from "./post.model";
 
 export interface ITopic {
     ID: number
-    Title: string,
+    Title: string
     CreationDate: Date
 
     CreatorId: string
