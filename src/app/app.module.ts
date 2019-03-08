@@ -5,6 +5,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from './angular-material.module';
 import { ToasterModule } from 'angular2-toaster';
 
+//State
+import { NgxsModule } from '@ngxs/store';
+import { UserState } from './ngxs/states/user.state';
+import { TopicsState } from './ngxs/states/topics.state';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin'
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
@@ -36,7 +42,11 @@ import { PostComponent } from './components/post/post.component';
     BrowserModule,
     ToasterModule.forRoot(),
     AngularMaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxsModule.forRoot([
+      UserState,
+      TopicsState
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]
