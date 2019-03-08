@@ -2,6 +2,7 @@ import { State, StateContext, Selector, Action } from "@ngxs/store"
 import { NotificationService } from "src/app/services/notification/notification.service";
 import { ITopic } from "src/app/models/topic.model";
 import { GetAllTopics, GetAllTopicsSuccess, GetAllTopicsFailure, CreateTopic, CreateTopicSuccess, CreateTopicFailure, DeleteTopic, DeleteTopicSuccess, DeleteTopicFailure, GetSubscribedTopics, GetSubscribedTopicsSuccess, GetSubscribedTopicsFailure, GetTopicByID, GetTopicByIDSuccess, GetTopicByIDFailure, SubscribeToTopic, SubscribeToTopicSuccess, SubscribeToTopicFailure, UnsubscribeFromTopic, UnsubscribeFromTopicSuccess, UnsubscribeFromTopicFailure } from "../actions/topics.actions";
+import { TopicsService } from "src/app/services/topics/topics.service";
 
 interface TopicsStateModel {
     topics: ITopic[],
@@ -26,7 +27,7 @@ interface TopicsStateModel {
     }
 })
 export class TopicsState {
-    constructor(private notification: NotificationService) { }
+    constructor(private topicsService: TopicsService,private notification: NotificationService) { }
 
     //Selectors
     //All Topics
@@ -101,15 +102,13 @@ export class TopicsState {
         const state = context.getState()
         state.isLoading = true
 
-        // TODO: CALL TOPICS SERVICE AND PARSE RESPONSE TO PASS/FAIL
-
-        // this.topicsService.AddOrUpdatetopics(action.topic)
-        //     .then(res => {
-        //         context.dispatch(new CreateTopicSuccess())
-        //     })
-        //     .catch(err => {
-        //         context.dispatch(new CreateTopicFailure(err))
-        //     })
+        this.topicsService.CreateTopic(action.topic).toPromise()
+            .then(res => {
+                context.dispatch(new CreateTopicSuccess())
+            })
+            .catch(err => {
+                context.dispatch(new CreateTopicFailure(err))
+            })
 
     }
 
@@ -136,16 +135,13 @@ export class TopicsState {
         const state = context.getState()
         state.isLoading = true
 
-        //TODO: CALL TOPICS SERVICE AND DELETE TOPIC THEN PARSE RESPONSE
-
-        // this.topicsService.deletetopics(action.topicId)
-        //     .then(res => {
-        //         context.dispatch(new DeleteTopicSuccess())
-        //     })
-        //     .catch(err => {
-        //         context.dispatch(new DeleteTopicFailure(err))
-        //     })
-
+        this.topicsService.DeleteTopic(action.id).toPromise()
+            .then(res => {
+                context.dispatch(new DeleteTopicSuccess())
+            })
+            .catch(err => {
+                context.dispatch(new DeleteTopicFailure(err))
+            })
     }
 
     @Action(DeleteTopicSuccess)
@@ -207,16 +203,14 @@ export class TopicsState {
         const state = context.getState()
         state.selectedLoading = true
 
-        //TODO: GET TOPIC BY ID THEN PARSE RESPONSE
-
-        //this.topicsService.getTopicByID.subscribe(
-        //      res => {
-        //          context.dispatch(new GetTopicByIDSuccess(res))
-        //      },
-        //      err => {
-        //          context.dispatch(new GetTopicByIDFailure(err))
-        //      }
-        //)
+        this.topicsService.GetTopicByID(action.id).subscribe(
+             res => {
+                 context.dispatch(new GetTopicByIDSuccess(res))
+             },
+             err => {
+                 context.dispatch(new GetTopicByIDFailure(err))
+             }
+        )
     }
 
     @Action(GetTopicByIDSuccess)

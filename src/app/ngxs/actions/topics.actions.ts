@@ -33,7 +33,7 @@ export class CreateTopicFailure {
 //Delete Topic
 export class DeleteTopic {
     static readonly type = '[Topics] Delete Topic'
-    constructor(public id: string) { }
+    constructor(public id: number) { }
 }
 
 export class DeleteTopicSuccess {
