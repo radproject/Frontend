@@ -24,6 +24,7 @@ import { TopicItemComponent } from './pages/topics/topic-item/topic-item.compone
 import { TopicsComponent } from './pages/topics/topics.component';
 import { TopicListComponent } from './pages/topics/topic-list/topic-list.component';
 import { PostComponent } from './components/post/post.component';
+import { TopicListItemComponent } from './components/topics/topic-list-item/topic-list-item.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +38,7 @@ import { PostComponent } from './components/post/post.component';
     TopicItemComponent,
     TopicsComponent,
     PostComponent,
+    TopicListItemComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -48,7 +50,8 @@ import { PostComponent } from './components/post/post.component';
       UserState,
       TopicsState
     ]),
-    HttpClientModule
+    HttpClientModule,
+    NgxsReduxDevtoolsPluginModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -77,6 +77,11 @@ export class GetTopicByIDFailure {
     constructor(public error: string) { }
 }
 
+//Clear selected
+export class  ClearSelectedTopic {
+    static readonly type = '[Topics] Clear Selected Topic'
+}
+
 //Subscribe to topic
 export class SubscribeToTopic {
     static readonly type = '[Topics] Subscribe to topic'

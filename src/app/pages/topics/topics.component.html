@@ -1,4 +1,7 @@
 <div class="pageContainer">
-  <div class="breadcrumbs"><a>Index</a>{{selectedTopic?('>'+selectedTopic.id):''}}</div>
+  <div class="breadcrumbs">
+    <a (click)='returnToIndex()'>Index</a>
+    {{(selectedTopic | async)?('>'+(selectedTopic | async).ID):('')}}
+  </div>
   <router-outlet></router-outlet>
 </div>

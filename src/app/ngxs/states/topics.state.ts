@@ -1,7 +1,7 @@
 import { State, StateContext, Selector, Action } from "@ngxs/store"
 import { NotificationService } from "src/app/services/notification/notification.service";
 import { ITopic } from "src/app/models/topic.model";
-import { GetAllTopics, GetAllTopicsSuccess, GetAllTopicsFailure, CreateTopic, CreateTopicSuccess, CreateTopicFailure, DeleteTopic, DeleteTopicSuccess, DeleteTopicFailure, GetSubscribedTopics, GetSubscribedTopicsSuccess, GetSubscribedTopicsFailure, GetTopicByID, GetTopicByIDSuccess, GetTopicByIDFailure, SubscribeToTopic, SubscribeToTopicSuccess, SubscribeToTopicFailure, UnsubscribeFromTopic, UnsubscribeFromTopicSuccess, UnsubscribeFromTopicFailure } from "../actions/topics.actions";
+import { GetAllTopics, GetAllTopicsSuccess, GetAllTopicsFailure, CreateTopic, CreateTopicSuccess, CreateTopicFailure, DeleteTopic, DeleteTopicSuccess, DeleteTopicFailure, GetSubscribedTopics, GetSubscribedTopicsSuccess, GetSubscribedTopicsFailure, GetTopicByID, GetTopicByIDSuccess, GetTopicByIDFailure, SubscribeToTopic, SubscribeToTopicSuccess, SubscribeToTopicFailure, UnsubscribeFromTopic, UnsubscribeFromTopicSuccess, UnsubscribeFromTopicFailure, ClearSelectedTopic } from "../actions/topics.actions";
 import { TopicsService } from "src/app/services/topics/topics.service";
 
 interface TopicsStateModel {
@@ -18,7 +18,33 @@ interface TopicsStateModel {
 @State<TopicsStateModel>({
     name: 'topics',
     defaults: {
-        topics: null,
+        //TODO: RESET TO NULL WHEN TOPICS DONE
+        topics: [
+            {
+                ID: 1,
+                Title: 'Topic 1',
+                CreationDate: new Date(),
+                CreatorId: '1',
+                SubscribedIds: ['foo','bar'],
+                isPrivate: false
+            },
+            {
+                ID: 2,
+                Title: 'Topic 2',
+                CreationDate: new Date(),
+                CreatorId: '2',
+                SubscribedIds: ['foo','bar'],
+                isPrivate: false
+            },
+            {
+                ID: 3,
+                Title: 'Topic 3',
+                CreationDate: new Date(),
+                CreatorId: '3',
+                SubscribedIds: ['foo','bar'],
+                isPrivate: false
+            }
+        ],
         isLoading: false,
         selectedTopic: null,
         selectedLoading: false,
@@ -102,13 +128,13 @@ export class TopicsState {
         const state = context.getState()
         state.isLoading = true
 
-        this.topicsService.CreateTopic(action.topic).toPromise()
-            .then(res => {
-                context.dispatch(new CreateTopicSuccess())
-            })
-            .catch(err => {
-                context.dispatch(new CreateTopicFailure(err))
-            })
+        // this.topicsService.CreateTopic(action.topic).toPromise()
+        //     .then(res => {
+        //         context.dispatch(new CreateTopicSuccess())
+        //     })
+        //     .catch(err => {
+        //         context.dispatch(new CreateTopicFailure(err))
+        //     })
 
     }
 
@@ -135,13 +161,13 @@ export class TopicsState {
         const state = context.getState()
         state.isLoading = true
 
-        this.topicsService.DeleteTopic(action.id).toPromise()
-            .then(res => {
-                context.dispatch(new DeleteTopicSuccess())
-            })
-            .catch(err => {
-                context.dispatch(new DeleteTopicFailure(err))
-            })
+        // this.topicsService.DeleteTopic(action.id).toPromise()
+        //     .then(res => {
+        //         context.dispatch(new DeleteTopicSuccess())
+        //     })
+        //     .catch(err => {
+        //         context.dispatch(new DeleteTopicFailure(err))
+        //     })
     }
 
     @Action(DeleteTopicSuccess)
@@ -203,14 +229,26 @@ export class TopicsState {
         const state = context.getState()
         state.selectedLoading = true
 
-        this.topicsService.GetTopicByID(action.id).subscribe(
-             res => {
-                 context.dispatch(new GetTopicByIDSuccess(res))
-             },
-             err => {
-                 context.dispatch(new GetTopicByIDFailure(err))
-             }
-        )
+        context.patchState({
+            selectedTopic: 
+            {
+                ID: 1,
+                Title: 'Topic 1',
+                CreationDate: new Date(),
+                CreatorId: '1',
+                SubscribedIds: ['foo','bar'],
+                isPrivate: false
+            },
+            selectedLoading: false
+        })
+        // this.topicsService.GetTopicByID(action.id).subscribe(
+        //      res => {
+        //          context.dispatch(new GetTopicByIDSuccess(res))
+        //      },
+        //      err => {
+        //          context.dispatch(new GetTopicByIDFailure(err))
+        //      }
+        // )
     }
 
     @Action(GetTopicByIDSuccess)
@@ -231,6 +269,12 @@ export class TopicsState {
         })
     }
 
+    @Action(ClearSelectedTopic)
+    ClearSelectedTopic(context: StateContext<TopicsStateModel>, action: ClearSelectedTopic) {
+        context.patchState({
+            selectedTopic: null
+        })
+    }
     //Sub to topic    
     @Action(SubscribeToTopic)
     SubscribeToTopic(context: StateContext<TopicsStateModel>, action: SubscribeToTopic) {
