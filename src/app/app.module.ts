@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AngularMaterialModule } from './angular-material.module';
 import { ToasterModule } from 'angular2-toaster';
@@ -46,7 +47,8 @@ import { PostComponent } from './components/post/post.component';
     NgxsModule.forRoot([
       UserState,
       TopicsState
-    ])
+    ]),
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
