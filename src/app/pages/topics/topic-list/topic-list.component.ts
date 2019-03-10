@@ -26,7 +26,6 @@ export class TopicListComponent implements OnInit {
 
   //TODO: TEST ONCE TOPICS ADDED
   openTopic(t: ITopic) {
-    this.store.dispatch(new GetTopicByID(t.ID))
     this.router.navigate([`/topics/${t.ID}`])
   }
 

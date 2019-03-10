@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ITopic } from 'src/app/models/topic.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,35 @@ export class TopicsService {
 
   //CRUD operations
   GetAllTopics() {
-    return this._http.get<ITopic[]>(`${environment.webApiURL}/posts/getall`)     
+    return of(
+      [
+        {
+            ID: 1,
+            Title: 'Topic 1',
+            CreationDate: new Date(),
+            CreatorId: '1',
+            SubscribedIds: ['foo','bar'],
+            isPrivate: false
+        },
+        {
+            ID: 2,
+            Title: 'Topic 2',
+            CreationDate: new Date(),
+            CreatorId: '2',
+            SubscribedIds: ['foo','bar'],
+            isPrivate: false
+        },
+        {
+            ID: 3,
+            Title: 'Topic 3',
+            CreationDate: new Date(),
+            CreatorId: '3',
+            SubscribedIds: ['foo','bar'],
+            isPrivate: false
+        }
+    ]
+    )
+    // return this._http.get<ITopic[]>(`${environment.webApiURL}/posts/getall`)
   }
 
   CreateTopic(topic: ITopic) {
@@ -25,7 +53,16 @@ export class TopicsService {
   }
 
   GetTopicByID(id: number) {
-    return this._http.get<ITopic>(`${environment.webApiURL}/posts/getbyid?id=${id}`)
+    return of(
+         {
+            ID: id,
+            Title: `Topic ${id}`,
+            CreationDate: new Date(),
+            CreatorId: '1',
+            SubscribedIds: ['foo','bar'],
+            isPrivate: false
+        })
+    // return this._http.get<ITopic>(`${environment.webApiURL}/posts/getbyid?id=${id}`)
   }
 
   //Subbing and unsubbing

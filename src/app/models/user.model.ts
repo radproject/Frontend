@@ -4,5 +4,5 @@ export interface IUser {
     StudentId: string
     Name: string
     email: string
-    subscribedTopics: ITopic[]
+    subscribedTopics: number[]
 }

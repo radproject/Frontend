@@ -6,10 +6,10 @@
 
 <div class='topicList subbedTopics'>
     <h2>Your Subscribed Topics</h2>
-    <topic-list-item *ngFor='let t of (subbedTopics|async)' (click)='openTopic(t)'></topic-list-item>
+    <topic-list-item *ngFor='let t of (subbedTopics|async)' [TopicIn]='t' (click)='openTopic(t)'></topic-list-item>
 </div>
 
 <div class='topicList allTopics'>
     <h2>All Topics</h2>
-    <topic-list-item *ngFor='let t of (allTopics|async)' (click)='openTopic(t)'></topic-list-item>
+    <topic-list-item *ngFor='let t of (allTopics|async)' [TopicIn]='t' (click)='openTopic(t)'></topic-list-item>
 </div>

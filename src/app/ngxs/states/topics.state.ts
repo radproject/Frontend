@@ -1,7 +1,7 @@
 import { State, StateContext, Selector, Action } from "@ngxs/store"
 import { NotificationService } from "src/app/services/notification/notification.service";
 import { ITopic } from "src/app/models/topic.model";
-import { GetAllTopics, GetAllTopicsSuccess, GetAllTopicsFailure, CreateTopic, CreateTopicSuccess, CreateTopicFailure, DeleteTopic, DeleteTopicSuccess, DeleteTopicFailure, GetSubscribedTopics, GetSubscribedTopicsSuccess, GetSubscribedTopicsFailure, GetTopicByID, GetTopicByIDSuccess, GetTopicByIDFailure, SubscribeToTopic, SubscribeToTopicSuccess, SubscribeToTopicFailure, UnsubscribeFromTopic, UnsubscribeFromTopicSuccess, UnsubscribeFromTopicFailure, ClearSelectedTopic } from "../actions/topics.actions";
+import { GetAllTopics, GetAllTopicsSuccess, GetAllTopicsFailure, CreateTopic, CreateTopicSuccess, CreateTopicFailure, DeleteTopic, DeleteTopicSuccess, DeleteTopicFailure, GetSubscribedTopics, GetSubscribedTopicsSuccess, GetSubscribedTopicsFailure, GetTopicByID, GetTopicByIDSuccess, GetTopicByIDFailure, ClearSelectedTopic } from "../actions/topics.actions";
 import { TopicsService } from "src/app/services/topics/topics.service";
 
 interface TopicsStateModel {
@@ -18,33 +18,7 @@ interface TopicsStateModel {
 @State<TopicsStateModel>({
     name: 'topics',
     defaults: {
-        //TODO: RESET TO NULL WHEN TOPICS DONE
-        topics: [
-            {
-                ID: 1,
-                Title: 'Topic 1',
-                CreationDate: new Date(),
-                CreatorId: '1',
-                SubscribedIds: ['foo','bar'],
-                isPrivate: false
-            },
-            {
-                ID: 2,
-                Title: 'Topic 2',
-                CreationDate: new Date(),
-                CreatorId: '2',
-                SubscribedIds: ['foo','bar'],
-                isPrivate: false
-            },
-            {
-                ID: 3,
-                Title: 'Topic 3',
-                CreationDate: new Date(),
-                CreatorId: '3',
-                SubscribedIds: ['foo','bar'],
-                isPrivate: false
-            }
-        ],
+        topics: null,
         isLoading: false,
         selectedTopic: null,
         selectedLoading: false,
@@ -90,18 +64,17 @@ export class TopicsState {
     //Get Topics
     @Action(GetAllTopics)
     GetAllTopics(context: StateContext<TopicsStateModel>, action: GetAllTopics) {
-        const state = context.getState()
-        state.isLoading = true
+        context.patchState({
+            isLoading: true
+        })
 
-        //TODO: CALL SERVICE TO GET ALL TOPICS THEN PARSE RESPONSE
-
-        // this.topicsService.GetAllTopics()
-        //     .then(res => {
-        //         context.dispatch(new GetAllTopicsSuccess(res))
-        //     })
-        //     .catch(err => {
-        //         context.dispatch(new GetAllTopicsFailure(err))
-        //     })
+        this.topicsService.GetAllTopics().subscribe(
+            res => {
+                context.dispatch(new GetAllTopicsSuccess(res))
+            },
+            err => {
+                context.dispatch(new GetAllTopicsFailure(err))
+            })
     }
 
     @Action(GetAllTopicsSuccess)
@@ -190,10 +163,13 @@ export class TopicsState {
     //Get Subbed topics
     @Action(GetSubscribedTopics)
     GetSubscribedTopics(context: StateContext<TopicsStateModel>, action: GetSubscribedTopics) {
-        const state = context.getState();
-        state.subscribedLoading = true
+        context.patchState({
+            subscribedLoading: true
+        })
         
-        //TODO: GET SUBBED TOPICS BASED ON STUDENT ID THEN PARSE RESPONSE
+        //TEMP
+        context.dispatch(new GetSubscribedTopicsSuccess((context.getState()).topics.slice(0,3)))
+        //TODO: GET SUBBED TOPICS BASED ON PASSED IN ARRAY
 
         // this.topicsService.getSubscribedTopics(action.studentID).subscribe(
         //     res => {
@@ -229,26 +205,14 @@ export class TopicsState {
         const state = context.getState()
         state.selectedLoading = true
 
-        context.patchState({
-            selectedTopic: 
-            {
-                ID: 1,
-                Title: 'Topic 1',
-                CreationDate: new Date(),
-                CreatorId: '1',
-                SubscribedIds: ['foo','bar'],
-                isPrivate: false
-            },
-            selectedLoading: false
-        })
-        // this.topicsService.GetTopicByID(action.id).subscribe(
-        //      res => {
-        //          context.dispatch(new GetTopicByIDSuccess(res))
-        //      },
-        //      err => {
-        //          context.dispatch(new GetTopicByIDFailure(err))
-        //      }
-        // )
+        this.topicsService.GetTopicByID(action.id).subscribe(
+             res => {
+                 context.dispatch(new GetTopicByIDSuccess(res))
+             },
+             err => {
+                 context.dispatch(new GetTopicByIDFailure(err))
+             }
+        )
     }
 
     @Action(GetTopicByIDSuccess)
@@ -275,74 +239,4 @@ export class TopicsState {
             selectedTopic: null
         })
     }
-    //Sub to topic    
-    @Action(SubscribeToTopic)
-    SubscribeToTopic(context: StateContext<TopicsStateModel>, action: SubscribeToTopic) {
-        const state = context.getState()
-        state.subscribedLoading = true
-
-        //TODO: SUBSCRIBE TO TOPIC THEN PARSE RESPONSE
-
-        //this.topicsService.subscribeToTopic(action.id).subscribe(
-        //      res => {
-        //          context.dispatch(new SubscribeToTopicSuccess())
-        //      },
-        //      err => {
-        //          context.dispatch(new SubscribeToTopicFailure(err))
-        //      }
-        //)
-    }
-
-    @Action(SubscribeToTopicSuccess)
-    SubscribeToTopicSuccess(context: StateContext<TopicsStateModel>, action: SubscribeToTopicSuccess) {
-        context.patchState({
-            subscribedLoading: false
-        })
-    }
-
-    @Action(SubscribeToTopicFailure)
-    SubscribeToTopicFailure(context: StateContext<TopicsStateModel>, action: SubscribeToTopicFailure) {
-        console.error(`Error subscribing to topic: + ${action.error}`)
-        this.notification.danger('Error subscribing to topic', action.error)
-
-        context.patchState({
-            subscribedLoading: false
-        })
-    }
-
-    //Unsub from topic
-    @Action(UnsubscribeFromTopic)
-    UnsubscribeFromTopic(context: StateContext<TopicsStateModel>, action: UnsubscribeFromTopic) {
-        const state = context.getState()
-        state.subscribedLoading = true
-
-        //TODO: UNSUBSCRIBE FROM TOPIC THEN PARSE RESPONSE
-
-        //this.topicsService.unsubscribeFromTopic(action.id).subscribe(
-        //      res => {
-        //          context.dispatch(new UnsubscribeFromTopicSuccess())
-        //      },
-        //      err => {
-        //          context.dispatch(new UnsubscribeFromTopicFailure(err))
-        //      }
-        //)
-    }
-
-    @Action(UnsubscribeFromTopicSuccess)
-    UnsubscribeFromTopicSuccess(context: StateContext<TopicsStateModel>, action: UnsubscribeFromTopicSuccess) {
-        context.patchState({
-            subscribedLoading: false
-        })
-    }
-
-    @Action(UnsubscribeFromTopicFailure)
-    UnsubscribeFromTopicFailure(context: StateContext<TopicsStateModel>, action: UnsubscribeFromTopicFailure) {
-        console.error(`Error unsubscribing from topic: + ${action.error}`)
-        this.notification.danger('Error unsubscribing from topic', action.error)
-
-        context.patchState({
-            subscribedLoading: false
-        })
-    }
-
 }

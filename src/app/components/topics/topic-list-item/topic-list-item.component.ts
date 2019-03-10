@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { ITopic } from 'src/app/models/topic.model';
 
 @Component({
   selector: 'topic-list-item',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./topic-list-item.component.scss']
 })
 export class TopicListItemComponent implements OnInit {
+  @Input('TopicIn') topic: ITopic
 
   constructor() { }
 

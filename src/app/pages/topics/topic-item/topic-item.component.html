@@ -1,3 +1,15 @@
-<p>
-  topic-item works!
-</p>
+<div class='pageContainer' *ngIf='(topic$|async)'>
+  <h1>{{(topic$|async).Title}}</h1>
+  <p>{{(topic$|async).CreationDate | date}}</p>
+  
+  <div class='postsList'>
+      <div *ngFor='let p of (topic$|async).Posts'>
+        <p>{{p.Text}}</p>
+        <small>{{p.TimeStamp | date}}</small>
+        {{p.CreatorId}}
+      </div>
+  </div>
+</div>
+<div class="notFound" *ngIf='!(topic$|async)'>
+
+</div>
