@@ -6,6 +6,7 @@ import { TopicsState } from 'src/app/ngxs/states/topics.state';
 import { Observable } from 'rxjs';
 import { ITopic } from 'src/app/models/topic.model';
 import { GetUserByID, ClearSelectedUser } from 'src/app/ngxs/actions/user.actions';
+import { UserState } from 'src/app/ngxs/states/user.state';
 
 @Component({
   selector: 'app-topic-item',
@@ -24,13 +25,10 @@ export class TopicItemComponent implements OnInit, OnDestroy {
   ngOnInit() {
     let id = this.route.snapshot.params['id']
     this.store.dispatch(new GetTopicByID(id))
-
-    this.topic$.subscribe(res => { this.store.dispatch(new GetUserByID(res.CreatorId))})
   }
 
   ngOnDestroy() {
     this.store.dispatch(new ClearSelectedTopic())
-    this.store.dispatch(new ClearSelectedUser())
   }
 
 }

@@ -36,6 +36,16 @@ export class UserState {
         return state.isLoading
     }
 
+    @Selector()
+    static getSelectedUser(state: UserStateModel) {
+        return state.selectedUser
+    }
+
+    @Selector()
+    static getSelectedLoading(state: UserStateModel) {
+        return state.selectedLoading
+    }
+
     //Actions
     //Get User
     @Action(GetUser)

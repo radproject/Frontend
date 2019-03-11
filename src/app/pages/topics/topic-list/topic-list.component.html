@@ -1,15 +1,15 @@
-<div class='topRow'>
-    <!-- <form>
-        <input type='text'/>
-    </form> -->
-</div>
-
+<!--Subscribed Topics-->
 <div class='topicList subbedTopics'>
-    <h2>Your Subscribed Topics</h2>
-    <topic-list-item *ngFor='let t of (subbedTopics|async)' [TopicIn]='t' (click)='openTopic(t)'></topic-list-item>
+    <h2>Your Subscribed Topics <mat-icon (click)='toggleHidden(0)'>{{(shown.subscribed)?('keyboard_arrow_up'):('keyboard_arrow_down')}}</mat-icon></h2>
+    <div *ngIf='shown.subscribed'>
+        <topic-list-item *ngFor='let t of (subbedTopics|async)' [TopicIn]='t' (click)='openTopic(t)'></topic-list-item>
+    </div>
 </div>
 
+<!--All Topics-->
 <div class='topicList allTopics'>
-    <h2>All Topics</h2>
-    <topic-list-item *ngFor='let t of (allTopics|async)' [TopicIn]='t' (click)='openTopic(t)'></topic-list-item>
+    <h2>All Topics <mat-icon (click)='toggleHidden(1)'>{{(shown.all)?('keyboard_arrow_up'):('keyboard_arrow_down')}}</mat-icon></h2>
+    <div *ngIf='shown.all'>
+        <topic-list-item *ngFor='let t of (allTopics|async)' [TopicIn]='t' (click)='openTopic(t)'></topic-list-item>
+    </div>
 </div>

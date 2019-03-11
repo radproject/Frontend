@@ -53,15 +53,15 @@ export class TopicsService {
   }
 
   GetTopicByID(id: number) {
-    return of(
-         {
-            ID: id,
-            Title: `Topic ${id}`,
-            CreationDate: new Date(),
-            CreatorId: '1',
-            SubscribedIds: ['foo','bar'],
-            isPrivate: false
-        })
+    let tempTopic: ITopic = {
+      ID: id,
+      Title: `Topic ${id}`,
+      CreationDate: new Date(),
+      CreatorId: '1',
+      isPrivate: false
+    }
+    return of(tempTopic)
+
     // return this._http.get<ITopic>(`${environment.webApiURL}/posts/getbyid?id=${id}`)
   }
 

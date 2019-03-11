@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ITopic } from 'src/app/models/topic.model';
 import { Router } from '@angular/router';
 import { Store, Select } from '@ngxs/store';
-import { GetTopicByID } from 'src/app/ngxs/actions/topics.actions';
 import { Observable } from 'rxjs';
 import { TopicsState } from 'src/app/ngxs/states/topics.state';
 
@@ -12,7 +11,11 @@ import { TopicsState } from 'src/app/ngxs/states/topics.state';
   styleUrls: ['./topic-list.component.scss']
 })
 export class TopicListComponent implements OnInit {
-
+  shown = {
+    subscribed: true,
+    all: true
+  }
+  
   @Select(TopicsState.getTopics)
   allTopics: Observable<ITopic[]>
 
@@ -29,4 +32,15 @@ export class TopicListComponent implements OnInit {
     this.router.navigate([`/topics/${t.ID}`])
   }
 
+  toggleHidden(n: number) {
+    switch(n)
+    {
+      case 0:
+        this.shown.subscribed = !this.shown.subscribed
+        break;
+      case 1:
+        this.shown.all = !this.shown.all
+        break;
+    }
+  }
 }

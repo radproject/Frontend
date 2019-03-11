@@ -1,0 +1,27 @@
+.pageContainer {
+    padding: 20px;
+    
+    .topRow {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        form {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            grid-column-gap: 10px;
+            align-items: flex-end;
+        }
+    }
+
+    .breadcrumbs {
+        margin: 5px;
+
+        a {
+            color: blue;
+            cursor: pointer;
+        }
+
+        label {
+            margin: 5px;
+        }
+    }
+}
