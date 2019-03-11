@@ -1,4 +1,5 @@
 .rowContainer {
+    margin: 5px;
     padding: 10px;
     display: grid;
     grid-template-areas: 'private title title'
@@ -6,6 +7,7 @@
     grid-template-columns: 40px 1fr auto;
 
     border: 1px transparent solid;
+    border-radius: 5px;
     
     .private {
         grid-area: private;
