@@ -21,7 +21,7 @@ export class TopicsService {
             CreationDate: new Date(),
             CreatorId: '1',
             SubscribedIds: ['foo','bar'],
-            isPrivate: false
+            isPrivate: true
         },
         {
             ID: 2,
