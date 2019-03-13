@@ -3,7 +3,7 @@
       <div class="breadcrumbs">
         <a (click)='returnToIndex()'>Browse</a>
         <label>{{(selectedTopic | async)?('>'):('')}}</label>
-        <a>{{(selectedTopic | async)?((selectedTopic|async).ID):('')}}</a>
+        <a>{{(selectedTopic | async)?((selectedTopic|async).Title):('')}}</a>
       </div>
 
       <form [formGroup]='searchForm' *ngIf='router.url == "/topics/browse"'>

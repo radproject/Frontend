@@ -13,34 +13,44 @@ export class TopicsService {
 
   //CRUD operations
   GetAllTopics() {
-    return of(
-      [
-        {
-            ID: 1,
-            Title: 'Topic 1',
-            CreationDate: new Date(),
-            CreatorId: '1',
-            SubscribedIds: ['foo','bar'],
-            isPrivate: true
-        },
-        {
-            ID: 2,
-            Title: 'Topic 2',
-            CreationDate: new Date(),
-            CreatorId: '2',
-            SubscribedIds: ['foo','bar'],
-            isPrivate: false
-        },
-        {
-            ID: 3,
-            Title: 'Topic 3',
-            CreationDate: new Date(),
-            CreatorId: '3',
-            SubscribedIds: ['foo','bar'],
-            isPrivate: false
-        }
+    let sampleTopics: ITopic[] = 
+    [
+      {
+          ID: 1,
+          Title: 'Topic 1',
+          CreationDate: new Date(),
+          Creator: {
+            StudentId: 'S00173047',
+            Name: 'Daire Finn',
+            email: 'daire.finn@mail.itsligo.ie'
+          },
+          isPrivate: true
+      },
+      {
+          ID: 2,
+          Title: 'Topic 2',
+          CreationDate: new Date(),
+          Creator: {
+            StudentId: 'S00173047',
+            Name: 'Daire Finn',
+            email: 'daire.finn@mail.itsligo.ie'
+          },
+          isPrivate: false
+      },
+      {
+          ID: 3,
+          Title: 'Topic 3',
+          CreationDate: new Date(),
+          Creator: {
+            StudentId: 'S00173047',
+            Name: 'Daire Finn',
+            email: 'daire.finn@mail.itsligo.ie'            
+          },
+          isPrivate: false
+      }
     ]
-    )
+    return of(sampleTopics)
+
     // return this._http.get<ITopic[]>(`${environment.webApiURL}/posts/getall`)
   }
 
@@ -57,7 +67,11 @@ export class TopicsService {
       ID: id,
       Title: `Topic ${id}`,
       CreationDate: new Date(),
-      CreatorId: '1',
+      Creator: {
+        StudentId: 'S00123456',
+        Name: 'GetBy ID',
+        email: 'sample.man@mail.itsligo.ie'
+      },
       isPrivate: false
     }
     return of(tempTopic)

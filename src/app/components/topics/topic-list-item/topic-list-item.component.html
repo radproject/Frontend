@@ -1,8 +1,9 @@
 <div class='rowContainer'>
   <div class='private'>
     <mat-icon *ngIf='topic.isPrivate'>lock_open</mat-icon>
+    <mat-icon *ngIf='!topic.isPrivate'>public</mat-icon>
   </div>
   <h3 class='title'>{{topic.Title}}</h3>
-  <!-- <h5>{{topic.Creator.Name}}</h5> --> <h5 class='creator'>Jeff Bezos</h5>
+  <h5 class='creator'>{{topic.Creator.Name}}</h5>
   <small class='date'>{{topic.CreationDate | date}}</small>
 </div>
