@@ -1,15 +1,32 @@
 <div class='pageContainer' *ngIf='(topic$|async)'>
-  <h1>{{(topic$|async).Title}}</h1>
-  <p>{{(topic$|async).CreationDate | date}}</p>
-  
-  <div class='postsList'>
-      <div *ngFor='let p of (topic$|async).Posts'>
-        <p>{{p.Text}}</p>
-        <small>{{p.TimeStamp | date}}</small>
-        {{p.CreatorId}}
-      </div>
+  <div class='topRow'>
+    <div class='private'>
+        <mat-icon *ngIf='(topic$|async).isPrivate'>lock_open</mat-icon>
+        <mat-icon *ngIf='!((topic$|async).isPrivate)'>public</mat-icon>
+    </div>
+    <h1>{{(topic$|async).Title}}</h1>
+    <p>{{(topic$|async).CreationDate | date}}</p>
   </div>
-</div>
-<div class="notFound" *ngIf='!(topic$|async)'>
+  
+  <div *ngIf='(topic$|async).Posts.length > 0' class='postList'>
+    <div *ngFor='let p of ((topic$|async).Posts)' class='postItem'>
+      <div class='info'>
+        <div>
+          <h4>{{p.Creator.Name}}</h4>
+          <p>({{p.Creator.StudentId}})</p>
+        </div>
+        <small>Posted: {{p.TimeStamp|date}}</small>
+      </div>
+      <div class='content'>
+        <p>{{p.Text}}</p>
+      </div>
+    </div>
+  </div>
 
+  <div *ngIf='(topic$|async).Posts.length < 1' class='noPosts'>
+    <div>
+      <h2>No Posts</h2>
+      <mat-icon>cancel_presentation</mat-icon>
+    </div>
+  </div>
 </div>
