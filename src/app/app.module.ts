@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AngularMaterialModule } from './angular-material.module';
-import { ToasterModule } from 'angular2-toaster';
+import { ToasterModule, ToasterService } from 'angular2-toaster';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +17,8 @@ import { TopicItemComponent } from './pages/topics/topic-item/topic-item.compone
 import { CommentComponent } from './components/comment/comment.component';
 import { TopicsComponent } from './pages/topics/topics.component';
 import { TopicListComponent } from './pages/topics/topic-list/topic-list.component';
+import { HttpClientModule } from '@angular/common/http';
+import { NotificationService } from './services/notification/notification.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,16 +31,17 @@ import { TopicListComponent } from './pages/topics/topic-list/topic-list.compone
     TopicListComponent,
     TopicItemComponent,
     CommentComponent,
-    TopicsComponent,
+    TopicsComponent
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
     ToasterModule.forRoot(),
     AngularMaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [NotificationService, ToasterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
