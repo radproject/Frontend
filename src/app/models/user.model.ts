@@ -1,6 +1,8 @@
+import { ITopic } from "./topic.model";
+
 export interface IUser {
-    uid: string
+    StudentId: string
+    Name: string
     email: string
-    photoURL?: string
-    displayName?: string
+    subscribedTopics?: number[];
 }

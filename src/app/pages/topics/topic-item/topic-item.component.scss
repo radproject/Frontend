@@ -1,0 +1,50 @@
+.pageContainer {
+    .topRow {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        margin-bottom: 20px;
+
+        .private {
+            padding: 5px;
+            line-height: 100%;
+        }
+    }
+
+    .postList {
+        // border: 1px gray solid;
+        // border-radius: 10px;
+
+        .postItem {
+            margin: 10px;
+            display: grid;
+            // grid-template-columns: minmax(100px,120px) 1fr;
+            grid-template-columns: 120px 1fr;
+            border: 1px darkslategray solid;
+
+            .content {
+                padding: 10px;
+            }
+
+            .info {
+                text-align: center;
+                padding: 10px;
+                background: darkslategrey;
+                color: white;
+                display: grid;
+            }
+        }
+    }
+    
+    .noPosts {
+        display: grid;
+        grid-template-columns: 1fr;
+        height: 400px;
+
+        div {
+            justify-self: center;
+            align-self: center;
+            text-align: center;
+        }
+    }
+}

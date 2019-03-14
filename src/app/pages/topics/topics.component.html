@@ -1,4 +1,19 @@
 <div class="pageContainer">
-  <div class="breadcrumbs"><a>Index</a>{{selectedTopic?('>'+selectedTopic.id):''}}</div>
-  <router-outlet></router-outlet>
+  <div class='topRow'>
+      <div class="breadcrumbs">
+        <a (click)='returnToIndex()'>Browse</a>
+        <label>{{(selectedTopic | async)?('>'):('')}}</label>
+        <a>{{(selectedTopic | async)?((selectedTopic|async).Title):('')}}</a>
+      </div>
+
+      <form [formGroup]='searchForm' *ngIf='router.url == "/topics/browse"'>
+          <label for='searchTerm'>Search Topics: </label>
+          <input type='text' name='searchTerm' class='form-control' formControlName="searchTerm"/>
+          <button class='submit' class='btn btn-primary'>Search</button>
+      </form>
+  </div>
+  
+  <div class='pageRoute'>
+    <router-outlet></router-outlet>
+  </div>
 </div>

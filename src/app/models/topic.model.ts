@@ -1,3 +1,12 @@
+import { IPost } from "./post.model";
+import { IUser } from "./user.model";
+
 export interface ITopic {
-    id: string
+    ID: number
+    Title: string
+    CreationDate: Date
+    Creator: IUser
+    isPrivate: boolean
+
+    Posts?: IPost[]
 }

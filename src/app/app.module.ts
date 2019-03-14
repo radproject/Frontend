@@ -1,9 +1,16 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AngularMaterialModule } from './angular-material.module';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
+
+//State
+import { NgxsModule } from '@ngxs/store';
+import { UserState } from './ngxs/states/user.state';
+import { TopicsState } from './ngxs/states/topics.state';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,11 +21,11 @@ import { AuthComponent } from './pages/auth/auth.component';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { RegisterComponent } from './pages/auth/register/register.component';
 import { TopicItemComponent } from './pages/topics/topic-item/topic-item.component';
-import { CommentComponent } from './components/comment/comment.component';
 import { TopicsComponent } from './pages/topics/topics.component';
 import { TopicListComponent } from './pages/topics/topic-list/topic-list.component';
-import { HttpClientModule } from '@angular/common/http';
 import { NotificationService } from './services/notification/notification.service';
+import { PostComponent } from './components/post/post.component';
+import { TopicListItemComponent } from './components/topics/topic-list-item/topic-list-item.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,8 +37,9 @@ import { NotificationService } from './services/notification/notification.servic
     RegisterComponent,
     TopicListComponent,
     TopicItemComponent,
-    CommentComponent,
-    TopicsComponent
+    TopicsComponent,
+    PostComponent,
+    TopicListItemComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -40,6 +48,12 @@ import { NotificationService } from './services/notification/notification.servic
     AngularMaterialModule,
     ReactiveFormsModule,
     HttpClientModule
+    NgxsModule.forRoot([
+      UserState,
+      TopicsState
+    ]),
+    HttpClientModule,
+    NgxsReduxDevtoolsPluginModule.forRoot()
   ],
   providers: [NotificationService, ToasterService],
   bootstrap: [AppComponent]

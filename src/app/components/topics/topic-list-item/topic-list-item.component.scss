@@ -1,0 +1,31 @@
+.rowContainer {
+    margin: 5px;
+    padding: 10px;
+    display: grid;
+    grid-template-areas: 'private title title'
+                         'private creator date';
+    grid-template-columns: 40px 1fr auto;
+
+    border: 1px transparent solid;
+    border-radius: 5px;
+    
+    .private {
+        grid-area: private;
+        align-self: center;
+        justify-self: center;
+        vertical-align: middle;
+    }
+    .title {
+        grid-area: title;
+    }
+    .creator {
+        grid-area: creator;
+    }
+    .date {
+        grid-area: date;
+    }
+}
+
+.rowContainer:hover {
+    border: 1px gray solid;
+}

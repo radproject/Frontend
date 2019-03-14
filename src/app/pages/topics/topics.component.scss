@@ -1,0 +1,40 @@
+.pageContainer {
+    margin: 20px;
+    padding: 20px;
+
+    display: grid;
+    justify-items: center;
+    
+    .topRow {
+        width: 80%;
+        display: grid;
+        grid-template-columns: 1fr auto;
+
+        // width: 100%;
+        // max-width: 1000px;
+        // min-width: 300px;
+        form {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            grid-column-gap: 10px;
+            align-items: flex-end;
+        }
+
+        .breadcrumbs {
+            margin: 5px;
+    
+            a {
+                color: blue;
+            cursor: pointer;
+            }
+            
+            label {
+                margin: 5px;
+            }
+        }
+    }
+
+    .pageRoute {
+        width: 80%;
+    }
+}
