@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment'
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class AuthService {
 
   constructor(private _http: HttpClient) { }
 
-  login(email: string, password: string) {
+  login(email: string, password: string): Observable<IUser> {
     // let body = {
     //   username: email,
     //   password: password,
@@ -23,9 +24,19 @@ export class AuthService {
 
     this._http.post(`${environment.webApiURL}/login`, body.toString(), {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
-    }).subscribe((res: { access_token: string, id_token: string }) => {
-      localStorage.setItem('access_token', res.access_token)
-      localStorage.setItem('id_token', res.id_token)
-  })
+    })
+  }
+
+  register(username: string, password: string, confirmPassword: string): Observable<any> {
+    alert(`username ${username} password: ${password} confirm: ${confirmPassword}`)
+    return this._http.post(`${environment.webApiUrl}/account/Register`, JSON.stringify({
+      Email: username,
+      Password: password,
+      ConfirmPassword: confirmPassword
+    }), {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
   }
 }

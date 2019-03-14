@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AngularMaterialModule } from './angular-material.module';
-import { ToasterModule } from 'angular2-toaster';
+import { ToasterModule, ToasterService } from 'angular2-toaster';
 
 //State
 import { NgxsModule } from '@ngxs/store';
@@ -23,6 +23,7 @@ import { RegisterComponent } from './pages/auth/register/register.component';
 import { TopicItemComponent } from './pages/topics/topic-item/topic-item.component';
 import { TopicsComponent } from './pages/topics/topics.component';
 import { TopicListComponent } from './pages/topics/topic-list/topic-list.component';
+import { NotificationService } from './services/notification/notification.service';
 import { PostComponent } from './components/post/post.component';
 import { TopicListItemComponent } from './components/topics/topic-list-item/topic-list-item.component';
 @NgModule({
@@ -46,6 +47,7 @@ import { TopicListItemComponent } from './components/topics/topic-list-item/topi
     ToasterModule.forRoot(),
     AngularMaterialModule,
     ReactiveFormsModule,
+    HttpClientModule
     NgxsModule.forRoot([
       UserState,
       TopicsState
@@ -53,7 +55,7 @@ import { TopicListItemComponent } from './components/topics/topic-list-item/topi
     HttpClientModule,
     NgxsReduxDevtoolsPluginModule.forRoot()
   ],
-  providers: [],
+  providers: [NotificationService, ToasterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

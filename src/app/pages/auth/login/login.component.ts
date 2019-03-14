@@ -12,9 +12,9 @@ import { NotificationService } from 'src/app/services/notification/notification.
 export class LoginComponent implements OnInit {
   loginForm: FormGroup
     = new FormGroup({
-      email: new FormControl(null, [ Validators.required ]),
-      password: new FormControl(null, [ Validators.required ])
-  })
+      email: new FormControl(null, [Validators.required]),
+      password: new FormControl(null, [Validators.required])
+    })
 
   constructor(private router: Router, private auth: AuthService, private notification: NotificationService) { }
 
@@ -23,6 +23,16 @@ export class LoginComponent implements OnInit {
   goToRegister() { this.router.navigate(['/auth/register']) }
 
   tryLogin() {
-    this.auth.login(this.loginForm.value.email, this.loginForm.value.password) //.catch(err => { this.notification.danger('Failed to login',err)})
+    this.auth.login(this.loginForm.value.email, this.loginForm.value.password).subscribe((res) => {
+      console.log(res)
+      localStorage.setItem('access_token', res.access_token)
+      localStorage.setItem('id_token', res.id_token)
+      localStorage.setItem('expiry', res['.expiry'])
+      this.notification.info('Successful Login', "You logged in succesfully!")
+      this.router.navigate(['home'])
+    }, err => {
+      this.notification.danger('Failed to login', err)
+    })
+    // this.auth.emailLogin(this.loginForm.value.email, this.loginForm.value.password).catch(err => { this.notification.danger('Failed to login',err)})
   }
 }
