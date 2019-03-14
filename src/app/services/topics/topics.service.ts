@@ -12,46 +12,46 @@ export class TopicsService {
   constructor(private _http: HttpClient) { }
 
   //CRUD operations
-  GetAllTopics() {
-    let sampleTopics: ITopic[] = 
-    [
-      {
-          ID: 1,
-          Title: 'Topic 1',
-          CreationDate: new Date(),
-          Creator: {
-            StudentId: 'S00173047',
-            Name: 'Daire Finn',
-            email: 'daire.finn@mail.itsligo.ie'
-          },
-          isPrivate: true
-      },
-      {
-          ID: 2,
-          Title: 'Topic 2',
-          CreationDate: new Date(),
-          Creator: {
-            StudentId: 'S00173047',
-            Name: 'Daire Finn',
-            email: 'daire.finn@mail.itsligo.ie'
-          },
-          isPrivate: false
-      },
-      {
-          ID: 3,
-          Title: 'Topic 3',
-          CreationDate: new Date(),
-          Creator: {
-            StudentId: 'S00173047',
-            Name: 'Daire Finn',
-            email: 'daire.finn@mail.itsligo.ie'            
-          },
-          isPrivate: false
-      }
-    ]
-    return of(sampleTopics)
+  GetAllTopics(id: string) {
+    // let sampleTopics: ITopic[] = 
+    // [
+    //   {
+    //       ID: 1,
+    //       Title: 'Topic 1',
+    //       CreationDate: new Date(),
+    //       Creator: {
+    //         StudentId: 'S00173047',
+    //         Name: 'Daire Finn',
+    //         email: 'daire.finn@mail.itsligo.ie'
+    //       },
+    //       isPrivate: true
+    //   },
+    //   {
+    //       ID: 2,
+    //       Title: 'Topic 2',
+    //       CreationDate: new Date(),
+    //       Creator: {
+    //         StudentId: 'S00173047',
+    //         Name: 'Daire Finn',
+    //         email: 'daire.finn@mail.itsligo.ie'
+    //       },
+    //       isPrivate: false
+    //   },
+    //   {
+    //       ID: 3,
+    //       Title: 'Topic 3',
+    //       CreationDate: new Date(),
+    //       Creator: {
+    //         StudentId: 'S00173047',
+    //         Name: 'Daire Finn',
+    //         email: 'daire.finn@mail.itsligo.ie'            
+    //       },
+    //       isPrivate: false
+    //   }
+    // ]
+    // return of(sampleTopics)
 
-    // return this._http.get<ITopic[]>(`${environment.webApiURL}/posts/getall`)
+    return this._http.get<ITopic[]>(`${environment.webApiURL}/topics/getallfortopic/${id}`)
   }
 
   CreateTopic(topic: ITopic) {

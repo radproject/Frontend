@@ -3,6 +3,7 @@ import { ITopic } from "src/app/models/topic.model";
 //Get all topics
 export class GetAllTopics {
     static readonly type = '[Topics] Get All Topics'
+    constructor(public id: string) { }
 }
 
 export class GetAllTopicsSuccess {

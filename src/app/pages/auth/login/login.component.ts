@@ -23,6 +23,6 @@ export class LoginComponent implements OnInit {
   goToRegister() { this.router.navigate(['/auth/register']) }
 
   tryLogin() {
-    // this.auth.emailLogin(this.loginForm.value.email, this.loginForm.value.password).catch(err => { this.notification.danger('Failed to login',err)})
+    this.auth.login(this.loginForm.value.email, this.loginForm.value.password) //.catch(err => { this.notification.danger('Failed to login',err)})
   }
 }

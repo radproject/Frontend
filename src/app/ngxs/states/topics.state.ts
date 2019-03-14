@@ -67,8 +67,8 @@ export class TopicsState {
         context.patchState({
             isLoading: true
         })
-
-        this.topicsService.GetAllTopics().subscribe(
+        
+        this.topicsService.GetAllTopics(action.id).subscribe(
             res => {
                 context.dispatch(new GetAllTopicsSuccess(res))
             },
