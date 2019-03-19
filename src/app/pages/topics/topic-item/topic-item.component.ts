@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { ITopic } from 'src/app/models/topic.model';
 import { GetUserByID, ClearSelectedUser } from 'src/app/ngxs/actions/user.actions';
 import { UserState } from 'src/app/ngxs/states/user.state';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-topic-item',
@@ -14,6 +15,11 @@ import { UserState } from 'src/app/ngxs/states/user.state';
   styleUrls: ['./topic-item.component.scss']
 })
 export class TopicItemComponent implements OnInit, OnDestroy {
+  postForm: FormGroup
+    = new FormGroup({
+      message: new FormControl(null, [Validators.required])
+    })
+
   @Select(TopicsState.getSelectedTopic)
   topic$: Observable<ITopic>
 
@@ -31,4 +37,7 @@ export class TopicItemComponent implements OnInit, OnDestroy {
     this.store.dispatch(new ClearSelectedTopic())
   }
 
+  tryPost() {
+    //TODO: Write post
+  }
 }

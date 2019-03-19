@@ -29,4 +29,14 @@
       <mat-icon>cancel_presentation</mat-icon>
     </div>
   </div>
+
+  <form [formGroup]='postForm'>
+    <div class='form-group'>
+      <label for='message'>Message</label>
+      <textarea id='message' class='form-control' formControlName='message'></textarea>
+    </div>
+    <div class='buttons'>
+      <button class='btn btn-primary' (click)='tryPost()' [disabled]='!postForm.valid'><mat-icon>send</mat-icon></button>
+    </div>
+  </form>
 </div>
