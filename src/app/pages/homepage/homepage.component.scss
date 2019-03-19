@@ -1,0 +1,17 @@
+.pageContainer {
+    display: grid;
+    margin: 20px;
+    .header {
+        display: grid;
+        justify-items: center;
+        justify-self: center;
+
+        .img {
+            width: 200px;
+
+            img {
+                width: 100%;
+            }
+        }
+    }
+}

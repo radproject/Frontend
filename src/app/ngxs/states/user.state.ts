@@ -2,7 +2,7 @@ import { State, StateContext, Selector, Action } from "@ngxs/store"
 import { NotificationService } from "src/app/services/notification/notification.service";
 import { IUser } from "src/app/models/user.model";
 import { AuthService } from "src/app/services/auth/auth.service";
-import { GetUser, GetUserFailure, GetUserSuccess, LogoutUser, LogoutUserSuccess, LogoutUserFailure, GetUserByID, GetUserByIDSuccess, GetUserByIDFailure, SubscribeToTopic, SubscribeToTopicSuccess, SubscribeToTopicFailure, UnsubscribeFromTopic, UnsubscribeFromTopicFailure, UnsubscribeFromTopicSuccess, ClearSelectedUser } from "../actions/user.actions";
+import { GetUser, GetUserFailure, GetUserSuccess, LogoutUser, LogoutUserSuccess, LogoutUserFailure, GetUserByID, GetUserByIDSuccess, GetUserByIDFailure, SubscribeToTopic, SubscribeToTopicSuccess, SubscribeToTopicFailure, UnsubscribeFromTopic, UnsubscribeFromTopicFailure, UnsubscribeFromTopicSuccess, ClearSelectedUser, LoginUser, LoginUserSuccess, LoginUserFailure, RegisterUser, RegisterUserSuccess, RegisterUserFailure } from "../actions/user.actions";
 
 interface UserStateModel {
     user: IUser,
@@ -55,17 +55,17 @@ export class UserState {
         })
 
         //TEMP
-        let user: IUser = {
-            StudentId: 'S00173047',
-            Name: 'Daire Finn',
-            email: 'S00173047@mail.itsligo.ie',
-            subscribedTopics: [1,2,3]
-        }
+        // let user: IUser = {
+        //     StudentId: 'S00173047',
+        //     Name: 'Daire Finn',
+        //     email: 'S00173047@mail.itsligo.ie',
+        //     subscribedTopics: [1,2,3]
+        // }
 
-        context.dispatch(new GetUserSuccess(user))
+        // context.dispatch(new GetUserSuccess(user))
 
-        //TODO: LINK AUTH WITH BACKEND
-        //
+        // TODO: LINK AUTH WITH BACKEND
+        
         // this.authService.user$.subscribe(
         //     res => {
         //         context.dispatch(new GetUserSuccess(res))
@@ -92,6 +92,22 @@ export class UserState {
         context.patchState({
             isLoading: false
         })
+    }
+
+    //Login User
+    @Action(LoginUser)
+    LoginUser(context: StateContext<UserStateModel>, action: LoginUser) {
+
+    }
+
+    @Action(LoginUserSuccess)
+    LoginUserSuccess(context: StateContext<UserStateModel>, action: LoginUser) {
+
+    }
+
+    @Action(LoginUserFailure)
+    LoginUserFailure(context: StateContext<UserStateModel>, action: LoginUserFailure) {
+
     }
 
     //Logout User
@@ -124,6 +140,22 @@ export class UserState {
         context.patchState({
             isLoading: false
         })
+    }
+
+    //Register User
+    @Action(RegisterUser)
+    RegisterUser(context: StateContext<UserStateModel>, action: RegisterUser) {
+
+    }
+
+    @Action(RegisterUserSuccess)
+    RegisterUserSuccess(context: StateContext<UserStateModel>, action: RegisterUserSuccess) {
+
+    }
+
+    @Action(RegisterUserFailure)
+    RegisterUserFailure(context: StateContext<UserStateModel>, action: RegisterUserFailure) {
+
     }
 
     //Get user by ID

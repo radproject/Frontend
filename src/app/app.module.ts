@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -47,13 +48,14 @@ import { TopicListItemComponent } from './components/topics/topic-list-item/topi
     ToasterModule.forRoot(),
     AngularMaterialModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
     NgxsModule.forRoot([
       UserState,
       TopicsState
     ]),
     HttpClientModule,
-    NgxsReduxDevtoolsPluginModule.forRoot()
+    NgxsReduxDevtoolsPluginModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [NotificationService, ToasterService],
   bootstrap: [AppComponent]

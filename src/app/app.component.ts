@@ -4,6 +4,7 @@ import { GetAllTopics } from './ngxs/actions/topics.actions';
 import { UserState } from './ngxs/states/user.state';
 import { Observable } from 'rxjs';
 import { IUser } from './models/user.model';
+import { NotificationService } from './services/notification/notification.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,7 @@ export class AppComponent {
   @Select(UserState.getUser)
   user$: Observable<IUser>
   
-  constructor(private store: Store) {
+  constructor(private store: Store, public notification: NotificationService) {
     this.user$.subscribe(res => {
       this.store.dispatch(new GetAllTopics(res.StudentId))
     }).unsubscribe()

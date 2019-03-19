@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   goToRegister() { this.router.navigate(['/auth/register']) }
 
   tryLogin() {
-    this.auth.login(this.loginForm.value.email, this.loginForm.value.password).subscribe((res) => {
+    this.auth.login(this.loginForm.value.email, this.loginForm.value.password).subscribe((res: {access_token: string, id_token: string}) => {
       console.log(res)
       localStorage.setItem('access_token', res.access_token)
       localStorage.setItem('id_token', res.id_token)
