@@ -5,7 +5,11 @@
         <mat-icon *ngIf='!((topic$|async).isPrivate)'>public</mat-icon>
     </div>
     <h1>{{(topic$|async).Title}}</h1>
-    <p>{{(topic$|async).CreationDate | date}}</p>
+    <small>Created: {{(topic$|async).CreationDate | date}}</small>
+    <div class='sub'>
+      <button class='btn btn-primary' *ngIf='false'>Subscribe</button>
+      <button class='btn btn-danger' *ngIf='true'>Unsubscribe</button>
+    </div>
   </div>
   
   <div *ngIf='(topic$|async).Posts.length > 0' class='postList'>
@@ -30,13 +34,10 @@
     </div>
   </div>
 
+
+  <h4>Write a post</h4>
   <form [formGroup]='postForm'>
-    <div class='form-group'>
-      <label for='message'>Message</label>
-      <textarea id='message' class='form-control' formControlName='message'></textarea>
-    </div>
-    <div class='buttons'>
-      <button class='btn btn-primary' (click)='tryPost()' [disabled]='!postForm.valid'><mat-icon>send</mat-icon></button>
-    </div>
+    <textarea id='message' class='form-control' formControlName='message'></textarea>
+    <button class='btn btn-primary' (click)='tryPost()' [disabled]='!postForm.valid'><mat-icon>send</mat-icon></button>
   </form>
 </div>
