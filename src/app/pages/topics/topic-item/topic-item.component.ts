@@ -57,14 +57,11 @@ export class TopicItemComponent implements OnInit, OnDestroy {
 
   isSubbed() {
     if(this.user.subscribedTopics.indexOf(this.topic.ID) !== -1)
-    {
-      return true
-    }
+    { return true }
     else
-    {
-      return false
-    }
+    { return false }
   }
+  
   subToTopic() {
     this.store.dispatch(new SubscribeToTopic(this.topic.ID))
   }
