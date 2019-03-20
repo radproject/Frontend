@@ -2,24 +2,18 @@ import { State, StateContext, Selector, Action } from "@ngxs/store"
 import { NotificationService } from "src/app/services/notification/notification.service";
 import { IUser } from "src/app/models/user.model";
 import { AuthService } from "src/app/services/auth/auth.service";
-import { GetUser, GetUserFailure, GetUserSuccess, LogoutUser, LogoutUserSuccess, LogoutUserFailure, GetUserByID, GetUserByIDSuccess, GetUserByIDFailure, SubscribeToTopic, SubscribeToTopicSuccess, SubscribeToTopicFailure, UnsubscribeFromTopic, UnsubscribeFromTopicFailure, UnsubscribeFromTopicSuccess, ClearSelectedUser, LoginUser, LoginUserSuccess, LoginUserFailure, RegisterUser, RegisterUserSuccess, RegisterUserFailure } from "../actions/user.actions";
+import { GetUser, GetUserFailure, GetUserSuccess, LogoutUser, LogoutUserSuccess, LogoutUserFailure, LoginUser, LoginUserSuccess, LoginUserFailure, RegisterUser, RegisterUserSuccess, RegisterUserFailure } from "../actions/user.actions";
 
 interface UserStateModel {
     user: IUser,
-    isLoading: boolean,
-
-    selectedUser: IUser,
-    selectedLoading: boolean
+    isLoading: boolean
 }
 
 @State<UserStateModel>({
     name: 'user',
     defaults: {
         user: null,
-        isLoading: false,
-
-        selectedUser: null,
-        selectedLoading: false
+        isLoading: false
     }
 })
 export class UserState {
@@ -34,16 +28,6 @@ export class UserState {
     @Selector()
     static getIsLoading(state: UserStateModel) {
         return state.isLoading
-    }
-
-    @Selector()
-    static getSelectedUser(state: UserStateModel) {
-        return state.selectedUser
-    }
-
-    @Selector()
-    static getSelectedLoading(state: UserStateModel) {
-        return state.selectedLoading
     }
 
     //Actions
@@ -156,118 +140,5 @@ export class UserState {
     @Action(RegisterUserFailure)
     RegisterUserFailure(context: StateContext<UserStateModel>, action: RegisterUserFailure) {
 
-    }
-
-    //Get user by ID
-    @Action(GetUserByID)
-    GetUserByID(context: StateContext<UserStateModel>, action: GetUserByID) {
-        context.patchState({
-            selectedLoading: true
-        })
-
-        //TEMP
-        let user: IUser = {
-            StudentId: 'S00123456',
-            Name: 'John Doe',
-            email: 'S00123456@mail.itsligo.ie',
-            subscribedTopics: [4,5,6]
-        }
-
-        //TODO: LINK TO AUTH SERVICE
-
-        context.dispatch(new GetUserByIDSuccess(user))
-    }
-
-    @Action(GetUserByIDSuccess)
-    GetUserByIDSuccess(context: StateContext<UserStateModel>, action: GetUserByIDSuccess) {
-        context.patchState({
-            selectedUser: action.user,
-            selectedLoading: false
-        })
-    }
-
-    @Action(GetUserByIDFailure)
-    GetUserByIDFailure(context: StateContext<UserStateModel>, action: GetUserByIDFailure) { 
-        console.error(`Error getting user by ID: + ${action.error}`)
-        this.notification.danger('Error getting user by ID', action.error)
-
-        context.patchState({
-            selectedLoading: false
-        })
-    }
-
-    @Action(ClearSelectedUser)
-    ClearSelectedUser(context: StateContext<UserStateModel>, action: ClearSelectedUser) {
-        context.patchState({
-            user: null
-        })
-    }
-    
-    //Sub to topic    
-    @Action(SubscribeToTopic)
-    SubscribeToTopic(context: StateContext<UserStateModel>, action: SubscribeToTopic) {
-        //TEMP
-        let newUser = (context.getState()).user
-        newUser.subscribedTopics.push(action.id)
-
-        context.patchState({
-            user: newUser
-        })
-        //TODO: SUBSCRIBE TO TOPIC THEN PARSE RESPONSE
-
-        //this.topicsService.subscribeToTopic(action.id).subscribe(
-        //      res => {
-        //          context.dispatch(new SubscribeToTopicSuccess())
-        //      },
-        //      err => {
-        //          context.dispatch(new SubscribeToTopicFailure(err))
-        //      }
-        //)
-    }
-
-    @Action(SubscribeToTopicSuccess)
-    SubscribeToTopicSuccess(context: StateContext<UserStateModel>, action: SubscribeToTopicSuccess) {
-        context.patchState({
-            isLoading:false
-        })
-    }
-
-    @Action(SubscribeToTopicFailure)
-    SubscribeToTopicFailure(context: StateContext<UserStateModel>, action: SubscribeToTopicFailure) {
-        console.error(`Error subscribing to topic: + ${action.error}`)
-        this.notification.danger('Error subscribing to topic', action.error)
-    }
-
-    //Unsub from topic
-    @Action(UnsubscribeFromTopic)
-    UnsubscribeFromTopic(context: StateContext<UserStateModel>, action: UnsubscribeFromTopic) {
-        //TEMP
-        let newUser = (context.getState()).user
-        let index = newUser.subscribedTopics.findIndex(t => t == action.id)
-        newUser.subscribedTopics.splice(index,1);
-
-        context.patchState({
-            user: newUser
-        })
-        //TODO: UNSUBSCRIBE FROM TOPIC THEN PARSE RESPONSE
-
-        //this.topicsService.unsubscribeFromTopic(action.id).subscribe(
-        //      res => {
-        //          context.dispatch(new UnsubscribeFromTopicSuccess())
-        //      },
-        //      err => {
-        //          context.dispatch(new UnsubscribeFromTopicFailure(err))
-        //      }
-        //)
-    }
-
-    @Action(UnsubscribeFromTopicSuccess)
-    UnsubscribeFromTopicSuccess(context: StateContext<UserStateModel>, action: UnsubscribeFromTopicSuccess) {
-    }
-
-    @Action(UnsubscribeFromTopicFailure)
-    UnsubscribeFromTopicFailure(context: StateContext<UserStateModel>, action: UnsubscribeFromTopicFailure) {
-        console.error(`Error unsubscribing from topic: + ${action.error}`)
-        this.notification.danger('Error unsubscribing from topic', action.error)
     }
 }

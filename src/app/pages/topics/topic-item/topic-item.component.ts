@@ -1,13 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
-import { ClearSelectedTopic, GetTopicByID } from 'src/app/ngxs/actions/topics.actions';
+import { ClearSelectedTopic, GetTopicByID, AddPostToTopic, SubscribeToTopic, UnsubscribeFromTopic } from 'src/app/ngxs/actions/topics.actions';
 import { ActivatedRoute } from '@angular/router';
 import { TopicsState } from 'src/app/ngxs/states/topics.state';
 import { Observable } from 'rxjs';
 import { ITopic } from 'src/app/models/topic.model';
-import { GetUserByID, ClearSelectedUser } from 'src/app/ngxs/actions/user.actions';
 import { UserState } from 'src/app/ngxs/states/user.state';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { IPost } from 'src/app/models/post.model';
+import { IUser } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-topic-item',
@@ -20,8 +21,13 @@ export class TopicItemComponent implements OnInit, OnDestroy {
       message: new FormControl(null, [Validators.required])
     })
 
+  @Select(UserState.getUser)
+  user$: Observable<IUser>
+  user: IUser
+
   @Select(TopicsState.getSelectedTopic)
   topic$: Observable<ITopic>
+  topic: ITopic
 
   @Select(TopicsState.getSelectedLoading)
   isLoading$: Observable<boolean>
@@ -31,6 +37,9 @@ export class TopicItemComponent implements OnInit, OnDestroy {
   ngOnInit() {
     let id = this.route.snapshot.params['id']
     this.store.dispatch(new GetTopicByID(id))
+
+    this.user$.subscribe(res => { this.user = res })
+    this.topic$.subscribe(res => { this.topic = res })
   }
 
   ngOnDestroy() {
@@ -38,6 +47,42 @@ export class TopicItemComponent implements OnInit, OnDestroy {
   }
 
   tryPost() {
-    //TODO: Write post
+    let newPost: Partial<IPost> = {
+      Text: this.postForm.value.message,
+      Creator: this.user
+    }
+
+    this.store.dispatch(new AddPostToTopic(this.topic.ID, newPost ))
+  }
+
+  isSubbed() {
+    if(this.user.subscribedTopics.indexOf(this.topic.ID) !== -1)
+    {
+      return true
+    }
+    else
+    {
+      return false
+    }
+  }
+  subToTopic() {
+    this.store.dispatch(new SubscribeToTopic(this.topic.ID))
+  }
+
+  unsubFromTopic() {
+    this.store.dispatch(new UnsubscribeFromTopic(this.topic.ID))
+  }
+
+  openFileUpload() {
+    // const client = filestack.init(environment.filestack);
+    // const options = {
+    //   fromSources: ["local_file_system","url","imagesearch"],
+    //   onFileSelected: file => {
+    //     if (file.size > 1000 * 1000) {
+    //       throw new Error('File too big, select something smaller than 1MB');
+    //     }
+    //   }
+    // }
+    // client.picker(options).open();
   }
 }

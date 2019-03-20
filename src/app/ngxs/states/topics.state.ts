@@ -1,8 +1,11 @@
-import { State, StateContext, Selector, Action } from "@ngxs/store"
+import { State, StateContext, Selector, Action, Select } from "@ngxs/store"
 import { NotificationService } from "src/app/services/notification/notification.service";
 import { ITopic } from "src/app/models/topic.model";
-import { GetAllTopics, GetAllTopicsSuccess, GetAllTopicsFailure, CreateTopic, CreateTopicSuccess, CreateTopicFailure, DeleteTopic, DeleteTopicSuccess, DeleteTopicFailure, GetSubscribedTopics, GetSubscribedTopicsSuccess, GetSubscribedTopicsFailure, GetTopicByID, GetTopicByIDSuccess, GetTopicByIDFailure, ClearSelectedTopic } from "../actions/topics.actions";
+import { GetAllTopics, GetAllTopicsSuccess, GetAllTopicsFailure, CreateTopic, CreateTopicSuccess, CreateTopicFailure, DeleteTopic, DeleteTopicSuccess, DeleteTopicFailure, GetSubscribedTopics, GetSubscribedTopicsSuccess, GetSubscribedTopicsFailure, GetTopicByID, GetTopicByIDSuccess, GetTopicByIDFailure, ClearSelectedTopic, AddPostToTopic, AddPostToTopicSuccess, AddPostToTopicFailure, SubscribeToTopicSuccess, SubscribeToTopicFailure, UnsubscribeFromTopic, UnsubscribeFromTopicSuccess, UnsubscribeFromTopicFailure, SubscribeToTopic } from "../actions/topics.actions";
 import { TopicsService } from "src/app/services/topics/topics.service";
+import { UserState } from "./user.state";
+import { Observable } from "rxjs";
+import { IUser } from "src/app/models/user.model";
 
 interface TopicsStateModel {
     topics: ITopic[],
@@ -28,6 +31,9 @@ interface TopicsStateModel {
 })
 export class TopicsState {
     constructor(private topicsService: TopicsService,private notification: NotificationService) { }
+
+    @Select(UserState.getUser)
+    user$: Observable<IUser>
 
     //Selectors
     //All Topics
@@ -238,5 +244,99 @@ export class TopicsState {
         context.patchState({
             selectedTopic: null
         })
+    }
+
+    @Action(AddPostToTopic)
+    AddPostToTopic(context: StateContext<TopicsStateModel>, action: AddPostToTopic) {
+        this.topicsService.CreatePost(action.post.Text, action.topicID, action.post.Creator.StudentId)
+    }
+
+    @Action(AddPostToTopicSuccess)
+    AddPostToTopicSuccess(context: StateContext<TopicsStateModel>, action: AddPostToTopicSuccess) {
+
+    }
+
+    @Action(AddPostToTopicFailure)
+    AddPostToTopicFailure(context: StateContext<TopicsStateModel>, action: AddPostToTopicFailure) {
+        console.error(`Error gettting topic: + ${action.error}`)
+        this.notification.danger('Error getting topic', action.error)
+    }
+    
+    
+    //Sub to topic    
+    @Action(SubscribeToTopic)
+    SubscribeToTopic(context: StateContext<TopicsStateModel>, action: SubscribeToTopic) {
+        this.user$.subscribe(
+            user => {
+                if(user != null)
+                {
+                    this.topicsService.SubscribeToTopic(user.StudentId, action.id).subscribe(
+                        res => {
+                            context.dispatch(new SubscribeToTopicSuccess())
+                        },
+                        err => {
+                            context.dispatch(new SubscribeToTopicFailure(err))
+                        }
+                    ).unsubscribe()
+                }
+                else
+                {
+                    context.dispatch(new SubscribeToTopicFailure('No user'))
+                }
+            },
+            err => {
+                context.dispatch(new SubscribeToTopicFailure('err'))
+            }
+        ).unsubscribe()
+    }
+
+    @Action(SubscribeToTopicSuccess)
+    SubscribeToTopicSuccess(context: StateContext<TopicsStateModel>, action: SubscribeToTopicSuccess) {
+        context.patchState({
+            isLoading:false
+        })
+    }
+
+    @Action(SubscribeToTopicFailure)
+    SubscribeToTopicFailure(context: StateContext<TopicsStateModel>, action: SubscribeToTopicFailure) {
+        console.error(`Error subscribing to topic: + ${action.error}`)
+        this.notification.danger('Error subscribing to topic', action.error)
+    }
+
+    //Unsub from topic
+    @Action(UnsubscribeFromTopic)
+    UnsubscribeFromTopic(context: StateContext<TopicsStateModel>, action: UnsubscribeFromTopic) {
+        this.user$.subscribe(
+            user => {
+                if(user != null)
+                {
+                    this.topicsService.UnsubscribeFromTopic(user.StudentId, action.id).subscribe(
+                        res => {
+                            context.dispatch(new UnsubscribeFromTopicSuccess())
+                        },
+                        err => {
+                            context.dispatch(new UnsubscribeFromTopicFailure(err))
+                        }
+                    ).unsubscribe()
+                }
+                else
+                {
+                    context.dispatch(new UnsubscribeFromTopicFailure('No user'))
+                }
+            },
+            err => {
+                context.dispatch(new UnsubscribeFromTopicFailure('err'))
+            }
+        ).unsubscribe()
+    }
+
+    @Action(UnsubscribeFromTopicSuccess)
+    UnsubscribeFromTopicSuccess(context: StateContext<TopicsStateModel>, action: UnsubscribeFromTopicSuccess) {
+    }
+
+    @Action(UnsubscribeFromTopicFailure)
+    UnsubscribeFromTopicFailure(context: StateContext<TopicsStateModel>, action: UnsubscribeFromTopicFailure) {
+        console.error(`Error unsubscribing from topic: + ${action.error}`)
+        this.notification.danger('Error unsubscribing from topic', action.error)
     }
 }

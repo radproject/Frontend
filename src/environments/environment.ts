@@ -5,7 +5,9 @@
 export const environment = {
   production: false,
 
-  webApiURL: 'http://localhost:54579'
+  webApiURL: 'http://localhost:54579',
+
+  filestack: 'AnLEpIiapRyOmghZdrMgVz'
 };
 
 /*

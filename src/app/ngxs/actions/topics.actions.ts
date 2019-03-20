@@ -1,4 +1,5 @@
 import { ITopic } from "src/app/models/topic.model";
+import { IPost } from "src/app/models/post.model";
 
 //Get all topics
 export class GetAllTopics {
@@ -81,4 +82,51 @@ export class GetTopicByIDFailure {
 //Clear selected
 export class  ClearSelectedTopic {
     static readonly type = '[Topics] Clear Selected Topic'
+}
+
+//Add post to topic
+export class AddPostToTopic {
+    static readonly type = '[Topics] Add Post to Topic'
+    constructor(public topicID: number, public post: Partial<IPost>) { }
+}
+
+export class AddPostToTopicSuccess {
+    static readonly type = '[Topics] Add Post to Topic Success'
+}
+
+export class AddPostToTopicFailure {
+    static readonly type = '[Topics] Add Post to Topic Failure'
+    constructor(public error: string) { }
+}
+
+//Topic subbing
+
+//Subscribe to topic
+export class SubscribeToTopic {
+    static readonly type = '[Topics] Subscribe to topic'
+    constructor(public id: number) { }
+}
+
+export class SubscribeToTopicSuccess {
+    static readonly type = '[Topics] Subscribe to topic success'
+}
+
+export class SubscribeToTopicFailure {
+    static readonly type = '[Topics] Subscribe to topic failure'
+    constructor(public error: string) { }
+}
+
+//Unsubscribe from topic
+export class UnsubscribeFromTopic {
+    static readonly type = '[Topics] Unsubscrube from topic'
+    constructor(public id: number) { }
+}
+
+export class UnsubscribeFromTopicSuccess {
+    static readonly type = '[Topics] Unsubscribe from topic success'
+}
+
+export class UnsubscribeFromTopicFailure {
+    static readonly type = '[Topics] Unsubscribe from topic failure'
+    constructor(public error: string) { }
 }
