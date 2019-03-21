@@ -77,6 +77,13 @@ export class TopicsState {
         this.topicsService.GetAllTopics().subscribe(
             res => {
                 context.dispatch(new GetAllTopicsSuccess(res))
+
+                this.user$.subscribe(u => {
+                    if(u)
+                    {
+                        context.dispatch(new GetSubscribedTopics(u.Id))
+                    }
+                })
             },
             err => {
                 context.dispatch(new GetAllTopicsFailure(err.error.Message))
@@ -173,18 +180,14 @@ export class TopicsState {
             subscribedLoading: true
         })
         
-        //TEMP
-        context.dispatch(new GetSubscribedTopicsSuccess((context.getState()).topics.slice(0,3)))
-        //TODO: GET SUBBED TOPICS BASED ON PASSED IN ARRAY
-
-        // this.topicsService.getSubscribedTopics(action.studentID).subscribe(
-        //     res => {
-        //         context.dispatch(new GetSubscribedTopicsSuccess(res))
-        //     },
-        //     err => {
-        //         context.dispatch(new GetSubscribedTopicsFailure(err.error.Message))
-        //     }
-        // )
+        this.topicsService.GetSubscribedTopics(action.userID).subscribe(
+            res => {
+                context.dispatch(new GetSubscribedTopicsSuccess(res))
+            },
+            err => {
+                context.dispatch(new GetSubscribedTopicsFailure(err.error.Message))
+            }
+        )
     }
 
     @Action(GetSubscribedTopicsSuccess)
@@ -373,25 +376,36 @@ export class TopicsState {
     //Search
     @Action(SearchForTopic)
     SearchForTopic(context: StateContext<TopicsStateModel>, action: SearchForTopic) {
+        const subbedTopics = context.getState().subscribedTopics
         const topics = context.getState().topics
         context.patchState({
             isLoading: true,
-            topics: []
+            topics: [],
+            subscribedTopics: [],
+            subscribedLoading: true
         })
 
-        console.log(topics)
+        let filteredSubbedTopics = []
         let filteredTopics = []
 
         if(action.searchTerm.length > 0) {
+            subbedTopics.forEach(t => {
+                if(t.Title)
+                {
+                    if(t.Title.includes(action.searchTerm))
+                    { filteredSubbedTopics.push(t) }
+                }
+            })
             topics.forEach(t => {
                 if(t.Title)
                 {
                     if(t.Title.includes(action.searchTerm))
                     { filteredTopics.push(t) }
                 }
-              })
+            })
 
               context.dispatch(new GetAllTopicsSuccess(filteredTopics))
+              context.dispatch(new GetSubscribedTopicsSuccess(filteredSubbedTopics))
         }
         else {
             context.dispatch(new GetAllTopics())

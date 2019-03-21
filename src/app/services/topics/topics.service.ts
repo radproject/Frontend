@@ -17,10 +17,6 @@ export class TopicsService {
     return this._http.get<ITopic[]>(`${environment.webApiURL}/topics/getall`)
   }
 
-  GetAllByUser(id: string) {
-    return this._http.get<ITopic[]>(`${environment.webApiURL}/topics/getallfortopic?UserId=${id}`)
-  }
-
   CreateTopic(topic: Partial<ITopic>) {
     return this._http.post(`${environment.webApiURL}/topics/create`, topic)
   }
@@ -89,5 +85,9 @@ export class TopicsService {
 
   GetPostsForTopic(id: number) {
     return this._http.get(`${environment.webApiURL}/getforthread?ThreadId=${id}`)
+  }
+
+  GetSubscribedTopics(id: string) {
+    return this._http.get<ITopic[]>(`${environment.webApiURL}/topics/getsubscribedtopics?UserId=${id}`)
   }
 }

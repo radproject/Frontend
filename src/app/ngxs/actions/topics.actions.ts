@@ -49,7 +49,7 @@ export class DeleteTopicFailure {
 //Get Subscribed Topics
 export class GetSubscribedTopics {
     static readonly type = '[Topics] Get Subscribed Topics'
-    constructor(public topicIDs: number[]) { }
+    constructor(public userID: string) { }
 }
 
 export class GetSubscribedTopicsSuccess {
