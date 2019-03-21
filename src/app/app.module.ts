@@ -61,6 +61,9 @@ import { CreateTopicModalComponent } from './components/create-topic-modal/creat
     BrowserAnimationsModule
   ],
   providers: [NotificationService, ToasterService, { provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true}],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    CreateTopicModalComponent
+  ]
 })
 export class AppModule { }

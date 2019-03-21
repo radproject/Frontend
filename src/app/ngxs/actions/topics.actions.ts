@@ -4,7 +4,6 @@ import { IPost } from "src/app/models/post.model";
 //Get all topics
 export class GetAllTopics {
     static readonly type = '[Topics] Get All Topics'
-    constructor(public id: string) { }
 }
 
 export class GetAllTopicsSuccess {
@@ -20,7 +19,7 @@ export class GetAllTopicsFailure {
 //Create Topic
 export class CreateTopic {
     static readonly type = '[Topics] Add Topic'
-    constructor(public topic: ITopic) { }
+    constructor(public topic: Partial<ITopic>) { }
 }
 
 export class CreateTopicSuccess { 

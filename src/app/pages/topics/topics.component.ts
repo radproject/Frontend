@@ -29,11 +29,7 @@ export class TopicsComponent implements OnInit {
   constructor(private store: Store, public router: Router) { }
 
   ngOnInit() {
-    this.user$.subscribe(res => {
-      if(res != null) {
-        this.store.dispatch(new GetAllTopics(res.Id))
-      }
-    }).unsubscribe()
+    this.store.dispatch(new GetAllTopics())
   }
 
   returnToIndex() {

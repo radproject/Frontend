@@ -74,20 +74,13 @@ export class TopicsState {
             isLoading: true
         })
         
-        if(action.id != null)
-        {
-            this.topicsService.GetAllTopics(action.id).subscribe(
-                res => {
-                    context.dispatch(new GetAllTopicsSuccess(res))
-                },
-                err => {
-                    context.dispatch(new GetAllTopicsFailure(err))
-                })
-        }
-        else
-        {
-            context.dispatch(new GetAllTopicsFailure('No user ID provided'))
-        }
+        this.topicsService.GetAllTopics().subscribe(
+            res => {
+                context.dispatch(new GetAllTopicsSuccess(res))
+            },
+            err => {
+                context.dispatch(new GetAllTopicsFailure(err))
+        })
     }
 
     @Action(GetAllTopicsSuccess)
@@ -114,13 +107,13 @@ export class TopicsState {
         const state = context.getState()
         state.isLoading = true
 
-        // this.topicsService.CreateTopic(action.topic).toPromise()
-        //     .then(res => {
-        //         context.dispatch(new CreateTopicSuccess())
-        //     })
-        //     .catch(err => {
-        //         context.dispatch(new CreateTopicFailure(err))
-        //     })
+        this.topicsService.CreateTopic(action.topic).toPromise()
+            .then(res => {
+                context.dispatch(new CreateTopicSuccess())
+            })
+            .catch(err => {
+                context.dispatch(new CreateTopicFailure(err))
+            })
 
     }
 
@@ -147,13 +140,13 @@ export class TopicsState {
         const state = context.getState()
         state.isLoading = true
 
-        // this.topicsService.DeleteTopic(action.id).toPromise()
-        //     .then(res => {
-        //         context.dispatch(new DeleteTopicSuccess())
-        //     })
-        //     .catch(err => {
-        //         context.dispatch(new DeleteTopicFailure(err))
-        //     })
+        this.topicsService.DeleteTopic(action.id).toPromise()
+            .then(res => {
+                context.dispatch(new DeleteTopicSuccess())
+            })
+            .catch(err => {
+                context.dispatch(new DeleteTopicFailure(err))
+            })
     }
 
     @Action(DeleteTopicSuccess)
@@ -253,22 +246,30 @@ export class TopicsState {
         })
     }
 
+    //Add post to topic
     @Action(AddPostToTopic)
     AddPostToTopic(context: StateContext<TopicsStateModel>, action: AddPostToTopic) {
         this.topicsService.CreatePost(action.post.Text, action.topicID, action.post.Creator.StudentId)
+        .subscribe(
+            res => {
+                context.dispatch(new AddPostToTopicSuccess())
+            },
+            err => {
+                context.dispatch(new AddPostToTopicFailure(err))
+            }
+        )
     }
 
     @Action(AddPostToTopicSuccess)
     AddPostToTopicSuccess(context: StateContext<TopicsStateModel>, action: AddPostToTopicSuccess) {
-
+        console.info('Post added to topic')
     }
 
     @Action(AddPostToTopicFailure)
     AddPostToTopicFailure(context: StateContext<TopicsStateModel>, action: AddPostToTopicFailure) {
         console.error(`Error gettting topic: + ${action.error}`)
         this.notification.danger('Error getting topic', action.error)
-    }
-    
+    }    
     
     //Sub to topic    
     @Action(SubscribeToTopic)

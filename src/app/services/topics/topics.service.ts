@@ -13,11 +13,15 @@ export class TopicsService {
   constructor(private _http: HttpClient) { }
 
   //TOPICS
-  GetAllTopics(id: string) {
+  GetAllTopics() {
+    return this._http.get<ITopic[]>(`${environment.webApiURL}/topics/getall`)
+  }
+
+  GetAllByUser(id: string) {
     return this._http.get<ITopic[]>(`${environment.webApiURL}/topics/getallfortopic?UserId=${id}`)
   }
 
-  CreateTopic(topic: ITopic) {
+  CreateTopic(topic: Partial<ITopic>) {
     return this._http.post(`${environment.webApiURL}/topics/create`, topic)
   }
 
@@ -80,5 +84,10 @@ export class TopicsService {
 
   DeletePost(id: number) {
     return this._http.post(`${environment.webApiURL}/posts/DeletePost`, id)
+  }
+
+
+  GetPostsForTopic(id: number) {
+    return this._http.get(`${environment.webApiURL}/getforthread?ThreadId=${id}`)
   }
 }

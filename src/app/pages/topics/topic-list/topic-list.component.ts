@@ -5,6 +5,8 @@ import { Store, Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { TopicsState } from 'src/app/ngxs/states/topics.state';
 import { GetTopicByID } from 'src/app/ngxs/actions/topics.actions';
+import { MatDialog } from '@angular/material';
+import { CreateTopicModalComponent } from 'src/app/components/create-topic-modal/create-topic-modal.component';
 
 @Component({
   selector: 'app-topic-list',
@@ -23,7 +25,7 @@ export class TopicListComponent implements OnInit {
   @Select(TopicsState.getSubbedTopics)
   subbedTopics: Observable<ITopic[]>
 
-  constructor(private router: Router, private store: Store) { }
+  constructor(private router: Router, private store: Store, public dialog: MatDialog) { }
 
   ngOnInit() {
   }
@@ -44,5 +46,9 @@ export class TopicListComponent implements OnInit {
         this.shown.all = !this.shown.all
         break;
     }
+  }
+
+  openCreateTopic() {
+    this.dialog.open(CreateTopicModalComponent)
   }
 }

@@ -51,7 +51,6 @@ export class TopicItemComponent implements OnInit, OnDestroy {
       Text: this.postForm.value.message,
       Creator: this.user
     }
-
     this.store.dispatch(new AddPostToTopic(this.topic.ID, newPost ))
   }
 

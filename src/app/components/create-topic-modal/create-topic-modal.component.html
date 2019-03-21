@@ -1,3 +1,19 @@
-<p>
-  create-topic-modal works!
-</p>
+<h1 mat-dialog-title>Create a topic</h1>
+<div mat-dialog-content>
+  <p>Enter a topic name</p>
+  <form [formGroup]='topicForm'>
+    <div class='form-group'>
+      <input type='text' class='form-control' formControlName='name' />
+      
+      <label>
+        <input type="radio" value=false formControlName="private">
+          <span>public</span>
+      </label>
+      <label>
+        <input type="radio" value=true formControlName="private">
+          <span>private</span>
+      </label>
+    </div>
+    <button class='btn btn-primary' (click)='createTopic()' [disabled]='!topicForm.valid'>Create</button>
+  </form>
+</div>
