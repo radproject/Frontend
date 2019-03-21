@@ -15,8 +15,6 @@
             grid-column-gap: 10px;
             border-radius: 5px;
             align-items: center;
-            background: #007bff;
-            color: white;
             cursor: pointer;
             padding: 2px;
 
@@ -27,11 +25,6 @@
             mat-icon {
                 grid-column: 3;
             }
-        }
-
-        .addTopic:active {
-            color: white;
-            background: #007bff;
         }
     }
 }

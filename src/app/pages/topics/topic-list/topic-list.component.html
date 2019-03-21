@@ -11,7 +11,7 @@
     <h2>All Topics <mat-icon (click)='toggleHidden(1)'>{{(shown.all)?('keyboard_arrow_up'):('keyboard_arrow_down')}}</mat-icon></h2>
     <div class='list' *ngIf='shown.all'>
         <topic-list-item *ngFor='let t of (allTopics|async)' [TopicIn]='t' (click)='openTopic(t)'></topic-list-item>
-        <div class='addTopic'>
+        <div class='btn btn-primary addTopic'>
             <h4>Create a topic</h4>
             <mat-icon>add</mat-icon>
         </div>
