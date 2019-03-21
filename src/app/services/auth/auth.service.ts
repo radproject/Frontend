@@ -2,13 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment'
 import { Observable } from 'rxjs';
+import { Store } from '@ngxs/store';
+import { GetUser } from 'src/app/ngxs/actions/user.actions';
+import { Router } from '@angular/router';
+import { IUser } from 'src/app/models/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient, private store: Store, private router: Router) { }
 
   //POST: Login with provided credentials
   login(email: string, password: string){
@@ -36,5 +40,9 @@ export class AuthService {
           "Content-Type": "application/json"
         }
       })
+  }
+
+  getUser() {
+    return this._http.get<IUser>(`${environment.webApiURL}/account/getaccount`)
   }
 }

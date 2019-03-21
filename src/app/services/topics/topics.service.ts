@@ -14,7 +14,7 @@ export class TopicsService {
 
   //TOPICS
   GetAllTopics(id: string) {
-    return this._http.get<ITopic[]>(`${environment.webApiURL}/topics/getallfortopic/${id}`)
+    return this._http.get<ITopic[]>(`${environment.webApiURL}/topics/getallfortopic?UserId=${id}`)
   }
 
   CreateTopic(topic: ITopic) {

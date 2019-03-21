@@ -38,26 +38,14 @@ export class UserState {
             isLoading: true
         })
 
-        //TEMP
-        // let user: IUser = {
-        //     StudentId: 'S00173047',
-        //     Name: 'Daire Finn',
-        //     email: 'S00173047@mail.itsligo.ie',
-        //     subscribedTopics: [1,2,3]
-        // }
-
-        // context.dispatch(new GetUserSuccess(user))
-
-        // TODO: LINK AUTH WITH BACKEND
-        
-        // this.authService.user$.subscribe(
-        //     res => {
-        //         context.dispatch(new GetUserSuccess(res))
-        //     },
-        //     err => {
-        //         context.dispatch(new GetUserFailure(err))
-        //     }
-        // )
+        this.authService.getUser().subscribe(
+            res => {
+                context.dispatch(new GetUserSuccess(res))
+            },
+            err => {
+                context.dispatch(new GetUserFailure(err))
+            }
+        )
     }
 
     @Action(GetUserSuccess)
@@ -72,7 +60,7 @@ export class UserState {
     GetUserFailure(context: StateContext<UserStateModel>, action: GetUserFailure) {
         console.error(`Error getting User: + ${action.error}`)
         this.notification.danger('Error getting User', action.error)
-
+        console.log(action.error)
         context.patchState({
             isLoading: false
         })

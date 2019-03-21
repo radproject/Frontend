@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AngularMaterialModule } from './angular-material.module';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
@@ -27,6 +27,8 @@ import { TopicListComponent } from './pages/topics/topic-list/topic-list.compone
 import { NotificationService } from './services/notification/notification.service';
 import { PostComponent } from './components/post/post.component';
 import { TopicListItemComponent } from './components/topics/topic-list-item/topic-list-item.component';
+import { Interceptor } from './services/htpp-interceptor.service';
+import { CreateTopicModalComponent } from './components/create-topic-modal/create-topic-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +43,7 @@ import { TopicListItemComponent } from './components/topics/topic-list-item/topi
     TopicsComponent,
     PostComponent,
     TopicListItemComponent,
+    CreateTopicModalComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -57,7 +60,7 @@ import { TopicListItemComponent } from './components/topics/topic-list-item/topi
     NgxsReduxDevtoolsPluginModule.forRoot(),
     BrowserAnimationsModule
   ],
-  providers: [NotificationService, ToasterService],
+  providers: [NotificationService, ToasterService, { provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

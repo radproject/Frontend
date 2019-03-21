@@ -31,7 +31,7 @@ export class TopicsComponent implements OnInit {
   ngOnInit() {
     this.user$.subscribe(res => {
       if(res != null) {
-        this.store.dispatch(new GetAllTopics(res.StudentId))
+        this.store.dispatch(new GetAllTopics(res.Id))
       }
     }).unsubscribe()
   }

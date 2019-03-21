@@ -3,6 +3,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
+import { GetUser } from 'src/app/ngxs/actions/user.actions';
+import { Store } from '@ngxs/store';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +18,7 @@ export class LoginComponent implements OnInit {
       password: new FormControl(null, [Validators.required])
     })
 
-  constructor(private router: Router, private auth: AuthService, private notification: NotificationService) { }
+  constructor(private router: Router, private auth: AuthService, private notification: NotificationService, private store: Store) { }
 
   ngOnInit() { }
 
@@ -30,9 +32,9 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('expiry', res['.expiry'])
       this.notification.info('Successful Login', "You logged in succesfully!")
       this.router.navigate(['home'])
-    }, err => {
+      this.store.dispatch(new GetUser())
+    }, err => {0
       this.notification.danger('Failed to login', err)
     })
-    // this.auth.emailLogin(this.loginForm.value.email, this.loginForm.value.password).catch(err => { this.notification.danger('Failed to login',err)})
   }
 }

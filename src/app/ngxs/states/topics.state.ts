@@ -74,13 +74,20 @@ export class TopicsState {
             isLoading: true
         })
         
-        this.topicsService.GetAllTopics(action.id).subscribe(
-            res => {
-                context.dispatch(new GetAllTopicsSuccess(res))
-            },
-            err => {
-                context.dispatch(new GetAllTopicsFailure(err))
-            })
+        if(action.id != null)
+        {
+            this.topicsService.GetAllTopics(action.id).subscribe(
+                res => {
+                    context.dispatch(new GetAllTopicsSuccess(res))
+                },
+                err => {
+                    context.dispatch(new GetAllTopicsFailure(err))
+                })
+        }
+        else
+        {
+            context.dispatch(new GetAllTopicsFailure('No user ID provided'))
+        }
     }
 
     @Action(GetAllTopicsSuccess)
