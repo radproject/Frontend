@@ -38,7 +38,6 @@ export class RegisterComponent implements OnInit {
 
   register() {
     this.auth.register(this.registerForm.value.email, this.registerForm.value.password, this.registerForm.value.confirmPassword).subscribe(res => {
-      console.log(res)
       this.notification.success("Registration Complete", `${this.registerForm.value.name}, You registered Successfully!`)
       this.router.navigate(['/auth/login'])
     }, err => {

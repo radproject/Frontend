@@ -24,6 +24,11 @@
       <div class='content'>
         <p>{{p.Text}}</p>
       </div>
+      <div class='info'>
+        <div>
+          <mat-icon (click)='deletePost(p.ID)' class="delete">delete</mat-icon>
+        </div>
+      </div>
     </div>
   </div>
 

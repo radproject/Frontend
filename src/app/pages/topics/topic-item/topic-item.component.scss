@@ -14,14 +14,11 @@
     }
 
     .postList {
-        // border: 1px gray solid;
-        // border-radius: 10px;
-
         .postItem {
             margin: 10px;
             display: grid;
             // grid-template-columns: minmax(100px,120px) 1fr;
-            grid-template-columns: 120px 1fr;
+            grid-template-columns: 120px 1fr 50px;
             border: 1px darkslategray solid;
 
             .content {
@@ -29,11 +26,18 @@
             }
 
             .info {
+                display: grid;
                 text-align: center;
                 padding: 10px;
                 background: darkslategrey;
                 color: white;
-                display: grid;
+
+                .delete:hover {
+                    color: red;
+                }
+                .delete:focus {
+                    color: darkred;
+                }
             }
         }
     }

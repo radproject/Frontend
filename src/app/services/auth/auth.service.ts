@@ -30,7 +30,6 @@ export class AuthService {
 
   //POST: Register with provided credentials
   register(username: string, password: string, confirmPassword: string): Observable<any> {
-    alert(`username ${username} password: ${password} confirm: ${confirmPassword}`)
     return this._http.post(`${environment.webApiURL}/account/Register`, JSON.stringify({
       Email: username,
       Password: password,

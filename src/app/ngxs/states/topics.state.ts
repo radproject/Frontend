@@ -1,7 +1,7 @@
 import { State, StateContext, Selector, Action, Select } from "@ngxs/store"
 import { NotificationService } from "src/app/services/notification/notification.service";
 import { ITopic } from "src/app/models/topic.model";
-import { GetAllTopics, GetAllTopicsSuccess, GetAllTopicsFailure, CreateTopic, CreateTopicSuccess, CreateTopicFailure, DeleteTopic, DeleteTopicSuccess, DeleteTopicFailure, GetSubscribedTopics, GetSubscribedTopicsSuccess, GetSubscribedTopicsFailure, GetTopicByID, GetTopicByIDSuccess, GetTopicByIDFailure, ClearSelectedTopic, AddPostToTopic, AddPostToTopicSuccess, AddPostToTopicFailure, SubscribeToTopicSuccess, SubscribeToTopicFailure, UnsubscribeFromTopic, UnsubscribeFromTopicSuccess, UnsubscribeFromTopicFailure, SubscribeToTopic } from "../actions/topics.actions";
+import { GetAllTopics, GetAllTopicsSuccess, GetAllTopicsFailure, CreateTopic, CreateTopicSuccess, CreateTopicFailure, DeleteTopic, DeleteTopicSuccess, DeleteTopicFailure, GetSubscribedTopics, GetSubscribedTopicsSuccess, GetSubscribedTopicsFailure, GetTopicByID, GetTopicByIDSuccess, GetTopicByIDFailure, ClearSelectedTopic, AddPostToTopic, AddPostToTopicSuccess, AddPostToTopicFailure, SubscribeToTopicSuccess, SubscribeToTopicFailure, UnsubscribeFromTopic, UnsubscribeFromTopicSuccess, UnsubscribeFromTopicFailure, SubscribeToTopic, DeletePost, DeletePostSuccess, DeletePostFailure } from "../actions/topics.actions";
 import { TopicsService } from "src/app/services/topics/topics.service";
 import { UserState } from "./user.state";
 import { Observable } from "rxjs";
@@ -79,7 +79,7 @@ export class TopicsState {
                 context.dispatch(new GetAllTopicsSuccess(res))
             },
             err => {
-                context.dispatch(new GetAllTopicsFailure(err))
+                context.dispatch(new GetAllTopicsFailure(err.error.Message))
         })
     }
 
@@ -112,7 +112,7 @@ export class TopicsState {
                 context.dispatch(new CreateTopicSuccess())
             })
             .catch(err => {
-                context.dispatch(new CreateTopicFailure(err))
+                context.dispatch(new CreateTopicFailure(err.error.Message))
             })
 
     }
@@ -145,7 +145,7 @@ export class TopicsState {
                 context.dispatch(new DeleteTopicSuccess())
             })
             .catch(err => {
-                context.dispatch(new DeleteTopicFailure(err))
+                context.dispatch(new DeleteTopicFailure(err.error.Message))
             })
     }
 
@@ -182,7 +182,7 @@ export class TopicsState {
         //         context.dispatch(new GetSubscribedTopicsSuccess(res))
         //     },
         //     err => {
-        //         context.dispatch(new GetSubscribedTopicsFailure(err))
+        //         context.dispatch(new GetSubscribedTopicsFailure(err.error.Message))
         //     }
         // )
     }
@@ -216,7 +216,7 @@ export class TopicsState {
                  context.dispatch(new GetTopicByIDSuccess(res))
              },
              err => {
-                 context.dispatch(new GetTopicByIDFailure(err))
+                 context.dispatch(new GetTopicByIDFailure(err.error.Message))
              }
         )
     }
@@ -255,7 +255,7 @@ export class TopicsState {
                 context.dispatch(new AddPostToTopicSuccess())
             },
             err => {
-                context.dispatch(new AddPostToTopicFailure(err))
+                context.dispatch(new AddPostToTopicFailure(err.error.Message))
             }
         )
     }
@@ -283,7 +283,7 @@ export class TopicsState {
                             context.dispatch(new SubscribeToTopicSuccess())
                         },
                         err => {
-                            context.dispatch(new SubscribeToTopicFailure(err))
+                            context.dispatch(new SubscribeToTopicFailure(err.error.error_description))
                         }
                     ).unsubscribe()
                 }
@@ -293,7 +293,7 @@ export class TopicsState {
                 }
             },
             err => {
-                context.dispatch(new SubscribeToTopicFailure('err'))
+                context.dispatch(new SubscribeToTopicFailure(err.error.Message))
             }
         ).unsubscribe()
     }
@@ -339,12 +339,33 @@ export class TopicsState {
     }
 
     @Action(UnsubscribeFromTopicSuccess)
-    UnsubscribeFromTopicSuccess(context: StateContext<TopicsStateModel>, action: UnsubscribeFromTopicSuccess) {
-    }
+    UnsubscribeFromTopicSuccess(context: StateContext<TopicsStateModel>, action: UnsubscribeFromTopicSuccess) { }
 
     @Action(UnsubscribeFromTopicFailure)
     UnsubscribeFromTopicFailure(context: StateContext<TopicsStateModel>, action: UnsubscribeFromTopicFailure) {
         console.error(`Error unsubscribing from topic: + ${action.error}`)
         this.notification.danger('Error unsubscribing from topic', action.error)
+    }
+
+    //DELETE POST
+    @Action(DeletePost)
+    DeletePost(context: StateContext<TopicsStateModel>, action: DeletePost) {
+        this.topicsService.DeletePost(action.id).subscribe(
+            res => {
+                context.dispatch(new DeletePostSuccess())
+            },
+            err => {
+                context.dispatch(new DeletePostFailure(err.error.Message))
+            }
+        )   
+    }
+
+    @Action(DeletePostSuccess)
+    DeletePostSuccess(context: StateContext<TopicsStateModel>, action: DeletePostSuccess) { }
+
+    @Action(DeletePostFailure)
+    DeletePostFailure(context: StateContext<TopicsStateModel>, action: DeletePostFailure) {
+        console.error(`Error deleting topic topic: + ${action.error}`)
+        this.notification.danger('Error deleting topic', action.error)
     }
 }

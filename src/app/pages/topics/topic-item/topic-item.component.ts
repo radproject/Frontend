@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
-import { ClearSelectedTopic, GetTopicByID, AddPostToTopic, SubscribeToTopic, UnsubscribeFromTopic } from 'src/app/ngxs/actions/topics.actions';
+import { ClearSelectedTopic, GetTopicByID, AddPostToTopic, SubscribeToTopic, UnsubscribeFromTopic, DeletePost } from 'src/app/ngxs/actions/topics.actions';
 import { ActivatedRoute } from '@angular/router';
 import { TopicsState } from 'src/app/ngxs/states/topics.state';
 import { Observable } from 'rxjs';
@@ -52,6 +52,7 @@ export class TopicItemComponent implements OnInit, OnDestroy {
       Creator: this.user
     }
     this.store.dispatch(new AddPostToTopic(this.topic.ID, newPost ))
+    this.store.dispatch(new GetTopicByID(this.topic.ID))
   }
 
   isSubbed() {
@@ -66,12 +67,19 @@ export class TopicItemComponent implements OnInit, OnDestroy {
   
   subToTopic() {
     this.store.dispatch(new SubscribeToTopic(this.topic.ID))
+    this.store.dispatch(new GetTopicByID(this.topic.ID))
   }
 
   unsubFromTopic() {
     this.store.dispatch(new UnsubscribeFromTopic(this.topic.ID))
+    this.store.dispatch(new GetTopicByID(this.topic.ID))
   }
 
+  deletePost(id:number) {
+    this.store.dispatch(new DeletePost(id))
+    this.store.dispatch(new GetTopicByID(this.topic.ID))
+  }
+  
   openFileUpload() {
     // const client = filestack.init(environment.filestack);
     // const options = {

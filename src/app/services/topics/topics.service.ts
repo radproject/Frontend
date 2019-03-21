@@ -83,7 +83,7 @@ export class TopicsService {
   }
 
   DeletePost(id: number) {
-    return this._http.post(`${environment.webApiURL}/posts/DeletePost`, id)
+    return this._http.post(`${environment.webApiURL}/posts/delete?id=${id}`,id)
   }
 
 

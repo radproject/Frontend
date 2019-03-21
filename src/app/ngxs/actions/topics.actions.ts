@@ -129,3 +129,18 @@ export class UnsubscribeFromTopicFailure {
     static readonly type = '[Topics] Unsubscribe from topic failure'
     constructor(public error: string) { }
 }
+
+//Delete Post
+export class DeletePost {
+    static readonly type = '[Topics] Deleting post'
+    constructor(public id: number) { }
+}
+
+export class DeletePostSuccess {
+    static readonly type = '[Topics] Delete post succcess'
+}
+
+export class DeletePostFailure {
+    static readonly  type = '[Topics] Delete post failure'
+    constructor(public error: string) { }
+}

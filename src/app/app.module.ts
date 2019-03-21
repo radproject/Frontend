@@ -25,7 +25,6 @@ import { TopicItemComponent } from './pages/topics/topic-item/topic-item.compone
 import { TopicsComponent } from './pages/topics/topics.component';
 import { TopicListComponent } from './pages/topics/topic-list/topic-list.component';
 import { NotificationService } from './services/notification/notification.service';
-import { PostComponent } from './components/post/post.component';
 import { TopicListItemComponent } from './components/topics/topic-list-item/topic-list-item.component';
 import { Interceptor } from './services/htpp-interceptor.service';
 import { CreateTopicModalComponent } from './components/create-topic-modal/create-topic-modal.component';
@@ -41,7 +40,6 @@ import { CreateTopicModalComponent } from './components/create-topic-modal/creat
     TopicListComponent,
     TopicItemComponent,
     TopicsComponent,
-    PostComponent,
     TopicListItemComponent,
     CreateTopicModalComponent,
   ],
