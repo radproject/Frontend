@@ -11,7 +11,6 @@ export class Interceptor implements HttpInterceptor {
       const updatedRequest = req.clone({
         headers: req.headers.append('authorization', `Bearer ${at}`)
       })
-      console.log(updatedRequest)
 
       return next.handle(updatedRequest)
     }

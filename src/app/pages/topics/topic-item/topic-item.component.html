@@ -12,7 +12,7 @@
     </div>
   </div>
   
-  <div *ngIf='(topic$|async).Posts.length > 0' class='postList'>
+  <div *ngIf='((topic$|async).Posts)' class='postList'>
     <div *ngFor='let p of ((topic$|async).Posts)' class='postItem'>
       <div class='info'>
         <div>
@@ -27,7 +27,7 @@
     </div>
   </div>
 
-  <div *ngIf='(topic$|async).Posts.length < 1' class='noPosts'>
+  <div *ngIf='!((topic$|async).Posts)' class='noPosts'>
     <div>
       <h2>No Posts</h2>
       <mat-icon>cancel_presentation</mat-icon>

@@ -56,10 +56,13 @@ export class TopicItemComponent implements OnInit, OnDestroy {
   }
 
   isSubbed() {
-    if(this.user.subscribedTopics.indexOf(this.topic.ID) !== -1)
-    { return true }
-    else
-    { return false }
+    if(this.user.subscribedTopics)
+    {
+      if(this.user.subscribedTopics.indexOf(this.topic.ID) !== -1)
+      { return true }
+      else
+      { return false }
+    }
   }
   
   subToTopic() {

@@ -1,3 +1,22 @@
+.addTopic {
+    margin: 10px;
+    display: grid;
+    grid-template-columns: 1fr auto auto 1fr;
+    grid-column-gap: 10px;
+    border-radius: 5px;
+    align-items: center;
+    cursor: pointer;
+    padding: 2px;
+
+    h4 {
+        font-weight: 400;
+        grid-column: 2;
+    }
+    mat-icon {
+        grid-column: 3;
+    }
+}
+
 .topicList {
     padding: 10px;
     display: grid;
@@ -9,23 +28,6 @@
     }
 
     .list {
-        .addTopic {
-            display: grid;
-            grid-template-columns: 1fr auto auto 1fr;
-            grid-column-gap: 10px;
-            border-radius: 5px;
-            align-items: center;
-            cursor: pointer;
-            padding: 2px;
-
-            h4 {
-                font-weight: 400;
-                grid-column: 2;
-            }
-            mat-icon {
-                grid-column: 3;
-            }
-        }
     }
 }
 
