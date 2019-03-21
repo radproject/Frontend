@@ -8,5 +8,5 @@ export interface ITopic {
     Creator: IUser
     isPrivate: boolean
 
-    Posts?: IPost[]
+    posts?: IPost[]
 }

@@ -7,6 +7,8 @@ import { TopicsState } from 'src/app/ngxs/states/topics.state';
 import { GetTopicByID } from 'src/app/ngxs/actions/topics.actions';
 import { MatDialog } from '@angular/material';
 import { CreateTopicModalComponent } from 'src/app/components/create-topic-modal/create-topic-modal.component';
+import { UserState } from 'src/app/ngxs/states/user.state';
+import { IUser } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-topic-list',
@@ -21,6 +23,7 @@ export class TopicListComponent implements OnInit {
   
   @Select(TopicsState.getTopics)
   allTopics: Observable<ITopic[]>
+  topics: ITopic[]
 
   @Select(TopicsState.getSubbedTopics)
   subbedTopics: Observable<ITopic[]>
@@ -30,7 +33,6 @@ export class TopicListComponent implements OnInit {
   ngOnInit() {
   }
 
-  //TODO: TEST ONCE TOPICS ADDED
   openTopic(t: ITopic) {
     this.router.navigate([`/topics/${t.ID}`])
     this.store.dispatch(new GetTopicByID(t.ID))

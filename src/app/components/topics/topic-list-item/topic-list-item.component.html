@@ -1,4 +1,4 @@
-<div class='rowContainer' *ngIf='topic != null'>
+<div class='rowContainer' *ngIf='topic'>
   <div class='private'>
     <mat-icon *ngIf='topic.isPrivate'>lock_open</mat-icon>
     <mat-icon *ngIf='!topic.isPrivate'>public</mat-icon>
