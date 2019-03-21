@@ -40,7 +40,6 @@ export class TopicItemComponent implements OnInit, OnDestroy {
 
     this.user$.subscribe(res => { this.user = res })
     this.topic$.subscribe(res => { this.topic = res })
-    this.
   }
 
   ngOnDestroy() {
