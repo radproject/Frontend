@@ -1,7 +1,16 @@
-<!--Add Topic-->
-<div class='btn btn-primary addTopic' (click)='openCreateTopic()'>
-    <h4>Create a topic</h4>
-    <mat-icon>add</mat-icon>
+<div class='topRow'>
+    <!--Add Topic-->
+    <div class='btn btn-primary addTopic' (click)='openCreateTopic()'>
+        <h4>Create a topic</h4>
+        <mat-icon>add</mat-icon>
+    </div>
+    
+    <!--Search box-->
+    <form [formGroup]='searchForm'>
+        <label for='searchTerm'>Search Topics: </label>
+        <input type='text' name='searchTerm' class='form-control' formControlName="searchTerm"/>
+        <button class='submit' class='btn btn-primary' (click)='search()'>Search</button>
+    </form>
 </div>
 
 <!--Subscribed Topics-->

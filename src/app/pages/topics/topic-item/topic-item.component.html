@@ -1,10 +1,10 @@
-<div class='pageContainer' *ngIf='(topic$|async)'>
+<div class='pageContainer' *ngIf='!(isLoading$|async)'>
   <div class='topRow'>
     <div class='private'>
         <mat-icon *ngIf='(topic$|async).isPrivate'>lock_open</mat-icon>
         <mat-icon *ngIf='!((topic$|async).isPrivate)'>public</mat-icon>
     </div>
-    <h1>{{(topic$|async).Title}}</h1>
+    <h1>{{(topic$|async) != null?((topic$|async).Title):'Unknown'}}</h1>
     <small>Created: {{(topic$|async).CreationDate | date}}</small>
     <div class='sub' *ngIf='(user$|async)'>
       <button class='btn btn-primary' *ngIf='!isSubbed()' (click)='subToTopic()'>Subscribe</button>

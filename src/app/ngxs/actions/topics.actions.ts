@@ -144,3 +144,8 @@ export class DeletePostFailure {
     static readonly  type = '[Topics] Delete post failure'
     constructor(public error: string) { }
 }
+
+export class SearchForTopic {
+    static readonly type = '[Topics] Searching'
+    constructor(public searchTerm: string) { }
+}

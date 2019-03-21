@@ -14,12 +14,7 @@ import { IUser } from 'src/app/models/user.model';
   templateUrl: './topics.component.html',
   styleUrls: ['./topics.component.scss']
 })
-export class TopicsComponent implements OnInit {
-  searchForm: FormGroup
-    = new FormGroup({
-      searchTerm: new FormControl(null, [Validators.required])
-    })
-  
+export class TopicsComponent implements OnInit {  
   @Select(TopicsState.getSelectedTopic)
   selectedTopic: ITopic
 

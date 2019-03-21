@@ -52,7 +52,6 @@ export class TopicItemComponent implements OnInit, OnDestroy {
       Creator: this.user
     }
     this.store.dispatch(new AddPostToTopic(this.topic.ID, newPost ))
-    this.store.dispatch(new GetTopicByID(this.topic.ID))
   }
 
   isSubbed() {
@@ -67,17 +66,14 @@ export class TopicItemComponent implements OnInit, OnDestroy {
   
   subToTopic() {
     this.store.dispatch(new SubscribeToTopic(this.topic.ID))
-    this.store.dispatch(new GetTopicByID(this.topic.ID))
   }
 
   unsubFromTopic() {
     this.store.dispatch(new UnsubscribeFromTopic(this.topic.ID))
-    this.store.dispatch(new GetTopicByID(this.topic.ID))
   }
 
   deletePost(id:number) {
     this.store.dispatch(new DeletePost(id))
-    this.store.dispatch(new GetTopicByID(this.topic.ID))
   }
   
   openFileUpload() {

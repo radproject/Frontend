@@ -1,7 +1,7 @@
 import { State, StateContext, Selector, Action, Select } from "@ngxs/store"
 import { NotificationService } from "src/app/services/notification/notification.service";
 import { ITopic } from "src/app/models/topic.model";
-import { GetAllTopics, GetAllTopicsSuccess, GetAllTopicsFailure, CreateTopic, CreateTopicSuccess, CreateTopicFailure, DeleteTopic, DeleteTopicSuccess, DeleteTopicFailure, GetSubscribedTopics, GetSubscribedTopicsSuccess, GetSubscribedTopicsFailure, GetTopicByID, GetTopicByIDSuccess, GetTopicByIDFailure, ClearSelectedTopic, AddPostToTopic, AddPostToTopicSuccess, AddPostToTopicFailure, SubscribeToTopicSuccess, SubscribeToTopicFailure, UnsubscribeFromTopic, UnsubscribeFromTopicSuccess, UnsubscribeFromTopicFailure, SubscribeToTopic, DeletePost, DeletePostSuccess, DeletePostFailure } from "../actions/topics.actions";
+import { GetAllTopics, GetAllTopicsSuccess, GetAllTopicsFailure, CreateTopic, CreateTopicSuccess, CreateTopicFailure, DeleteTopic, DeleteTopicSuccess, DeleteTopicFailure, GetSubscribedTopics, GetSubscribedTopicsSuccess, GetSubscribedTopicsFailure, GetTopicByID, GetTopicByIDSuccess, GetTopicByIDFailure, ClearSelectedTopic, AddPostToTopic, AddPostToTopicSuccess, AddPostToTopicFailure, SubscribeToTopicSuccess, SubscribeToTopicFailure, UnsubscribeFromTopic, UnsubscribeFromTopicSuccess, UnsubscribeFromTopicFailure, SubscribeToTopic, DeletePost, DeletePostSuccess, DeletePostFailure, SearchForTopic } from "../actions/topics.actions";
 import { TopicsService } from "src/app/services/topics/topics.service";
 import { UserState } from "./user.state";
 import { Observable } from "rxjs";
@@ -208,8 +208,9 @@ export class TopicsState {
     //Get Topic By ID
     @Action(GetTopicByID)
     GetTopicByID(context: StateContext<TopicsStateModel>, action: GetTopicByID) {
-        const state = context.getState()
-        state.selectedLoading = true
+        context.patchState({
+            selectedLoading: true
+        })
 
         this.topicsService.GetTopicByID(action.id).subscribe(
              res => {
@@ -367,5 +368,33 @@ export class TopicsState {
     DeletePostFailure(context: StateContext<TopicsStateModel>, action: DeletePostFailure) {
         console.error(`Error deleting topic topic: + ${action.error}`)
         this.notification.danger('Error deleting topic', action.error)
+    }
+
+    //Search
+    @Action(SearchForTopic)
+    SearchForTopic(context: StateContext<TopicsStateModel>, action: SearchForTopic) {
+        const topics = context.getState().topics
+        context.patchState({
+            isLoading: true,
+            topics: []
+        })
+
+        console.log(topics)
+        let filteredTopics = []
+
+        if(action.searchTerm.length > 0) {
+            topics.forEach(t => {
+                if(t.Title)
+                {
+                    if(t.Title.includes(action.searchTerm))
+                    { filteredTopics.push(t) }
+                }
+              })
+
+              context.dispatch(new GetAllTopicsSuccess(filteredTopics))
+        }
+        else {
+            context.dispatch(new GetAllTopics())
+        }
     }
 }

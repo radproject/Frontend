@@ -4,11 +4,12 @@ import { Router } from '@angular/router';
 import { Store, Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { TopicsState } from 'src/app/ngxs/states/topics.state';
-import { GetTopicByID } from 'src/app/ngxs/actions/topics.actions';
+import { GetTopicByID, SearchForTopic } from 'src/app/ngxs/actions/topics.actions';
 import { MatDialog } from '@angular/material';
 import { CreateTopicModalComponent } from 'src/app/components/create-topic-modal/create-topic-modal.component';
 import { UserState } from 'src/app/ngxs/states/user.state';
 import { IUser } from 'src/app/models/user.model';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-topic-list',
@@ -20,6 +21,11 @@ export class TopicListComponent implements OnInit {
     subscribed: true,
     all: true
   }
+  
+  searchForm: FormGroup
+    = new FormGroup({
+      searchTerm: new FormControl(null, [Validators.required])
+    })
   
   @Select(TopicsState.getTopics)
   allTopics: Observable<ITopic[]>
@@ -52,5 +58,9 @@ export class TopicListComponent implements OnInit {
 
   openCreateTopic() {
     this.dialog.open(CreateTopicModalComponent)
+  }
+
+  search() {
+    this.store.dispatch(new SearchForTopic(this.searchForm.value.searchTerm))
   }
 }

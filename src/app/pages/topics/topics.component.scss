@@ -10,16 +10,6 @@
         display: grid;
         grid-template-columns: 1fr auto;
 
-        // width: 100%;
-        // max-width: 1000px;
-        // min-width: 300px;
-        form {
-            display: grid;
-            grid-template-columns: auto 1fr auto;
-            grid-column-gap: 10px;
-            align-items: flex-end;
-        }
-
         .breadcrumbs {
             margin: 5px;
     
