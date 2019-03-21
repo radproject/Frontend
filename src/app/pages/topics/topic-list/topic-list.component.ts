@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Store, Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { TopicsState } from 'src/app/ngxs/states/topics.state';
+import { GetTopicByID } from 'src/app/ngxs/actions/topics.actions';
 
 @Component({
   selector: 'app-topic-list',
@@ -30,6 +31,7 @@ export class TopicListComponent implements OnInit {
   //TODO: TEST ONCE TOPICS ADDED
   openTopic(t: ITopic) {
     this.router.navigate([`/topics/${t.ID}`])
+    this.store.dispatch(new GetTopicByID(t.ID))
   }
 
   toggleHidden(n: number) {

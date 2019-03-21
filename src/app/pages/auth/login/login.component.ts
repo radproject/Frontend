@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['home'])
       this.store.dispatch(new GetUser())
     }, err => {0
-      this.notification.danger('Failed to login', err)
+      this.notification.danger('Failed to login', err.error.error_description)
     })
   }
 }

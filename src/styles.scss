@@ -1,2 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+//Toastr Fixes
+#toast-container>div {
+    opacity: none;
+  }
+  
+  .toast {
+    font-size: initial !important;
+    border: initial !important;
+    backdrop-filter: blur(0) !important;
+    color: white;
+  }
+  
+  .toast-success {
+    background-color: #51A351 !important;
+  }
+  
+  .toast-error {
+    color: white;
+    background-color: #BD362F !important;
+  }
+  
+  .toast-info {
+    background-color: #2F96B4 !important;
+  }
+  
+  .toast-warning {
+    background-color: #F89406 !important;
+  }
+  
