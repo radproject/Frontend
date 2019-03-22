@@ -1,19 +1,15 @@
 <h1 mat-dialog-title>Create a topic</h1>
 <div mat-dialog-content>
-  <p>Enter a topic name</p>
   <form [formGroup]='topicForm'>
     <div class='form-group'>
-      <input type='text' class='form-control' formControlName='name' />
-      
-      <label>
-        <input type="radio" value=false formControlName="private">
-          <span>public</span>
-      </label>
-      <label>
-        <input type="radio" value=true formControlName="private">
-          <span>private</span>
-      </label>
+      <label for='name'>Title:</label>
+      <input type='text' id='name' class='form-control' formControlName='name' />
     </div>
+    <div class='form-check'>
+      <input type='checkbox' id='private' class='form-check-input' formControlName='private'/>
+      <label for='private' class='form-check-label'>Private:</label>
+    </div>
+    <br/> 
     <button class='btn btn-primary' (click)='createTopic()' [disabled]='!topicForm.valid'>Create</button>
   </form>
 </div>

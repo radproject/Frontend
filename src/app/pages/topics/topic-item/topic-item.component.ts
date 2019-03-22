@@ -9,6 +9,8 @@ import { UserState } from 'src/app/ngxs/states/user.state';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { IPost } from 'src/app/models/post.model';
 import { IUser } from 'src/app/models/user.model';
+import { AddSubsModalComponent } from 'src/app/components/add-subs-modal/add-subs-modal.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-topic-item',
@@ -32,7 +34,7 @@ export class TopicItemComponent implements OnInit, OnDestroy {
   @Select(TopicsState.getSelectedLoading)
   isLoading$: Observable<boolean>
 
-  constructor(private store: Store, private route: ActivatedRoute) { }
+  constructor(private store: Store, private route: ActivatedRoute, public dialog: MatDialog) { }
 
   ngOnInit() {
     let id = this.route.snapshot.params['id']
@@ -76,19 +78,27 @@ export class TopicItemComponent implements OnInit, OnDestroy {
     this.store.dispatch(new DeletePost(id))
   }
   
-  isOwnerOrAnon() {
+  getRole() {
+    return 'owner'
     if(this.user) {
-      if(this.user.Id) {// RE-ADD WHEN CREATORS RETURNING FIXED= this.topic.Creator.Id) {
-        return true
+      if(!this.user.Id) {// RE-ADD WHEN CREATORS RETURNING FIXED= this.topic.Creator.Id) {
+        return 'owner'
       } 
       else {
-        return false
+        return 'user'
       }
     }
     else {
-      return true
+      return 'anon'
     }
   }
+
+  openAddSubs() {
+    this.dialog.open(AddSubsModalComponent, {
+      data: this.topic$
+    })
+  }
+
   openFileUpload() {
     // const client = filestack.init(environment.filestack);
     // const options = {

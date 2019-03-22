@@ -14,7 +14,7 @@
 </div>
 
 <!--Subscribed Topics-->
-<div class='topicList subbedTopics'>
+<div class='topicList subbedTopics' *ngIf='(user$|async)'>
     <h2>Your Subscribed Topics <mat-icon (click)='toggleHidden(0)'>{{(shown.subscribed)?('keyboard_arrow_up'):('keyboard_arrow_down')}}</mat-icon></h2>
     <div class='list' *ngIf='shown.subscribed'>
         <topic-list-item *ngFor='let t of (subbedTopics|async)' [TopicIn]='t' (click)='openTopic(t)'></topic-list-item>

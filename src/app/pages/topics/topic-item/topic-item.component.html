@@ -6,9 +6,12 @@
     </div>
     <h1>{{(topic$|async) != null?((topic$|async).Title):'Unknown'}}</h1>
     <small>Created: {{(topic$|async).CreationDate | date}}</small>
-    <div class='sub' *ngIf='!isOwnerOrAnon()'>
+    <div class='sub' *ngIf='getRole() == "user"'>
       <button class='btn btn-primary' *ngIf='!isSubbed()' (click)='subToTopic()'>Subscribe</button>
       <button class='btn btn-danger' *ngIf='isSubbed()' (click)='unsubFromTopic()'>Unsubscribe</button>
+    </div>
+    <div class='sub' *ngIf='getRole() == "owner"'>
+      <button class='btn btn-primary' (click)='openAddSubs()'>Add subscribers<mat-icon style="vertical-align: middle;">rss_feed</mat-icon></button>
     </div>
   </div>
   

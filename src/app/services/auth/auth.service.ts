@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment'
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { GetUser } from 'src/app/ngxs/actions/user.actions';
 import { Router } from '@angular/router';
@@ -43,5 +43,30 @@ export class AuthService {
 
   getUser() {
     return this._http.get<IUser>(`${environment.webApiURL}/account/getaccount`)
+  }
+
+  searchUsers(name: string) {
+    let tempUsers: IUser[] = [
+      {
+        Id: 'user1',
+        StudentId: 'student1',
+        Name: 'User Uno',
+        email: 'student1@email.com'
+      },
+      {
+        Id: 'user2',
+        StudentId: 'student2',
+        Name: 'User Dos',
+        email: 'student2@email.com'
+      },
+      {
+        Id: 'user3',
+        StudentId: 'student3',
+        Name: 'User Tres',
+        email: 'student2@email.com'
+      }
+    ]
+
+    return of(tempUsers)
   }
 }

@@ -30,6 +30,7 @@ import { Interceptor } from './services/htpp-interceptor.service';
 import { CreateTopicModalComponent } from './components/create-topic-modal/create-topic-modal.component';
 import { TopicsService } from './services/topics/topics.service';
 import { AuthService } from './services/auth/auth.service';
+import { AddSubsModalComponent } from './components/add-subs-modal/add-subs-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,6 +45,7 @@ import { AuthService } from './services/auth/auth.service';
     TopicsComponent,
     TopicListItemComponent,
     CreateTopicModalComponent,
+    AddSubsModalComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -63,7 +65,8 @@ import { AuthService } from './services/auth/auth.service';
   providers: [NotificationService, ToasterService, { provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true}, TopicsService, AuthService],
   bootstrap: [AppComponent],
   entryComponents: [
-    CreateTopicModalComponent
+    CreateTopicModalComponent,
+    AddSubsModalComponent
   ]
 })
 export class AppModule { }

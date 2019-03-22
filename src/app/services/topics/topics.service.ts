@@ -18,7 +18,12 @@ export class TopicsService {
   }
 
   CreateTopic(topic: Partial<ITopic>) {
-    return this._http.post(`${environment.webApiURL}/topics/create`, topic)
+    let body = {
+      Title: topic.Title,
+      CreationDate: new Date(),
+      isPrivate: topic.isPrivate
+    }
+    return this._http.post(`${environment.webApiURL}/topics/create`, body)
   }
 
   DeleteTopic(id: number) {
@@ -35,19 +40,19 @@ export class TopicsService {
 
   //Subbing and unsubbing
   SubscribeToTopic(UserId: string, TopicId: number) {
-    let body = {
-      TopicId: TopicId,
-      UserId: UserId
-    }
-    return this._http.post(`${environment.webApiURL}/topics/AddSubscriberToPost`, body)
+    if(UserId)
+    { UserId = `&UserId=${UserId}` }
+    else
+    { UserId = 'none' }
+    return this._http.post(`${environment.webApiURL}/topics/subscribe?TopicId=${TopicId}&UserId=${UserId}`, null)
   }
 
   UnsubscribeFromTopic(UserId: string, TopicId: number) {
-    let body = {
-      TopicId: TopicId,
-      UserId: UserId
-    }
-    return this._http.post(`${environment.webApiURL}/topics/RemoveSubscriberFromPost`, body)
+    if(UserId)
+    { UserId = `&UserId=${UserId}` }
+    else
+    { UserId = 'none' }
+    return this._http.post(`${environment.webApiURL}/topics/unsubscribe?TopicId=${TopicId}&UserId=${UserId}`, null)
   }
 
   //POSTS

@@ -6,8 +6,12 @@
         display: grid;
         grid-template-columns: auto 1fr auto;
         grid-column-gap: 10px;
-        align-items: flex-end;
+        align-items: center;
         justify-items: right;
+
+        input {
+            min-width: 150px;
+        }
     }
 
     .addTopic {

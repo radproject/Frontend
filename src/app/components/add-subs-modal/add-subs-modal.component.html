@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Add subscribers</h1>
+<div mat-dialog-content>
+  <form [formGroup]='userSearchForm'>
+    <input type='text' id='name' formControlName='name'/>
+    <button class='btn btn-primary' [disabled]='userSearchForm.invalid' (click)='searchForUser()'>Search</button>
+  </form>
+  <div class='results'>
+    <div *ngFor='let u of (results$|async)' class='item'>
+      <h5>{{u.Name}} ({{u.StudentId}})</h5>
+      <button class='btn btn-primary' [class.btn-danger]='(subsAdded.includes(u))' (click)='addSub(u)'><mat-icon>{{(subsAdded.includes(u))?'remove':'add'}}</mat-icon></button>
+    </div>
+  </div>
+</div>

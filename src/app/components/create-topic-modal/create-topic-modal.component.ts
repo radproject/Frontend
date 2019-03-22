@@ -27,7 +27,7 @@ export class CreateTopicModalComponent implements OnInit {
     public dialogRef: MatDialogRef<CreateTopicModalComponent>,
     private store: Store,
     @Inject(MAT_DIALOG_DATA)
-    public data,
+    public data
     ) { }
 
   ngOnInit() {
