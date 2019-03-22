@@ -14,11 +14,17 @@ export class RegisterComponent implements OnInit {
     = new FormGroup({
       name: new FormControl(null, [Validators.required]),
       email: new FormControl(null, [Validators.required]),
+      studentnumber: new FormControl(null, [Validators.required]),
       password: new FormControl(null, [Validators.required]),
       confirmPassword: new FormControl(null, [Validators.required])
     }, {
         validators: this.passwordsMatch('password', 'confirmPassword')
       })
+
+  backendErrors = {
+    general: null,
+    password: null
+  }
 
   passwordsMatch(p1: string, p2: string) {
     return (group: FormGroup): { [key: string]: any } => {
@@ -37,11 +43,35 @@ export class RegisterComponent implements OnInit {
   ngOnInit() { }
 
   register() {
-    this.auth.register(this.registerForm.value.email, this.registerForm.value.password, this.registerForm.value.confirmPassword).subscribe(res => {
+    this.auth.register(this.registerForm.value.email, this.registerForm.value.password, this.registerForm.value.confirmPassword, this.registerForm.value.studentnumber).subscribe(res => {
       this.notification.success("Registration Complete", `${this.registerForm.value.name}, You registered Successfully!`)
       this.router.navigate(['/auth/login'])
     }, err => {
-      this.notification.danger('Failed to register', err)
+      let messages = err.error.ModelState
+      this.backendErrors = {
+        general: null,
+        password: null
+      }
+      console.log(err)
+      if(err.error) {
+        if(err.error.Message)
+        {
+          this.backendErrors.general = (err.error.Message)
+          this.notification.danger('Failed to register', err.error.Message)
+        }
+        else if(err.error['Message'])
+        {
+          this.backendErrors.general = (err.error['Message'])
+          this.notification.danger('Failed to register', messages.error['Message'])
+        }
+      }
+      if(messages) {
+        if(messages[''] != undefined) {
+          this.backendErrors.password = (messages[''] as String[]).join(',')
+        }
+        if(messages['model.ConfirmPassword'] != undefined) {
+          this.backendErrors.password = `${this.backendErrors},${(messages['model.ConfirmPassword'] as String[]).join(',') }` }
+      }
     })
   }
 
