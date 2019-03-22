@@ -67,9 +67,9 @@ export class TopicsService {
   CreatePost(text: string, threadID: number, userID: string) {
     let body =
     {
-      ThreadID: threadID,
-      UserId: userID,
-      Text: text
+      ThreadId: threadID,
+      Text: text,
+      UserId: userID
     }
     return this._http.post(`${environment.webApiURL}/posts/create`, body)
   }
