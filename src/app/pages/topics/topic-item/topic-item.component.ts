@@ -79,9 +79,8 @@ export class TopicItemComponent implements OnInit, OnDestroy {
   }
   
   getRole() {
-    return 'owner'
     if(this.user) {
-      if(!this.user.Id) {// RE-ADD WHEN CREATORS RETURNING FIXED= this.topic.Creator.Id) {
+      if(this.user.Id == this.topic.Creator.Id) {// RE-ADD WHEN CREATORS RETURNING FIXED= this.topic.Creator.Id) {
         return 'owner'
       } 
       else {
