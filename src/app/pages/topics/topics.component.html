@@ -3,8 +3,8 @@
       <div class="breadcrumbs">
         <a (click)='returnToIndex()'*ngIf='router.url != "/topics/browse"'>Browse</a>
         <a *ngIf='router.url == "/topics/browse"' style='color: black'>Browse</a>
-        <label>{{(selectedTopic | async)?('>'):('')}}</label>
-        <a>{{(selectedTopic | async)?((selectedTopic|async).Title):('')}}</a>
+        <label>{{(selectedTopic|async)?('>'):('')}}</label>
+        <a>{{getTitle()}}</a>
       </div>
   </div>
   

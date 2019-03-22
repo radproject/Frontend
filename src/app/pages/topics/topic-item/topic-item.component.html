@@ -6,7 +6,7 @@
     </div>
     <h1>{{(topic$|async) != null?((topic$|async).Title):'Unknown'}}</h1>
     <small>Created: {{(topic$|async).CreationDate | date}}</small>
-    <div class='sub' *ngIf='(user$|async)'>
+    <div class='sub' *ngIf='!isOwnerOrAnon()'>
       <button class='btn btn-primary' *ngIf='!isSubbed()' (click)='subToTopic()'>Subscribe</button>
       <button class='btn btn-danger' *ngIf='isSubbed()' (click)='unsubFromTopic()'>Unsubscribe</button>
     </div>

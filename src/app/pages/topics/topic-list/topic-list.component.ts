@@ -34,6 +34,9 @@ export class TopicListComponent implements OnInit {
   @Select(TopicsState.getSubbedTopics)
   subbedTopics: Observable<ITopic[]>
 
+  @Select(UserState.getUser)
+  user$: Observable<IUser>
+
   constructor(private router: Router, private store: Store, public dialog: MatDialog) { }
 
   ngOnInit() {

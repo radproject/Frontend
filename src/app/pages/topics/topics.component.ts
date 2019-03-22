@@ -16,7 +16,7 @@ import { IUser } from 'src/app/models/user.model';
 })
 export class TopicsComponent implements OnInit {  
   @Select(TopicsState.getSelectedTopic)
-  selectedTopic: ITopic
+  selectedTopic: Observable<ITopic>
 
   @Select(UserState.getUser)
   user$: Observable<IUser>
@@ -31,4 +31,17 @@ export class TopicsComponent implements OnInit {
     this.router.navigate(['/topics/browse'])
   }
 
+  getTitle() {
+    this.selectedTopic.subscribe(res => {
+      if(res) {
+        return res.Title
+      }
+      else {
+        return ''
+      }
+    },
+    err => {
+      return ''
+    })
+  }
 }

@@ -114,13 +114,16 @@ export class TopicsState {
         const state = context.getState()
         state.isLoading = true
 
-        this.topicsService.CreateTopic(action.topic).toPromise()
-            .then(res => {
+        this.topicsService.CreateTopic(action.topic)
+            .toPromise().then(
+            res => {
                 context.dispatch(new CreateTopicSuccess())
-            })
-            .catch(err => {
+            },
+            ).catch(
+            err => {
                 context.dispatch(new CreateTopicFailure(err.error.Message))
-            })
+            }
+        )
 
     }
 
@@ -147,13 +150,14 @@ export class TopicsState {
         const state = context.getState()
         state.isLoading = true
 
-        this.topicsService.DeleteTopic(action.id).toPromise()
-            .then(res => {
+        this.topicsService.DeleteTopic(action.id).subscribe(
+            res => {
                 context.dispatch(new DeleteTopicSuccess())
-            })
-            .catch(err => {
+            },
+            err => {
                 context.dispatch(new DeleteTopicFailure(err.error.Message))
-            })
+            }
+        ).unsubscribe
     }
 
     @Action(DeleteTopicSuccess)
@@ -253,15 +257,9 @@ export class TopicsState {
     //Add post to topic
     @Action(AddPostToTopic)
     AddPostToTopic(context: StateContext<TopicsStateModel>, action: AddPostToTopic) {
-        this.topicsService.CreatePost(action.post.Text, action.topicID, action.post.Creator.StudentId)
-        .subscribe(
-            res => {
-                context.dispatch(new AddPostToTopicSuccess())
-            },
-            err => {
-                context.dispatch(new AddPostToTopicFailure(err.error.Message))
-            }
-        )
+        this.topicsService.CreatePost(action.post.Text, action.topicID, action.post.Creator.Id).toPromise()
+        .then(res => { context.dispatch(new AddPostToTopicSuccess()) })
+        .catch( err => { context.dispatch(new AddPostToTopicFailure(err.error.Message)) })
     }
 
     @Action(AddPostToTopicSuccess)
@@ -271,8 +269,8 @@ export class TopicsState {
 
     @Action(AddPostToTopicFailure)
     AddPostToTopicFailure(context: StateContext<TopicsStateModel>, action: AddPostToTopicFailure) {
-        console.error(`Error gettting topic: + ${action.error}`)
-        this.notification.danger('Error getting topic', action.error)
+        console.error(`Error creating post: + ${action.error}`)
+        this.notification.danger('Error creating post', action.error)
     }    
     
     //Sub to topic    
@@ -282,14 +280,9 @@ export class TopicsState {
             user => {
                 if(user != null)
                 {
-                    this.topicsService.SubscribeToTopic(user.StudentId, action.id).subscribe(
-                        res => {
-                            context.dispatch(new SubscribeToTopicSuccess())
-                        },
-                        err => {
-                            context.dispatch(new SubscribeToTopicFailure(err.error.error_description))
-                        }
-                    ).unsubscribe()
+                    this.topicsService.SubscribeToTopic(user.StudentId, action.id).toPromise()
+                    .then( res => { context.dispatch(new SubscribeToTopicSuccess()) })
+                    .catch( err => { context.dispatch(new SubscribeToTopicFailure(err.error.error_description)) })
                 }
                 else
                 {
@@ -322,14 +315,9 @@ export class TopicsState {
             user => {
                 if(user != null)
                 {
-                    this.topicsService.UnsubscribeFromTopic(user.StudentId, action.id).subscribe(
-                        res => {
-                            context.dispatch(new UnsubscribeFromTopicSuccess())
-                        },
-                        err => {
-                            context.dispatch(new UnsubscribeFromTopicFailure(err))
-                        }
-                    ).unsubscribe()
+                    this.topicsService.UnsubscribeFromTopic(user.StudentId, action.id).toPromise()
+                        .then(res => { context.dispatch(new UnsubscribeFromTopicSuccess()) })
+                        .catch( err => { context.dispatch(new UnsubscribeFromTopicFailure(err)) })
                 }
                 else
                 {
@@ -354,14 +342,9 @@ export class TopicsState {
     //DELETE POST
     @Action(DeletePost)
     DeletePost(context: StateContext<TopicsStateModel>, action: DeletePost) {
-        this.topicsService.DeletePost(action.id).subscribe(
-            res => {
-                context.dispatch(new DeletePostSuccess())
-            },
-            err => {
-                context.dispatch(new DeletePostFailure(err.error.Message))
-            }
-        )   
+        this.topicsService.DeletePost(action.id).toPromise()
+        .then( res => { context.dispatch(new DeletePostSuccess()) })
+        .catch( err => { context.dispatch(new DeletePostFailure(err.error.Message)) })
     }
 
     @Action(DeletePostSuccess)

@@ -76,6 +76,19 @@ export class TopicItemComponent implements OnInit, OnDestroy {
     this.store.dispatch(new DeletePost(id))
   }
   
+  isOwnerOrAnon() {
+    if(this.user) {
+      if(this.user.Id) {// RE-ADD WHEN CREATORS RETURNING FIXED= this.topic.Creator.Id) {
+        return true
+      } 
+      else {
+        return false
+      }
+    }
+    else {
+      return true
+    }
+  }
   openFileUpload() {
     // const client = filestack.init(environment.filestack);
     // const options = {

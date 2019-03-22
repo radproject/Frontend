@@ -40,7 +40,12 @@ export class UserState {
 
         this.authService.getUser().subscribe(
             res => {
-                context.dispatch(new GetUserSuccess(res))
+                if(res) {
+                    context.dispatch(new GetUserSuccess(res))
+                }
+                else {
+                    context.dispatch(new GetUserFailure('Err'))
+                }
             },
             err => {
                 context.dispatch(new GetUserFailure(err))

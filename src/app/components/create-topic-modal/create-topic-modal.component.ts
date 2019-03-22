@@ -46,6 +46,6 @@ export class CreateTopicModalComponent implements OnInit {
         this.store.dispatch(new CreateTopic(newTopic))
         this.dialogRef.close()
       }
-    })
+    }).unsubscribe()
   }
 }

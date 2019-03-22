@@ -26,13 +26,19 @@ export class LoginComponent implements OnInit {
 
   tryLogin() {
     this.auth.login(this.loginForm.value.email, this.loginForm.value.password).subscribe((res: {access_token: string, id_token: string}) => {
-      localStorage.setItem('access_token', res.access_token)
-      localStorage.setItem('id_token', res.id_token)
-      localStorage.setItem('expiry', res['.expiry'])
-      this.notification.info('Successful Login', "You logged in succesfully!")
-      this.router.navigate(['home'])
-      this.store.dispatch(new GetUser())
-    }, err => {0
+      if(res != null)
+      {
+        localStorage.setItem('access_token', res.access_token)
+        localStorage.setItem('id_token', res.id_token)
+        localStorage.setItem('expiry', res['.expiry'])
+        this.notification.info('Successful Login', "You logged in succesfully!")
+        this.router.navigate(['home'])
+        this.store.dispatch(new GetUser())
+      }
+      else {
+        this.notification.danger('Failed to login', 'No token received')
+      }
+    }, err => {
       this.notification.danger('Failed to login', err.error.error_description)
     })
   }

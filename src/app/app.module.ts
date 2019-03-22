@@ -28,6 +28,8 @@ import { NotificationService } from './services/notification/notification.servic
 import { TopicListItemComponent } from './components/topics/topic-list-item/topic-list-item.component';
 import { Interceptor } from './services/htpp-interceptor.service';
 import { CreateTopicModalComponent } from './components/create-topic-modal/create-topic-modal.component';
+import { TopicsService } from './services/topics/topics.service';
+import { AuthService } from './services/auth/auth.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,7 +60,7 @@ import { CreateTopicModalComponent } from './components/create-topic-modal/creat
     NgxsReduxDevtoolsPluginModule.forRoot(),
     BrowserAnimationsModule
   ],
-  providers: [NotificationService, ToasterService, { provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true}],
+  providers: [NotificationService, ToasterService, { provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true}, TopicsService, AuthService],
   bootstrap: [AppComponent],
   entryComponents: [
     CreateTopicModalComponent
