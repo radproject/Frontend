@@ -8,18 +8,22 @@
     <div class='form-group'>
       <label for='email'>Email*</label>
       <input type='text' id='email' class='form-control' formControlName='email' placeholder="johnsmith@email.com"/>
+      <small class='error'>{{(backendErrors.email)?backendErrors.email:''}}</small>
     </div>
     <div class='form-group'>
       <label for='studentnumber'>Student Number*</label>
       <input type='text' id='studentnumber' class='form-control' formControlName='studentnumber' placeholder="S12345678"/>
+      <small class='error'>{{(backendErrors.studentnumber)?backendErrors.studentnumber:''}}</small>
     </div>
     <div class='form-group'>
       <label for='password'>Password*</label>
       <input autocomplete="off" type='password' id='password' class='form-control' formControlName='password'/>
+      <small class='error'>{{(backendErrors.password)?backendErrors.password:''}}</small>
     </div>
     <div class='form-group'>
       <label for='confirmPassword'>Confirm Password*</label>
       <input autocomplete="off" type='password' id='confirmPassword' class='form-control' formControlName='confirmPassword'/>
+      <small class='error'>{{(backendErrors.confirmPassword)?backendErrors.confirmPassword:''}}</small>
     </div>
     <small class='error' *ngIf='registerForm.errors'>{{(registerForm.errors)?registerForm.errors.passMatch:null}}</small>
     <div class='buttons'>
