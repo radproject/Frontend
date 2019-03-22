@@ -22,10 +22,8 @@ export class RegisterComponent implements OnInit {
       })
 
   backendErrors = {
-    email: null,
-    password: null,
-    confirmPassword: null,
-    studentnumber: null
+    general: null,
+    password: null
   }
 
   passwordsMatch(p1: string, p2: string) {
@@ -51,23 +49,29 @@ export class RegisterComponent implements OnInit {
     }, err => {
       let messages = err.error.ModelState
       this.backendErrors = {
-        email: null,
-        password: null,
-        confirmPassword: null,
-        studentnumber: null
+        general: null,
+        password: null
       }
       console.log(err)
-      if(err.error['Message']) {
-        this.backendErrors.email = (err.error['Message'])
+      if(err.error) {
+        if(err.error.Message)
+        {
+          this.backendErrors.general = (err.error.Message)
+          this.notification.danger('Failed to register', err.error.Message)
+        }
+        else if(err.error['Message'])
+        {
+          this.backendErrors.general = (err.error['Message'])
+          this.notification.danger('Failed to register', messages.error['Message'])
+        }
       }
-      if(messages['model.Password'] != undefined) {
-        this.backendErrors.password = (messages['model.Password'] as String[]).join(',')
+      if(messages) {
+        if(messages[''] != undefined) {
+          this.backendErrors.password = (messages[''] as String[]).join(',')
+        }
+        if(messages['model.ConfirmPassword'] != undefined) {
+          this.backendErrors.password = `${this.backendErrors},${(messages['model.ConfirmPassword'] as String[]).join(',') }` }
       }
-      if(messages['model.ConfirmPassword'] != undefined) {
-        this.backendErrors.password = `${this.backendErrors},${(messages['model.ConfirmPassword'] as String[]).join(',') }` }
-      if(messages['model.StudentNumber'] != undefined)
-      { this.backendErrors.studentnumber = (messages['model.StudentNumber'] as String[]).join(',') }
-
     })
   }
 
