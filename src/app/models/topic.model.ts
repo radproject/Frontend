@@ -4,7 +4,7 @@ import { IUser } from "./user.model";
 export interface ITopic {
     ID: number
     Title: string
-    CreationDate: Date
+    CreationDate: Date | number
     Creator: IUser
     isPrivate: boolean
 

@@ -3,6 +3,9 @@ import { NotificationService } from 'src/app/services/notification/notification.
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { IUser } from 'src/app/models/user.model';
+import { Select } from '@ngxs/store';
+import { UserState } from 'src/app/ngxs/states/user.state';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-navigation',
@@ -10,7 +13,9 @@ import { IUser } from 'src/app/models/user.model';
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit {
-  user: IUser;
+  
+  @Select(UserState.getUser)
+  user$: Observable<IUser>
 
   constructor(
     public router: Router,
@@ -18,7 +23,6 @@ export class NavigationComponent implements OnInit {
     private notification: NotificationService ) { }
 
   ngOnInit() {
-    // this.auth.user$.subscribe(res => { this.user = res })
   }
 
   selectPage(route: string) {

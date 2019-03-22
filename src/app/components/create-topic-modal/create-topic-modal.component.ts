@@ -40,7 +40,7 @@ export class CreateTopicModalComponent implements OnInit {
         let newTopic: Partial<ITopic> = {
           Title: this.topicForm.value.name,
           CreationDate: new Date(),
-          Creator: u,
+          // Creator: u,
           isPrivate: this.topicForm.value.private
         }
         this.store.dispatch(new CreateTopic(newTopic))

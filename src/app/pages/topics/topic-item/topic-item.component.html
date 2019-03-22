@@ -1,4 +1,4 @@
-<div class='pageContainer' *ngIf='!(isLoading$|async)'>
+<div class='pageContainer' *ngIf='(topic$|async)!=null && !(isLoading$|async)'>
   <div class='topRow'>
     <div class='private'>
         <mat-icon *ngIf='(topic$|async).isPrivate'>lock_open</mat-icon>
@@ -45,4 +45,10 @@
     <button class='btn btn-primary' (click)='openFileUpload()'><mat-icon>attachment</mat-icon></button>
     <button class='btn btn-primary' (click)='tryPost()' [disabled]='!postForm.valid'><mat-icon>send</mat-icon></button>
   </form>
+</div>
+<div *ngIf='(topic$|async)==null && !(isLoading$|async)'>
+  <h1>Topic does not exist or failed to get topic</h1>
+</div>
+<div *ngIf='(isLoading$|async)'>
+  <h1>Loading</h1>
 </div>

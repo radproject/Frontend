@@ -6,11 +6,11 @@
       <span routerLink='/topics/' routerLinkActive='active'>Forums</span>
       <!-- <span routerLink='/info/' routerLinkActive='active'>Info</span> -->
     </div>
-    <div class="auth" *ngIf='!user'>
+    <div class="auth" *ngIf='!(user$|async)'>
       <span routerLink='/auth/login/' routerLinkActive='active'>Login</span>
       <span routerLink='/auth/register/' routerLinkActive='active'>Register</span>
     </div>
-    <div class="auth" *ngIf='user'>
+    <div class="auth" *ngIf='(user$|async)'>
         <span (click)='logout()'>Logout</span>
         <!-- <span (click)='selectPage("user")' [class.active]='router.url =="/user"'>My Profile</span> -->
     </div>
