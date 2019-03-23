@@ -11,6 +11,7 @@ import { IPost } from 'src/app/models/post.model';
 import { IUser } from 'src/app/models/user.model';
 import { AddSubsModalComponent } from 'src/app/components/add-subs-modal/add-subs-modal.component';
 import { MatDialog } from '@angular/material';
+import { UrlShortenerModalComponent } from 'src/app/components/url-shortener-modal/url-shortener-modal.component';
 
 @Component({
   selector: 'app-topic-item',
@@ -130,6 +131,6 @@ export class TopicItemComponent implements OnInit, OnDestroy {
   }
 
   openURLShorten() {
-
+    this.dialog.open(UrlShortenerModalComponent)
   }
 }

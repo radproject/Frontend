@@ -31,6 +31,7 @@ import { CreateTopicModalComponent } from './components/create-topic-modal/creat
 import { TopicsService } from './services/topics/topics.service';
 import { AuthService } from './services/auth/auth.service';
 import { AddSubsModalComponent } from './components/add-subs-modal/add-subs-modal.component';
+import { UrlShortenerModalComponent } from './components/url-shortener-modal/url-shortener-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +47,7 @@ import { AddSubsModalComponent } from './components/add-subs-modal/add-subs-moda
     TopicListItemComponent,
     CreateTopicModalComponent,
     AddSubsModalComponent,
+    UrlShortenerModalComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -66,7 +68,8 @@ import { AddSubsModalComponent } from './components/add-subs-modal/add-subs-moda
   bootstrap: [AppComponent],
   entryComponents: [
     CreateTopicModalComponent,
-    AddSubsModalComponent
+    AddSubsModalComponent,
+    UrlShortenerModalComponent
   ]
 })
 export class AppModule { }

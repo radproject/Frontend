@@ -4,10 +4,8 @@
 
 export const environment = {
   production: false,
-
   webApiURL: 'http://localhost:54579',
-
-  filestack: 'AnLEpIiapRyOmghZdrMgVz'
+  rebrandly: '69222719409145cfa80e7733bcb1c95f'
 };
 
 /*

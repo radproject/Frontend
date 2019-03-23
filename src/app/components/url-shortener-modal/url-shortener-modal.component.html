@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Enter a URL to shorten</h1>
+<div mat-dialog-content>
+  <form [formGroup]='urlShortenForm'>
+    <input type='text' id='name' formControlName='longUrl'/>
+    <button class='btn btn-primary' [disabled]='urlShortenForm.invalid' (click)='shorten()'>Shorten</button>
+  </form>
+  <div class='results'>
+    <h4>{{shortUrl}}</h4>
+  </div>
+</div>
