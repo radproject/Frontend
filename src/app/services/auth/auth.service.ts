@@ -52,19 +52,25 @@ export class AuthService {
         Id: 'user1',
         StudentId: 'student1',
         Name: 'User Uno',
-        email: 'student1@email.com'
+        email: 'student1@email.com',
+        FirstName: 'User',
+        LastName: '1'
       },
       {
         Id: 'user2',
         StudentId: 'student2',
         Name: 'User Dos',
-        email: 'student2@email.com'
+        email: 'student2@email.com',
+        FirstName: 'User',
+        LastName: '2'
       },
       {
         Id: 'user3',
         StudentId: 'student3',
         Name: 'User Tres',
-        email: 'student2@email.com'
+        email: 'student2@email.com',
+        FirstName: 'User',
+        LastName: '3'
       }
     ]
 

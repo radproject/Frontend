@@ -80,9 +80,9 @@ export class TopicItemComponent implements OnInit, OnDestroy {
   
   getRole() {
     if(this.user != null) {
-      if(this.topic.Creator != null)
+      if(this.topic.creator != null)
       {
-        if(this.user.Id == this.topic.Creator.Id) {
+        if(this.user.Id == this.topic.creator.Id) {
           return 'owner'
         } 
         else {

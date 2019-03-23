@@ -6,4 +6,6 @@ export interface IUser {
     Name: string
     email: string
     subscribedTopics?: number[];
+    FirstName: string
+    LastName: string
 }

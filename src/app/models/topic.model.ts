@@ -5,7 +5,7 @@ export interface ITopic {
     Id: number
     Title: string
     CreationDate: Date | number
-    Creator: IUser
+    creator: IUser
     isPrivate: boolean
 
     posts?: IPost[]

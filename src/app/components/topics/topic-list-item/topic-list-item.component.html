@@ -4,6 +4,6 @@
     <mat-icon *ngIf='!topic.isPrivate'>public</mat-icon>
   </div>
   <h3 class='title'>{{topic.Title?topic.Title:'Unknown'}}</h3>
-  <h5 class='creator'>{{topic.Creator?topic.Creator.Name:'Anon'}}</h5>
+  <h5 class='creator'>{{topic.creator?(topic.creator.FirstName + ' ' + topic.creator.LastName):'Anon'}}</h5>
   <small class='date'>{{topic.CreationDate?(topic.CreationDate | date):''}}</small>
 </div>
