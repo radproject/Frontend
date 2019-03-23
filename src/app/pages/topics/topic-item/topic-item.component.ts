@@ -79,7 +79,7 @@ export class TopicItemComponent implements OnInit, OnDestroy {
   }
   
   getRole() {
-    if(this.user) {
+    if(this.user != null) {
       if(this.user.Id == this.topic.Creator.Id) {// RE-ADD WHEN CREATORS RETURNING FIXED= this.topic.Creator.Id) {
         return 'owner'
       } 
@@ -98,6 +98,23 @@ export class TopicItemComponent implements OnInit, OnDestroy {
     })
   }
 
+  isUsersPost(p: IPost) {
+    if(this.user != null)
+    {
+      if(this.user.Id == p.Creator.Id)
+      {
+        return true
+      }
+      else
+      {
+        return false
+      }
+    }
+    else
+    {
+      return false
+    }
+  }
   openFileUpload() {
     // const client = filestack.init(environment.filestack);
     // const options = {

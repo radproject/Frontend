@@ -20,7 +20,7 @@
       <div class='info'>
         <div>
           <h4>{{p.Creator?p.Creator.Name:'Anon'}}</h4>
-          <p>({{p.Creator?p.Creator.StudentId:''}})</p>
+          <p>{{p.Creator?('('+p.Creator.StudentId+')'):''}}</p>
         </div>
         <small>Posted: {{p.TimeStamp*1000|date}}</small>
       </div>
@@ -28,7 +28,7 @@
         <p>{{p.Text}}</p>
       </div>
       <div class='info'>
-        <div>
+        <div *ngIf='isUsersPost(p)'>
           <mat-icon (click)='deletePost(p.ID)' class="delete">delete</mat-icon>
         </div>
       </div>
