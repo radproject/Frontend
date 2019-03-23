@@ -48,30 +48,6 @@ export class AuthService {
   }
 
   searchUsers(name: string) {
-    let tempUsers: IUser[] = [
-      {
-        Id: 'user1',
-        StudentId: 'student1',
-        Name: 'User Uno',
-        email: 'student1@email.com',
-        FullName: 'User 1'
-      },
-      {
-        Id: 'user2',
-        StudentId: 'student2',
-        Name: 'User Dos',
-        email: 'student2@email.com',
-        FullName: 'User 2'
-      },
-      {
-        Id: 'user3',
-        StudentId: 'student3',
-        Name: 'User Tres',
-        email: 'student2@email.com',
-        FullName: 'User 3'
-      }
-    ]
-
-    return of(tempUsers)
+    return this._http.get<IUser[]>(`${environment.webApiURL}/account/getusers?searchParam=${name}`)
   }
 }

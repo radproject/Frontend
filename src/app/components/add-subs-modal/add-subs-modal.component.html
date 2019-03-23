@@ -6,7 +6,7 @@
   </form>
   <div class='results'>
     <div *ngFor='let u of (results$|async)' class='item'>
-      <h5>{{u.Name}} ({{u.StudentId}})</h5>
+      <h5>{{u.FullName}} ({{u.StudentId}})</h5>
       <button class='btn btn-primary' [class.btn-danger]='(subsAdded.includes(u))' (click)='addSub(u)'><mat-icon>{{(subsAdded.includes(u))?'remove':'add'}}</mat-icon></button>
     </div>
   </div>
