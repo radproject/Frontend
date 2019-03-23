@@ -20,7 +20,7 @@ import { MatDialog } from '@angular/material';
 export class TopicItemComponent implements OnInit, OnDestroy {
   postForm: FormGroup
     = new FormGroup({
-      message: new FormControl(null, [Validators.required])
+      message: new FormControl(null, [Validators.required, Validators.maxLength(200)])
     })
 
   @Select(UserState.getUser)
