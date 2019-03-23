@@ -43,8 +43,8 @@ export class TopicListComponent implements OnInit {
   }
 
   openTopic(t: ITopic) {
-    this.router.navigate([`/topics/${t.ID}`])
-    this.store.dispatch(new GetTopicByID(t.ID))
+    this.router.navigate([`/topics/${t.Id}`])
+    this.store.dispatch(new GetTopicByID(t.Id))
   }
 
   toggleHidden(n: number) {

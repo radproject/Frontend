@@ -1,7 +1,7 @@
 import { IUser } from "./user.model";
 
 export interface IPost {
-    ID: number
+    Id: number
     Text: string
     TimeStamp: number
     // ThreadID: number
