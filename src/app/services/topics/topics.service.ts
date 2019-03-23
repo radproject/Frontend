@@ -27,7 +27,7 @@ export class TopicsService {
   }
 
   DeleteTopic(id: number) {
-    return this._http.post(`${environment.webApiURL}/topics/DeletePost`, id)
+    return this._http.post(`${environment.webApiURL}/topics/delete?id=${id}`, id)
   }
 
   UpdateTopic(topic: ITopic) {

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
-import { ClearSelectedTopic, GetTopicByID, AddPostToTopic, SubscribeToTopic, UnsubscribeFromTopic, DeletePost } from 'src/app/ngxs/actions/topics.actions';
+import { ClearSelectedTopic, GetTopicByID, AddPostToTopic, SubscribeToTopic, UnsubscribeFromTopic, DeletePost, DeleteTopic } from 'src/app/ngxs/actions/topics.actions';
 import { ActivatedRoute } from '@angular/router';
 import { TopicsState } from 'src/app/ngxs/states/topics.state';
 import { Observable } from 'rxjs';
@@ -122,6 +122,11 @@ export class TopicItemComponent implements OnInit, OnDestroy {
       return false
     }
   }
+
+  deleteTopic() {
+    this.store.dispatch(new DeleteTopic(this.topic.Id))
+  }
+
   openFileUpload() {
     // const client = filestack.init(environment.filestack);
     // const options = {
