@@ -51,7 +51,7 @@ export class TopicItemComponent implements OnInit, OnDestroy {
   tryPost() {
     let newPost: Partial<IPost> = {
       Text: this.postForm.value.message,
-      Creator: this.user
+      creator: this.user
     }
     this.store.dispatch(new AddPostToTopic(this.topic.Id, newPost ))
   }
@@ -106,9 +106,9 @@ export class TopicItemComponent implements OnInit, OnDestroy {
   }
 
   isUsersPost(p: IPost) {
-    if(this.user != null && p.Creator != null)
+    if(this.user != null && p.creator != null)
     {
-      if(this.user.Id == p.Creator.Id)
+      if(this.user.Id == p.creator.Id)
       {
         return true
       }

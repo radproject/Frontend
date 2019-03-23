@@ -18,9 +18,9 @@
   <div *ngIf='((topic$|async).posts)' class='postList'>
     <div *ngFor='let p of ((topic$|async).posts)' class='postItem'>
       <div class='info'>
-        <div>
-          <h4>{{p.Creator?p.Creator.Name:'Anon'}}</h4>
-          <p>{{p.Creator?('('+p.Creator.StudentId+')'):''}}</p>
+        <div *ngIf='p.creator'>
+          <h4>{{p.creator.FullName?p.creator.FullName:'Anon'}}</h4>
+          <p>{{p.creator.StudentId?('(' + p.creator.StudentId + ')'):''}}</p>
         </div>
         <small>Posted: {{p.TimeStamp*1000|date}}</small>
       </div>

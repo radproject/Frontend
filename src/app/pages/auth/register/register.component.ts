@@ -43,7 +43,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit() { }
 
   register() {
-    this.auth.register(this.registerForm.value.email, this.registerForm.value.password, this.registerForm.value.confirmPassword, this.registerForm.value.studentnumber).subscribe(res => {
+    this.auth.register(this.registerForm.value.email, this.registerForm.value.password, this.registerForm.value.confirmPassword, this.registerForm.value.studentnumber, this.registerForm.value.name).subscribe(res => {
       this.notification.success("Registration Complete", `${this.registerForm.value.name}, You registered Successfully!`)
       this.router.navigate(['/auth/login'])
     }, err => {

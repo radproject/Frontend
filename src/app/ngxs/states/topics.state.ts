@@ -257,7 +257,7 @@ export class TopicsState {
     //Add post to topic
     @Action(AddPostToTopic)
     AddPostToTopic(context: StateContext<TopicsStateModel>, action: AddPostToTopic) {
-        this.topicsService.CreatePost(action.post.Text, action.topicID, action.post.Creator.Id).toPromise()
+        this.topicsService.CreatePost(action.post.Text, action.topicID).toPromise()
         .then(res => { context.dispatch(new AddPostToTopicSuccess()) })
         .catch( err => { context.dispatch(new AddPostToTopicFailure(err.error.Message)) })
     }

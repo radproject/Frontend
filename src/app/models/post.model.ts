@@ -4,6 +4,5 @@ export interface IPost {
     Id: number
     Text: string
     TimeStamp: number
-    // ThreadID: number
-    Creator: IUser
+    creator: IUser
 }

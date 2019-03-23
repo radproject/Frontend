@@ -29,12 +29,13 @@ export class AuthService {
   }
 
   //POST: Register with provided credentials
-  register(username: string, password: string, confirmPassword: string, studentnumber: string): Observable<any> {
+  register(username: string, password: string, confirmPassword: string, studentnumber: string, name: string): Observable<any> {
     return this._http.post(`${environment.webApiURL}/account/Register`, JSON.stringify({
       Email: username,
       Password: password,
       ConfirmPassword: confirmPassword,
-      StudentNumber: studentnumber
+      StudentNumber: studentnumber,
+      FullName: name
     }), {
         headers: {
           "Content-Type": "application/json"
@@ -53,24 +54,21 @@ export class AuthService {
         StudentId: 'student1',
         Name: 'User Uno',
         email: 'student1@email.com',
-        FirstName: 'User',
-        LastName: '1'
+        FullName: 'User 1'
       },
       {
         Id: 'user2',
         StudentId: 'student2',
         Name: 'User Dos',
         email: 'student2@email.com',
-        FirstName: 'User',
-        LastName: '2'
+        FullName: 'User 2'
       },
       {
         Id: 'user3',
         StudentId: 'student3',
         Name: 'User Tres',
         email: 'student2@email.com',
-        FirstName: 'User',
-        LastName: '3'
+        FullName: 'User 3'
       }
     ]
 

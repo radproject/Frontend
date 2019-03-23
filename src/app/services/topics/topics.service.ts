@@ -64,12 +64,11 @@ export class TopicsService {
     return this._http.get<IPost[]>(`${environment.webApiURL}/posts/getforthread?id=${id}`)
   }
 
-  CreatePost(text: string, threadID: number, userID: string) {
+  CreatePost(text: string, threadID: number) {
     let body =
     {
       ThreadId: threadID,
-      Text: text,
-      UserId: userID
+      Text: text
     }
     return this._http.post(`${environment.webApiURL}/posts/create`, body)
   }
