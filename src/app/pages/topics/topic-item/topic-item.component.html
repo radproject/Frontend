@@ -46,7 +46,7 @@
 
   <form [formGroup]='postForm' *ngIf='(user$|async)'>
     <textarea id='message' class='form-control' formControlName='message' maxlength="200"></textarea>
-    <button class='btn btn-primary' (click)='openFileUpload()'><mat-icon>attachment</mat-icon></button>
+    <button class='btn btn-primary' (click)='openURLShorten()'><mat-icon>attachment</mat-icon></button>
     <button class='btn btn-primary' (click)='tryPost()' [disabled]='!postForm.valid'><mat-icon>send</mat-icon></button>
     <small>{{postForm.value.message.length}}/300</small>
   </form>

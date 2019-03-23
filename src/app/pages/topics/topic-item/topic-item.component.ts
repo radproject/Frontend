@@ -129,16 +129,7 @@ export class TopicItemComponent implements OnInit, OnDestroy {
     this.router.navigate(['topics/browse'])
   }
 
-  openFileUpload() {
-    // const client = filestack.init(environment.filestack);
-    // const options = {
-    //   fromSources: ["local_file_system","url","imagesearch"],
-    //   onFileSelected: file => {
-    //     if (file.size > 1000 * 1000) {
-    //       throw new Error('File too big, select something smaller than 1MB');
-    //     }
-    //   }
-    // }
-    // client.picker(options).open();
+  openURLShorten() {
+
   }
 }
