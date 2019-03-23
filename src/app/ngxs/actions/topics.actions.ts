@@ -133,7 +133,7 @@ export class UnsubscribeFromTopicFailure {
 //Delete Post
 export class DeletePost {
     static readonly type = '[Topics] Deleting post'
-    constructor(public id: number) { }
+    constructor(public id: number, public topicId: number) { }
 }
 
 export class DeletePostSuccess {

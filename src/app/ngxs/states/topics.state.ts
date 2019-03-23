@@ -258,7 +258,7 @@ export class TopicsState {
     @Action(AddPostToTopic)
     AddPostToTopic(context: StateContext<TopicsStateModel>, action: AddPostToTopic) {
         this.topicsService.CreatePost(action.post.Text, action.topicID).toPromise()
-        .then(res => { context.dispatch(new AddPostToTopicSuccess()) })
+        .then(res => { context.dispatch(new AddPostToTopicSuccess()); context.dispatch(new GetTopicByID(action.topicID)) })
         .catch( err => { context.dispatch(new AddPostToTopicFailure(err.error.Message)) })
     }
 
@@ -281,7 +281,7 @@ export class TopicsState {
                 if(user != null)
                 {
                     this.topicsService.SubscribeToTopic(user.StudentId, action.id).toPromise()
-                    .then( res => { context.dispatch(new SubscribeToTopicSuccess()) })
+                    .then( res => { context.dispatch(new SubscribeToTopicSuccess()); context.dispatch(new GetTopicByID(action.id)) })
                     .catch( err => { context.dispatch(new SubscribeToTopicFailure(err.error.error_description)) })
                 }
                 else
@@ -316,7 +316,7 @@ export class TopicsState {
                 if(user != null)
                 {
                     this.topicsService.UnsubscribeFromTopic(user.StudentId, action.id).toPromise()
-                        .then(res => { context.dispatch(new UnsubscribeFromTopicSuccess()) })
+                        .then(res => { context.dispatch(new UnsubscribeFromTopicSuccess()); context.dispatch(new GetTopicByID(action.id)) })
                         .catch( err => { context.dispatch(new UnsubscribeFromTopicFailure(err)) })
                 }
                 else
@@ -343,7 +343,7 @@ export class TopicsState {
     @Action(DeletePost)
     DeletePost(context: StateContext<TopicsStateModel>, action: DeletePost) {
         this.topicsService.DeletePost(action.id).toPromise()
-        .then( res => { context.dispatch(new DeletePostSuccess()) })
+        .then( res => { context.dispatch(new DeletePostSuccess()); context.dispatch(new GetTopicByID(action.topicId)) })
         .catch( err => { context.dispatch(new DeletePostFailure(err.error.Message)) })
     }
 

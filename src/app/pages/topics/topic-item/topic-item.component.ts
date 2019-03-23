@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
-import { ClearSelectedTopic, GetTopicByID, AddPostToTopic, SubscribeToTopic, UnsubscribeFromTopic, DeletePost, DeleteTopic } from 'src/app/ngxs/actions/topics.actions';
-import { ActivatedRoute } from '@angular/router';
+import { ClearSelectedTopic, GetTopicByID, AddPostToTopic, SubscribeToTopic, UnsubscribeFromTopic, DeletePost, DeleteTopic, GetAllTopics } from 'src/app/ngxs/actions/topics.actions';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TopicsState } from 'src/app/ngxs/states/topics.state';
 import { Observable } from 'rxjs';
 import { ITopic } from 'src/app/models/topic.model';
@@ -34,7 +34,7 @@ export class TopicItemComponent implements OnInit, OnDestroy {
   @Select(TopicsState.getSelectedLoading)
   isLoading$: Observable<boolean>
 
-  constructor(private store: Store, private route: ActivatedRoute, public dialog: MatDialog) { }
+  constructor(private store: Store, private route: ActivatedRoute, public dialog: MatDialog, private router: Router) { }
 
   ngOnInit() {
     let id = this.route.snapshot.params['id']
@@ -46,6 +46,7 @@ export class TopicItemComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.store.dispatch(new ClearSelectedTopic())
+    this.store.dispatch(new GetAllTopics())
   }
 
   tryPost() {
@@ -75,7 +76,7 @@ export class TopicItemComponent implements OnInit, OnDestroy {
   }
 
   deletePost(id:number) {
-    this.store.dispatch(new DeletePost(id))
+    this.store.dispatch(new DeletePost(id, this.topic.Id))
   }
   
   getRole() {
@@ -125,6 +126,7 @@ export class TopicItemComponent implements OnInit, OnDestroy {
 
   deleteTopic() {
     this.store.dispatch(new DeleteTopic(this.topic.Id))
+    this.router.navigate(['topics/browse'])
   }
 
   openFileUpload() {
