@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Store, Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { TopicsState } from 'src/app/ngxs/states/topics.state';
-import { GetTopicByID, SearchForTopic } from 'src/app/ngxs/actions/topics.actions';
+import { GetTopicByID, SearchForTopic, GetSubscribedTopics, GetAllTopics } from 'src/app/ngxs/actions/topics.actions';
 import { MatDialog } from '@angular/material';
 import { CreateTopicModalComponent } from 'src/app/components/create-topic-modal/create-topic-modal.component';
 import { UserState } from 'src/app/ngxs/states/user.state';
@@ -40,6 +40,13 @@ export class TopicListComponent implements OnInit {
   constructor(private router: Router, private store: Store, public dialog: MatDialog) { }
 
   ngOnInit() {
+    this.store.dispatch(new GetAllTopics())
+    this.user$.subscribe(res => {
+      if(res)
+      {
+        this.store.dispatch(new GetSubscribedTopics(res.Id))
+      }
+    })
   }
 
   openTopic(t: ITopic) {

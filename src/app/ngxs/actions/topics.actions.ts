@@ -24,6 +24,7 @@ export class CreateTopic {
 
 export class CreateTopicSuccess {
     static readonly type = '[Topics] Add Topic Success'
+    constructor(public topic: Partial<ITopic>) { }
 }
 
 export class CreateTopicFailure {
@@ -39,6 +40,7 @@ export class DeleteTopic {
 
 export class DeleteTopicSuccess {
     static readonly type = '[Topics] Delete Topic Success'
+    constructor(public id: number) { }
 }
 
 export class DeleteTopicFailure {
@@ -108,6 +110,7 @@ export class SubscribeToTopic {
 
 export class SubscribeToTopicSuccess {
     static readonly type = '[Topics] Subscribe to topic success'
+    constructor(public userId: string) {}
 }
 
 export class SubscribeToTopicFailure {
@@ -118,11 +121,12 @@ export class SubscribeToTopicFailure {
 //Unsubscribe from topic
 export class UnsubscribeFromTopic {
     static readonly type = '[Topics] Unsubscrube from topic'
-    constructor(public id: number) { }
+    constructor(public topicId: number, public userId: string) { }
 }
 
 export class UnsubscribeFromTopicSuccess {
     static readonly type = '[Topics] Unsubscribe from topic success'
+    constructor(public userId: string) { }
 }
 
 export class UnsubscribeFromTopicFailure {
@@ -138,6 +142,7 @@ export class DeletePost {
 
 export class DeletePostSuccess {
     static readonly type = '[Topics] Delete post succcess'
+    constructor(public id: number) { }
 }
 
 export class DeletePostFailure {

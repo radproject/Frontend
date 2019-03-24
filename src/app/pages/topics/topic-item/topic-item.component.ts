@@ -35,6 +35,12 @@ export class TopicItemComponent implements OnInit, OnDestroy {
   @Select(TopicsState.getSelectedLoading)
   isLoading$: Observable<boolean>
 
+  @Select(TopicsState.getSubbedTopics)
+  subbedTopics$: Observable<ITopic[]>
+
+  @Select(TopicsState.getIsSubbed)
+  subbed$: Observable<boolean>
+
   constructor(private store: Store, private route: ActivatedRoute, public dialog: MatDialog, private router: Router) { }
 
   ngOnInit() {
@@ -47,7 +53,6 @@ export class TopicItemComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.store.dispatch(new ClearSelectedTopic())
-    this.store.dispatch(new GetAllTopics())
   }
 
   tryPost() {
@@ -58,19 +63,21 @@ export class TopicItemComponent implements OnInit, OnDestroy {
     this.store.dispatch(new AddPostToTopic(this.topic.Id, newPost))
   }
 
-  isSubbed() {
-    if (this.user.subscribedTopics) {
-      if (this.user.subscribedTopics.indexOf(this.topic.Id) !== -1) { return true }
-      else { return false }
-    }
+  subOrUnsub(b: boolean)
+  {
+    this.subbed$.subscribe(res => {
+      if(res)
+      { this.unsubFromTopic() }
+      else
+      { this.subToTopic() }
+    })
   }
-
   subToTopic() {
     this.store.dispatch(new SubscribeToTopic(this.topic.Id, this.user.Id))
   }
 
   unsubFromTopic() {
-    this.store.dispatch(new UnsubscribeFromTopic(this.topic.Id))
+    this.store.dispatch(new UnsubscribeFromTopic(this.topic.Id, this.user.Id))
   }
 
   deletePost(id: number) {

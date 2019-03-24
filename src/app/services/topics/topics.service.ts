@@ -45,8 +45,7 @@ export class TopicsService {
   }
 
   UnsubscribeFromTopic(UserId: string, TopicId: number) {
-    if (UserId) { UserId = `&UserId=${UserId}` }
-    else { UserId = 'none' }
+    if (!UserId) { UserId = 'none' }
     return this._http.post(`${environment.webApiURL}/topics/unsubscribe?TopicId=${TopicId}&UserId=${UserId}`, null)
   }
 
