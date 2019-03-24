@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { Observable } from 'rxjs';
 import { IUser } from 'src/app/models/user.model';
 import { ITopic } from 'src/app/models/topic.model';
+import { SubscribeToTopic, UnsubscribeFromTopic } from 'src/app/ngxs/actions/topics.actions';
 
 @Component({
   selector: 'app-add-subs-modal',
@@ -15,6 +16,7 @@ import { ITopic } from 'src/app/models/topic.model';
 export class AddSubsModalComponent implements OnInit {
   subsAdded: IUser[] = [];
   results$: Observable<IUser[]>
+  topic: ITopic
 
   userSearchForm: FormGroup
     = new FormGroup({
@@ -29,7 +31,11 @@ export class AddSubsModalComponent implements OnInit {
     private auth: AuthService
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.data.subscribe(res => {
+      this.topic = res
+    })
+  }
 
   searchForUser() {
     this.results$ = this.auth.searchUsers(this.userSearchForm.value.name)
@@ -38,9 +44,11 @@ export class AddSubsModalComponent implements OnInit {
   addSub(u: IUser) {
     if (this.subsAdded.includes(u)) {
       this.subsAdded.splice((this.subsAdded.findIndex(s => s.Id == u.Id)), 1)
+      this.store.dispatch(new UnsubscribeFromTopic(this.topic.Id, u.Id))
     }
     else {
       this.subsAdded.push(u)
+      this.store.dispatch(new SubscribeToTopic(this.topic.Id, u.Id))
     }
   }
 }
