@@ -24,7 +24,6 @@ export class TopicsComponent implements OnInit {
   constructor(private store: Store, public router: Router) { }
 
   ngOnInit() {
-    this.store.dispatch(new GetAllTopics())
   }
 
   returnToIndex() {

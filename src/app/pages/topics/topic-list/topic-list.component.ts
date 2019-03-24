@@ -41,12 +41,6 @@ export class TopicListComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(new GetAllTopics())
-    this.user$.subscribe(res => {
-      if(res)
-      {
-        this.store.dispatch(new GetSubscribedTopics(res.Id))
-      }
-    })
   }
 
   openTopic(t: ITopic) {

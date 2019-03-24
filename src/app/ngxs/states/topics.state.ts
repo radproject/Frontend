@@ -88,6 +88,8 @@ export class TopicsState implements OnInit {
             isLoading: true
         })
 
+        this.user$.subscribe(res => {if(res) { context.dispatch(new GetSubscribedTopics(res.Id))}})
+
         this.topicsService.GetAllTopics().toPromise()
         .then( res => {context.dispatch(new GetAllTopicsSuccess(res))} )
         .catch( err => {context.dispatch(new GetAllTopicsFailure(err.error.Message))} )
@@ -125,6 +127,7 @@ export class TopicsState implements OnInit {
 
     @Action(CreateTopicSuccess)
     CreateTopicSuccess(context: StateContext<TopicsStateModel>, action: CreateTopicSuccess) {
+        context.dispatch(new GetAllTopics())
         context.patchState({
             isLoading: false
         })
