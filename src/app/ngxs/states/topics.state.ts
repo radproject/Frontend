@@ -10,7 +10,7 @@ import { IUser } from "src/app/models/user.model";
 interface TopicsStateModel {
     topics: ITopic[],
     isLoading: boolean,
-    
+
     selectedTopic: ITopic,
     selectedLoading: boolean,
 
@@ -30,7 +30,7 @@ interface TopicsStateModel {
     }
 })
 export class TopicsState {
-    constructor(private topicsService: TopicsService,private notification: NotificationService) { }
+    constructor(private topicsService: TopicsService, private notification: NotificationService) { }
 
     @Select(UserState.getUser)
     user$: Observable<IUser>
@@ -73,21 +73,20 @@ export class TopicsState {
         context.patchState({
             isLoading: true
         })
-        
+
         this.topicsService.GetAllTopics().subscribe(
             res => {
                 context.dispatch(new GetAllTopicsSuccess(res))
 
                 this.user$.subscribe(u => {
-                    if(u)
-                    {
+                    if (u) {
                         context.dispatch(new GetSubscribedTopics(u.Id))
                     }
                 })
             },
             err => {
                 context.dispatch(new GetAllTopicsFailure(err.error.Message))
-        })
+            })
     }
 
     @Action(GetAllTopicsSuccess)
@@ -107,7 +106,7 @@ export class TopicsState {
             isLoading: false
         })
     }
-    
+
     //Add topics
     @Action(CreateTopic)
     CreateTopic(context: StateContext<TopicsStateModel>, action: CreateTopic) {
@@ -116,14 +115,14 @@ export class TopicsState {
 
         this.topicsService.CreateTopic(action.topic)
             .toPromise().then(
-            res => {
-                context.dispatch(new CreateTopicSuccess())
-            },
+                res => {
+                    context.dispatch(new CreateTopicSuccess())
+                },
             ).catch(
-            err => {
-                context.dispatch(new CreateTopicFailure(err.error.Message))
-            }
-        )
+                err => {
+                    context.dispatch(new CreateTopicFailure(err.error.Message))
+                }
+            )
 
     }
 
@@ -183,7 +182,7 @@ export class TopicsState {
         context.patchState({
             subscribedLoading: true
         })
-        
+
         this.topicsService.GetSubscribedTopics(action.userID).subscribe(
             res => {
                 context.dispatch(new GetSubscribedTopicsSuccess(res))
@@ -220,12 +219,12 @@ export class TopicsState {
         })
 
         this.topicsService.GetTopicByID(action.id).subscribe(
-             res => {
-                 context.dispatch(new GetTopicByIDSuccess(res))
-             },
-             err => {
-                 context.dispatch(new GetTopicByIDFailure(err.error.Message))
-             }
+            res => {
+                context.dispatch(new GetTopicByIDSuccess(res))
+            },
+            err => {
+                context.dispatch(new GetTopicByIDFailure(err.error.Message))
+            }
         )
     }
 
@@ -258,8 +257,8 @@ export class TopicsState {
     @Action(AddPostToTopic)
     AddPostToTopic(context: StateContext<TopicsStateModel>, action: AddPostToTopic) {
         this.topicsService.CreatePost(action.post.Text, action.topicID).toPromise()
-        .then(res => { context.dispatch(new AddPostToTopicSuccess()); context.dispatch(new GetTopicByID(action.topicID)) })
-        .catch( err => { context.dispatch(new AddPostToTopicFailure(err.error.Message)) })
+            .then(res => { context.dispatch(new AddPostToTopicSuccess()); context.dispatch(new GetTopicByID(action.topicID)) })
+            .catch(err => { context.dispatch(new AddPostToTopicFailure(err.error.Message)) })
     }
 
     @Action(AddPostToTopicSuccess)
@@ -271,21 +270,19 @@ export class TopicsState {
     AddPostToTopicFailure(context: StateContext<TopicsStateModel>, action: AddPostToTopicFailure) {
         console.error(`Error creating post: + ${action.error}`)
         this.notification.danger('Error creating post', action.error)
-    }    
-    
+    }
+
     //Sub to topic    
     @Action(SubscribeToTopic)
     SubscribeToTopic(context: StateContext<TopicsStateModel>, action: SubscribeToTopic) {
         this.user$.subscribe(
             user => {
-                if(user != null)
-                {
-                    this.topicsService.SubscribeToTopic(user.StudentId, action.id).toPromise()
-                    .then( res => { context.dispatch(new SubscribeToTopicSuccess()); context.dispatch(new GetTopicByID(action.id)) })
-                    .catch( err => { context.dispatch(new SubscribeToTopicFailure(err.error.error_description)) })
+                if (user != null) {
+                    this.topicsService.SubscribeToTopic(action.userId, action.topicId).toPromise()
+                        .then(res => { context.dispatch(new SubscribeToTopicSuccess()); context.dispatch(new GetTopicByID(action.topicId)) })
+                        .catch(err => { context.dispatch(new SubscribeToTopicFailure(err.error.error_description)) })
                 }
-                else
-                {
+                else {
                     context.dispatch(new SubscribeToTopicFailure('No user'))
                 }
             },
@@ -298,7 +295,7 @@ export class TopicsState {
     @Action(SubscribeToTopicSuccess)
     SubscribeToTopicSuccess(context: StateContext<TopicsStateModel>, action: SubscribeToTopicSuccess) {
         context.patchState({
-            isLoading:false
+            isLoading: false
         })
     }
 
@@ -313,14 +310,12 @@ export class TopicsState {
     UnsubscribeFromTopic(context: StateContext<TopicsStateModel>, action: UnsubscribeFromTopic) {
         this.user$.subscribe(
             user => {
-                if(user != null)
-                {
+                if (user != null) {
                     this.topicsService.UnsubscribeFromTopic(user.StudentId, action.id).toPromise()
                         .then(res => { context.dispatch(new UnsubscribeFromTopicSuccess()); context.dispatch(new GetTopicByID(action.id)) })
-                        .catch( err => { context.dispatch(new UnsubscribeFromTopicFailure(err)) })
+                        .catch(err => { context.dispatch(new UnsubscribeFromTopicFailure(err)) })
                 }
-                else
-                {
+                else {
                     context.dispatch(new UnsubscribeFromTopicFailure('No user'))
                 }
             },
@@ -343,8 +338,8 @@ export class TopicsState {
     @Action(DeletePost)
     DeletePost(context: StateContext<TopicsStateModel>, action: DeletePost) {
         this.topicsService.DeletePost(action.id).toPromise()
-        .then( res => { context.dispatch(new DeletePostSuccess()); context.dispatch(new GetTopicByID(action.topicId)) })
-        .catch( err => { context.dispatch(new DeletePostFailure(err.error.Message)) })
+            .then(res => { context.dispatch(new DeletePostSuccess()); context.dispatch(new GetTopicByID(action.topicId)) })
+            .catch(err => { context.dispatch(new DeletePostFailure(err.error.Message)) })
     }
 
     @Action(DeletePostSuccess)
@@ -371,24 +366,20 @@ export class TopicsState {
         let filteredSubbedTopics = []
         let filteredTopics = []
 
-        if(action.searchTerm.length > 0) {
+        if (action.searchTerm.length > 0) {
             subbedTopics.forEach(t => {
-                if(t.Title)
-                {
-                    if(t.Title.includes(action.searchTerm))
-                    { filteredSubbedTopics.push(t) }
+                if (t.Title) {
+                    if (t.Title.includes(action.searchTerm)) { filteredSubbedTopics.push(t) }
                 }
             })
             topics.forEach(t => {
-                if(t.Title)
-                {
-                    if(t.Title.includes(action.searchTerm))
-                    { filteredTopics.push(t) }
+                if (t.Title) {
+                    if (t.Title.includes(action.searchTerm)) { filteredTopics.push(t) }
                 }
             })
 
-              context.dispatch(new GetAllTopicsSuccess(filteredTopics))
-              context.dispatch(new GetSubscribedTopicsSuccess(filteredSubbedTopics))
+            context.dispatch(new GetAllTopicsSuccess(filteredTopics))
+            context.dispatch(new GetSubscribedTopicsSuccess(filteredSubbedTopics))
         }
         else {
             context.dispatch(new GetAllTopics())

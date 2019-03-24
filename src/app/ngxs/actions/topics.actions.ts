@@ -22,7 +22,7 @@ export class CreateTopic {
     constructor(public topic: Partial<ITopic>) { }
 }
 
-export class CreateTopicSuccess { 
+export class CreateTopicSuccess {
     static readonly type = '[Topics] Add Topic Success'
 }
 
@@ -79,7 +79,7 @@ export class GetTopicByIDFailure {
 }
 
 //Clear selected
-export class  ClearSelectedTopic {
+export class ClearSelectedTopic {
     static readonly type = '[Topics] Clear Selected Topic'
 }
 
@@ -103,7 +103,7 @@ export class AddPostToTopicFailure {
 //Subscribe to topic
 export class SubscribeToTopic {
     static readonly type = '[Topics] Subscribe to topic'
-    constructor(public id: number) { }
+    constructor(public topicId: number, public userId: string) { }
 }
 
 export class SubscribeToTopicSuccess {
@@ -141,7 +141,7 @@ export class DeletePostSuccess {
 }
 
 export class DeletePostFailure {
-    static readonly  type = '[Topics] Delete post failure'
+    static readonly type = '[Topics] Delete post failure'
     constructor(public error: string) { }
 }
 

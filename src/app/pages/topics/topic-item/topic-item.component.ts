@@ -55,44 +55,39 @@ export class TopicItemComponent implements OnInit, OnDestroy {
       Text: this.postForm.value.message,
       creator: this.user
     }
-    this.store.dispatch(new AddPostToTopic(this.topic.Id, newPost ))
+    this.store.dispatch(new AddPostToTopic(this.topic.Id, newPost))
   }
 
   isSubbed() {
-    if(this.user.subscribedTopics)
-    {
-      if(this.user.subscribedTopics.indexOf(this.topic.Id) !== -1)
-      { return true }
-      else
-      { return false }
+    if (this.user.subscribedTopics) {
+      if (this.user.subscribedTopics.indexOf(this.topic.Id) !== -1) { return true }
+      else { return false }
     }
   }
-  
+
   subToTopic() {
-    this.store.dispatch(new SubscribeToTopic(this.topic.Id))
+    this.store.dispatch(new SubscribeToTopic(this.topic.Id, this.user.Id))
   }
 
   unsubFromTopic() {
     this.store.dispatch(new UnsubscribeFromTopic(this.topic.Id))
   }
 
-  deletePost(id:number) {
+  deletePost(id: number) {
     this.store.dispatch(new DeletePost(id, this.topic.Id))
   }
-  
+
   getRole() {
-    if(this.user != null) {
-      if(this.topic.creator != null)
-      {
-        if(this.user.Id == this.topic.creator.Id) {
+    if (this.user != null) {
+      if (this.topic.creator != null) {
+        if (this.user.Id == this.topic.creator.Id) {
           return 'owner'
-        } 
+        }
         else {
           return 'user'
         }
       }
-      else
-      {
+      else {
         return 'user'
       }
     }
@@ -108,19 +103,15 @@ export class TopicItemComponent implements OnInit, OnDestroy {
   }
 
   isUsersPost(p: IPost) {
-    if(this.user != null && p.creator != null)
-    {
-      if(this.user.Id == p.creator.Id)
-      {
+    if (this.user != null && p.creator != null) {
+      if (this.user.Id == p.creator.Id) {
         return true
       }
-      else
-      {
+      else {
         return false
       }
     }
-    else
-    {
+    else {
       return false
     }
   }

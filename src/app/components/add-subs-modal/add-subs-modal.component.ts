@@ -13,9 +13,9 @@ import { ITopic } from 'src/app/models/topic.model';
   styleUrls: ['./add-subs-modal.component.scss']
 })
 export class AddSubsModalComponent implements OnInit {
-  subsAdded:IUser[] = [];
+  subsAdded: IUser[] = [];
   results$: Observable<IUser[]>
-  
+
   userSearchForm: FormGroup
     = new FormGroup({
       name: new FormControl(null, [Validators.required])
@@ -36,12 +36,10 @@ export class AddSubsModalComponent implements OnInit {
   }
 
   addSub(u: IUser) {
-    if(this.subsAdded.includes(u))
-    {
-      this.subsAdded.splice((this.subsAdded.findIndex(s => s.Id == u.Id)),1)
+    if (this.subsAdded.includes(u)) {
+      this.subsAdded.splice((this.subsAdded.findIndex(s => s.Id == u.Id)), 1)
     }
-    else
-    {
+    else {
       this.subsAdded.push(u)
     }
   }

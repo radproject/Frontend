@@ -31,7 +31,7 @@ export class TopicsService {
   }
 
   UpdateTopic(topic: ITopic) {
-    return this._http.patch(`${environment.webApiURL}/topics/update`,topic)
+    return this._http.patch(`${environment.webApiURL}/topics/update`, topic)
   }
 
   GetTopicByID(id: number) {
@@ -40,18 +40,13 @@ export class TopicsService {
 
   //Subbing and unsubbing
   SubscribeToTopic(UserId: string, TopicId: number) {
-    if(UserId)
-    { UserId = `&UserId=${UserId}` }
-    else
-    { UserId = 'none' }
+    if (!UserId) { UserId = 'none' }
     return this._http.post(`${environment.webApiURL}/topics/subscribe?TopicId=${TopicId}&UserId=${UserId}`, null)
   }
 
   UnsubscribeFromTopic(UserId: string, TopicId: number) {
-    if(UserId)
-    { UserId = `&UserId=${UserId}` }
-    else
-    { UserId = 'none' }
+    if (UserId) { UserId = `&UserId=${UserId}` }
+    else { UserId = 'none' }
     return this._http.post(`${environment.webApiURL}/topics/unsubscribe?TopicId=${TopicId}&UserId=${UserId}`, null)
   }
 
@@ -79,11 +74,11 @@ export class TopicsService {
       Text: text,
       ThreadID: postID
     }
-    return this._http.patch(`${environment.webApiURL}/posts/update`,body)
+    return this._http.patch(`${environment.webApiURL}/posts/update`, body)
   }
 
   DeletePost(id: number) {
-    return this._http.post(`${environment.webApiURL}/posts/delete?id=${id}`,id)
+    return this._http.post(`${environment.webApiURL}/posts/delete?id=${id}`, id)
   }
 
 
