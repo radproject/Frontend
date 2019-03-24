@@ -289,13 +289,10 @@ export class TopicsState implements OnInit {
     //Sub to topic    
     @Action(SubscribeToTopic)
     SubscribeToTopic(context: StateContext<TopicsStateModel>, action: SubscribeToTopic) {
-        this.topicsService.SubscribeToTopic(action.userId, action.topicId).toPromise()
-        .then(
+        this.topicsService.SubscribeToTopic(action.userId, action.topicId).subscribe(
             res => {
                 context.dispatch(new SubscribeToTopicSuccess(action.userId))
-            }
-        )
-        .catch(
+            },
             err => {
                 context.dispatch(new SubscribeToTopicFailure(err.error.error_description))
             }
@@ -318,12 +315,10 @@ export class TopicsState implements OnInit {
     //Unsub from topic
     @Action(UnsubscribeFromTopic)
     UnsubscribeFromTopic(context: StateContext<TopicsStateModel>, action: UnsubscribeFromTopic) {
-        this.topicsService.UnsubscribeFromTopic(action.userId, action.topicId).toPromise()
-        .then(
+        this.topicsService.UnsubscribeFromTopic(action.userId, action.topicId).subscribe(
             res => {
                 context.dispatch(new UnsubscribeFromTopicSuccess(action.userId))
-            })
-        .catch(
+            },
             err => {
                 context.dispatch(new UnsubscribeFromTopicFailure(err.error.error_description))
             }

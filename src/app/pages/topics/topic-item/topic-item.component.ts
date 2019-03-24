@@ -70,7 +70,7 @@ export class TopicItemComponent implements OnInit, OnDestroy {
       { this.unsubFromTopic() }
       else
       { this.subToTopic() }
-    })
+    }).unsubscribe()
   }
   subToTopic() {
     this.store.dispatch(new SubscribeToTopic(this.topic.Id, this.user.Id))
