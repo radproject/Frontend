@@ -40,7 +40,7 @@ export class UserState {
 
         this.authService.getUser().subscribe(
             res => {
-                if(res) {
+                if (res) {
                     context.dispatch(new GetUserSuccess(res))
                 }
                 else {

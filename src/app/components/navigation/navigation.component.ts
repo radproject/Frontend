@@ -13,14 +13,14 @@ import { Observable } from 'rxjs';
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit {
-  
+
   @Select(UserState.getUser)
   user$: Observable<IUser>
 
   constructor(
     public router: Router,
     private auth: AuthService,
-    private notification: NotificationService ) { }
+    private notification: NotificationService) { }
 
   ngOnInit() {
   }
@@ -29,9 +29,11 @@ export class NavigationComponent implements OnInit {
     this.router.navigate([route])
   }
 
-  logout() { 
-    // this.auth.signOut()
-      // .then(res => {this.user = null})
-      // .catch(err => { this.notification.danger('Failed to log out',err) })
+  logout() {
+    this.auth.logout().subscribe(res => {
+      localStorage.removeItem('access_token')
+      localStorage.removeItem('expiry')
+      this.router.navigate(['home'])
+    })
   }
 }

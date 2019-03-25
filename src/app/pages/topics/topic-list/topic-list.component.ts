@@ -21,12 +21,12 @@ export class TopicListComponent implements OnInit {
     subscribed: true,
     all: true
   }
-  
+
   searchForm: FormGroup
     = new FormGroup({
       searchTerm: new FormControl(null, [Validators.required])
     })
-  
+
   @Select(TopicsState.getTopics)
   allTopics: Observable<ITopic[]>
   topics: ITopic[]
@@ -40,6 +40,7 @@ export class TopicListComponent implements OnInit {
   constructor(private router: Router, private store: Store, public dialog: MatDialog) { }
 
   ngOnInit() {
+    console.log('Running onInit')
     this.store.dispatch(new GetAllTopics())
   }
 
@@ -49,8 +50,7 @@ export class TopicListComponent implements OnInit {
   }
 
   toggleHidden(n: number) {
-    switch(n)
-    {
+    switch (n) {
       case 0:
         this.shown.subscribed = !this.shown.subscribed
         break;

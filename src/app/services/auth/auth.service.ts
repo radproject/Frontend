@@ -6,6 +6,7 @@ import { Store } from '@ngxs/store';
 import { GetUser } from 'src/app/ngxs/actions/user.actions';
 import { Router } from '@angular/router';
 import { IUser } from 'src/app/models/user.model';
+import { HttpResponse } from '@aspnet/signalr';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class AuthService {
   constructor(private _http: HttpClient, private store: Store, private router: Router) { }
 
   //POST: Login with provided credentials
-  login(email: string, password: string){
+  login(email: string, password: string) {
     //Set body to credentials
     let body = new URLSearchParams()
     body.set('username', email)
@@ -49,5 +50,9 @@ export class AuthService {
 
   searchUsers(name: string) {
     return this._http.get<IUser[]>(`${environment.webApiURL}/account/getusers?searchParam=${name}`)
+  }
+
+  logout() {
+    return this._http.post(`${environment.webApiURL}/account/logout`, {})
   }
 }

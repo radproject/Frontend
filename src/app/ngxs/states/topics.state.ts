@@ -41,7 +41,7 @@ export class TopicsState implements OnInit {
     user: IUser
 
     ngOnInit() {
-        this.user$.subscribe(res =>{ this.user = res})
+        this.user$.subscribe(res => { this.user = res })
     }
 
     //Selectors
@@ -88,11 +88,11 @@ export class TopicsState implements OnInit {
             isLoading: true
         })
 
-        this.user$.subscribe(res => {if(res) { context.dispatch(new GetSubscribedTopics(res.Id))}})
+        this.user$.subscribe(res => { if (res) { context.dispatch(new GetSubscribedTopics(res.Id)) } })
 
         this.topicsService.GetAllTopics().toPromise()
-        .then( res => {context.dispatch(new GetAllTopicsSuccess(res))} )
-        .catch( err => {context.dispatch(new GetAllTopicsFailure(err.error.Message))} )
+            .then(res => { context.dispatch(new GetAllTopicsSuccess(res)) })
+            .catch(err => { context.dispatch(new GetAllTopicsFailure(err.error.Message)) })
     }
 
     @Action(GetAllTopicsSuccess)
@@ -120,8 +120,8 @@ export class TopicsState implements OnInit {
         state.isLoading = true
 
         this.topicsService.CreateTopic(action.topic).toPromise()
-        .then(res => {context.dispatch(new CreateTopicSuccess(action.topic))})
-        .catch(err => {context.dispatch(new CreateTopicFailure(err.error.Message))})
+            .then(res => { context.dispatch(new CreateTopicSuccess(action.topic)) })
+            .catch(err => { context.dispatch(new CreateTopicFailure(err.error.Message)) })
 
     }
 
@@ -150,15 +150,17 @@ export class TopicsState implements OnInit {
         state.isLoading = true
 
         this.topicsService.DeleteTopic(action.id).toPromise()
-        .then(res => {context.dispatch(new DeleteTopicSuccess(action.id))})
-        .catch(err => {context.dispatch(new DeleteTopicFailure(err.error.Message))})
+            .then(res => { context.dispatch(new DeleteTopicSuccess(action.id)) })
+            .catch(err => { context.dispatch(new DeleteTopicFailure(err.error.Message)) })
     }
 
     @Action(DeleteTopicSuccess)
     DeleteTopicSuccess(context: StateContext<TopicsStateModel>, action: DeleteTopicSuccess) {
         const state = context.getState()
-        let newTopics = state.topics.splice(state.topics.findIndex(t => (t.Id == action.id)),1)
-        let subbedtopics = state.subscribedTopics.splice(state.subscribedTopics.findIndex(t => (t.Id == action.id),1))
+        let newTopics = state.topics
+        let subbedtopics = state.subscribedTopics
+        newTopics.splice(state.topics.findIndex(t => (t.Id == action.id)), 1)
+        subbedtopics.splice(state.subscribedTopics.findIndex(t => (t.Id == action.id), 1))
 
         context.patchState({
             topics: newTopics,
@@ -218,9 +220,8 @@ export class TopicsState implements OnInit {
         context.patchState({
             selectedLoading: true
         })
-        
-        if(this.user)
-        {
+
+        if (this.user) {
             context.dispatch(new GetSubscribedTopics(this.user.Id))
         }
 
@@ -239,13 +240,12 @@ export class TopicsState implements OnInit {
         const state = context.getState()
 
         let selSubbed = false;
-        if(state.subscribedTopics) {
-            if(state.subscribedTopics.findIndex(t => (t.Id == action.topic.Id)) > -1)
-            {
-                selSubbed= true
+        if (state.subscribedTopics) {
+            if (state.subscribedTopics.findIndex(t => (t.Id == action.topic.Id)) > -1) {
+                selSubbed = true
             }
         }
-        
+
         context.patchState({
             selectedTopic: action.topic,
             selectedLoading: false,
@@ -306,7 +306,7 @@ export class TopicsState implements OnInit {
     SubscribeToTopicSuccess(context: StateContext<TopicsStateModel>, action: SubscribeToTopicSuccess) {
         context.patchState({
             selectedSubbed: true
-        })   
+        })
     }
 
     @Action(SubscribeToTopicFailure)
@@ -332,7 +332,7 @@ export class TopicsState implements OnInit {
     UnsubscribeFromTopicSuccess(context: StateContext<TopicsStateModel>, action: UnsubscribeFromTopicSuccess) {
         context.patchState({
             selectedSubbed: false
-        })        
+        })
     }
 
     @Action(UnsubscribeFromTopicFailure)
@@ -353,7 +353,7 @@ export class TopicsState implements OnInit {
     DeletePostSuccess(context: StateContext<TopicsStateModel>, action: DeletePostSuccess) {
         const state = context.getState()
         let selTopic = state.selectedTopic
-        selTopic.posts.splice(selTopic.posts.findIndex(p => (p.Id == action.id)),1)
+        selTopic.posts.splice(selTopic.posts.findIndex(p => (p.Id == action.id)), 1)
 
         context.patchState({
             selectedTopic: selTopic
@@ -382,16 +382,14 @@ export class TopicsState implements OnInit {
         let filteredTopics = []
 
         if (action.searchTerm.length > 0) {
-            if(subbedTopics != null)
-            {
+            if (subbedTopics != null) {
                 subbedTopics.forEach(t => {
                     if (t.Title) {
                         if (t.Title.includes(action.searchTerm)) { filteredSubbedTopics.push(t) }
                     }
                 })
             }
-            if(topics != null)
-            {
+            if (topics != null) {
                 topics.forEach(t => {
                     if (t.Title) {
                         if (t.Title.includes(action.searchTerm)) { filteredTopics.push(t) }
@@ -404,8 +402,7 @@ export class TopicsState implements OnInit {
         }
         else {
             context.dispatch(new GetAllTopics())
-            if(this.user)
-            { context.dispatch(new GetSubscribedTopics(this.user.Id)) }
+            if (this.user) { context.dispatch(new GetSubscribedTopics(this.user.Id)) }
         }
     }
 }

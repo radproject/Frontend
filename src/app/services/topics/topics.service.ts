@@ -18,6 +18,7 @@ export class TopicsService {
   }
 
   CreateTopic(topic: Partial<ITopic>) {
+    console.log(new Date())
     let body = {
       Title: topic.Title,
       CreationDate: new Date(),
